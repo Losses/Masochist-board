@@ -1,4 +1,6 @@
 <?php
+
+	require('config.php');
 	
 	function sql_query($sqlcon)
 	{
@@ -10,5 +12,5 @@
 		return $result;
 	}
 
-	sql_query("SELECT * FROM guestbook");
-?>
+	$gay_sky = sql_query("SELECT * FROM content");
+	print_r($gay_sky);

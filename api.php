@@ -12,10 +12,5 @@
 		return $result;
 	}
 
-	$gay_sky = sql_query("SELECT * FROM content");
-	print_r($gay_sky);
-	$gay_losses = sql_query("insert into content ("id", "author")
-		values (01, "gay")");
+	$gay_losses = sql_query("SELECT * FROM content");
 	print_r($gay_losses);
-
-?>

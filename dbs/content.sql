@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 12, 2015 at 08:30 AM
+-- Generation Time: Feb 13, 2015 at 06:53 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -28,12 +28,14 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `content` (
 `id` int(11) NOT NULL,
-  `author` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `author` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `title` text COLLATE utf8_unicode_ci NOT NULL,
   `content` text COLLATE utf8_unicode_ci NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `img` tinytext COLLATE utf8_unicode_ci NOT NULL,
+  `active_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `img` tinytext COLLATE utf8_unicode_ci,
   `upid` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Indexes for dumped tables
@@ -53,7 +55,7 @@ ALTER TABLE `content`
 -- AUTO_INCREMENT for table `content`
 --
 ALTER TABLE `content`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

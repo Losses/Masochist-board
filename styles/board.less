@@ -1,3 +1,31 @@
+@import url('webfonts/board.css');
+
+@keyframes flow_up_f {
+  from {
+    margin-top: -200px;
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    margin-top: -250px;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@keyframes flow_down_f {
+  to {
+    margin-top: -200px;
+    opacity: 0;
+    visibility: hidden;
+  }
+  from {
+    margin-top: -250px;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
 html, body {
   height: 100%;
 }
@@ -10,8 +38,119 @@ html, body {
   }
 }
 
+#new_post {
+  background: #fd9b00;
+
+  &:hover {
+    background: lighten(#fd9b00, 10%);
+  }
+
+  i {
+    margin: 0 0 0 15px;
+    color: white;
+    font-size: 25px;
+    line-height: 62px;
+    display: block;
+  }
+}
+
+#post_dialog {
+  top: 50%;
+  left: 50%;
+  width: 550px;
+  height: 500px;
+  margin: -250px 0 0 -275px;
+  background: white;
+  border-radius: 3px;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, .16), 0 2px 5px 0 rgba(0, 0, 0, .26);
+  overflow: hidden;
+  position: fixed;
+  z-index: 5;
+
+  margin-top: -200px;
+  opacity: 0;
+  visibility: hidden;
+
+  &.flow_up {
+    animation: flow_up_f 300ms ease-in-out forwards;
+  }
+
+  &.flow_down {
+    animation: flow_down_f 300ms ease-in-out forwards;
+  }
+
+  form {
+    width: 100%;
+    height: 100%;
+    font-size: 12px;
+
+    input[name=title] {
+      width: calc(100% - 7px);
+      height: 1em;
+      padding: 20px 20px;
+      line-height: 1em;
+      border: none;
+      border-bottom: 1px solid #c0b5d3;
+      display: block;
+    }
+
+    input[type=submit] {
+      right: 10px;
+      bottom: 10px;
+      width: 3em;
+      height: 3em;
+      padding: 5px;
+      background: white;
+      border-radius: 100%;
+      border: 0;
+      color: #3c324d;
+      font-family: "board";
+      font-size: 18px;
+      display: block;
+      position: absolute;
+      resize: none;
+    }
+
+    textarea {
+      width: calc(100% - 7px);
+      height: 407px;
+      padding: 20px;
+      border: 0;
+      font-size: 12px;
+      line-height: 2em;
+    }
+  }
+}
+
+.float_icon {
+  right: 50px;
+  bottom: 50px;
+  width: 65px;
+  height: 65px;
+  background-size: 100%;
+  border-radius: 50%;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, .16), 0 2px 5px 0 rgba(0, 0, 0, .26);
+  transition: background 300ms ease-in-out, bottom 400ms;
+  position: fixed;
+  z-index: 5;
+  cursor: pointer;
+
+  &:active {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26), 0 8px 17px 0 rgba(0, 0, 0, .2);
+  }
+
+  &.show {
+    transition-timing-function: cubic-bezier(0.45, 1.36, 0.97, 1.17);
+  }
+
+  &.hide {
+    bottom: -70px;
+    transition: bottom 100ms;
+  }
+}
+
 footer {
-  width:100%;
+  width: 100%;
   position: absolute;
   bottom: 0;
 }

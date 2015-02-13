@@ -23,10 +23,6 @@
     visibility: visible;
   }
 }
-html,
-body {
-  height: 100%;
-}
 #main {
   margin: 30px;
 }
@@ -168,8 +164,6 @@ body {
 }
 footer {
   width: 100%;
-  position: absolute;
-  bottom: 0;
 }
 @media only screen and (max-width: 550px) {
   #post_dialog {

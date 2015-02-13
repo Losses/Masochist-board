@@ -33,8 +33,50 @@ html, body {
 #main {
   margin: 30px;
   .post {
-    padding: 10px 0;
+    padding: 10px;
     border-bottom: 1px dashed #c0b5d3;
+    color: #3c324d;
+    font-size: 14px;
+    line-height: 1.5em;
+    transition: all 300ms;
+
+    .title {
+      font-size: 18px;
+      text-decoration: none;
+      color: #20113c;
+
+      &:hover {
+        color: #3e00a4;
+      }
+    }
+
+    .time {
+      width: 90px;
+      border-radius: 3px;
+      margin-top: -2px;
+      margin-right: 10px;
+      font-size: 12px;
+      line-height: 2em;
+      text-align: center;
+      float: right;
+      background: #d7cceb;
+      display: block;
+    }
+
+    &:hover {
+      background: #ece8f5;
+      .title {
+        color: #3e00a4;
+
+        &:hover {
+          color: #5c00ff;
+        }
+      }
+
+      .time {
+        background: #c0b5d3;
+      }
+    }
   }
 }
 
@@ -153,4 +195,14 @@ footer {
   width: 100%;
   position: absolute;
   bottom: 0;
+}
+
+@media only screen and (max-width: 550px) {
+  #post_dialog {
+    left: 0;
+    top: 250px;
+    margin: 0 0 0 0;
+    width: 100%;
+    height: 100%;
+  }
 }

@@ -31,8 +31,44 @@ body {
   margin: 30px;
 }
 #main .post {
-  padding: 10px 0;
+  padding: 10px;
   border-bottom: 1px dashed #c0b5d3;
+  color: #3c324d;
+  font-size: 14px;
+  line-height: 1.5em;
+  transition: all 300ms;
+}
+#main .post .title {
+  font-size: 18px;
+  text-decoration: none;
+  color: #20113c;
+}
+#main .post .title:hover {
+  color: #3e00a4;
+}
+#main .post .time {
+  width: 90px;
+  border-radius: 3px;
+  margin-top: -2px;
+  margin-right: 10px;
+  font-size: 12px;
+  line-height: 2em;
+  text-align: center;
+  float: right;
+  background: #d7cceb;
+  display: block;
+}
+#main .post:hover {
+  background: #ece8f5;
+}
+#main .post:hover .title {
+  color: #3e00a4;
+}
+#main .post:hover .title:hover {
+  color: #5c00ff;
+}
+#main .post:hover .time {
+  background: #c0b5d3;
 }
 #new_post {
   background: #fd9b00;
@@ -134,4 +170,13 @@ footer {
   width: 100%;
   position: absolute;
   bottom: 0;
+}
+@media only screen and (max-width: 550px) {
+  #post_dialog {
+    left: 0;
+    top: 250px;
+    margin: 0 0 0 0;
+    width: 100%;
+    height: 100%;
+  }
 }

@@ -10,6 +10,7 @@
     <script src="scripts/jquery.js"></script>
 	<script src="scripts/angular.min.js"></script>
 	<script src="scripts/board.js"></script>
+	<script src="scripts/public.js"></script>
     <script src="scripts/prefixfree.min.js"></script>
     <title>轨道炮 piu——</title>
 </head>
@@ -32,9 +33,9 @@
 <section id="main">
 	<ul class="post_list" ng-controller="getPostCtrl">
 		<li class="post" ng-repeat="post in posts">
-			<a href='#{{post.id}}'>{{post.title}}</a>
+            <p class="time">{{post.time}}</p>
+			<a class='title' href='post.html#{{post.id}}'>{{post.title}}</a> <br>
 			<span>{{post.author}}</span>
-			<span>{{post.time}}</span>
 		</li>
 	</ul>
 
@@ -44,7 +45,7 @@
             <input type='text' name='title' placeholder="标题"/>
             <textarea name='content' ></textarea><br>
 
-            <input type='submit' value=" "/>
+            <input type='submit' value=" " class="submit"/>
         </form>
     </div>
 

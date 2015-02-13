@@ -44,6 +44,8 @@ if (isset ($_GET['new'])){
 
 elseif (isset ($_GET['list'])){
 
+	$_GET['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
+
 	$data = $database->select('content',[
 				'id',
 				'title',
@@ -51,7 +53,8 @@ elseif (isset ($_GET['list'])){
 				'time'
 			],[
 				'ORDER'		=>		['active_time DESC','time DESC'],
-				'upid[=]'	=>		0
+				'upid[=]'	=>		0,
+				'LIMIT'		=>		[($_GET['page']-1)*10, $_GET['page']*10]
 			]);
 
 	echo json_encode($data);

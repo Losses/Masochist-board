@@ -16,9 +16,6 @@ mKnowledge.controller('getPostCtrl', function ($http, $scope) {
             $http.get("api/?list&page=" + page)
                 .success(function (response) {
                     for (var i = 0; i <= response.length - 1; i++) {
-                        console.log(i);
-                        console.log(response[i]);
-
                         $scope.posts.push(response[i]);
                     }
                     loading = false;

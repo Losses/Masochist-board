@@ -23,7 +23,7 @@ if (isset ($_GET['new'])){
 	$_POST['upid'] = isset($_POST['upid']) ? $_POST['upid'] : 0;
 	$_POST['title'] = isset($_POST['title']) ? $_POST['title'] : '';
 
-	$database->insert('content',[
+	$result = $database->insert('content',[
 		'author'	=>		$_POST['author'],
 		'title'		=>		$_POST['title'],
 		'content'	=>		$_POST['content'],
@@ -38,7 +38,7 @@ if (isset ($_GET['new'])){
 		]);
 	}
 	
-	echo 'finished';
+	print_r($result);
 	exit();
 }
 

@@ -14,15 +14,18 @@ $(document).ready(function () {
             .removeClass('show');
 
         setTimeout(function () {
-            $('body').on('click.activeBody', function () {
-                $('#post_dialog').addClass('flow_down')
-                    .removeClass('flow_up')
-                    .off('click.activeForm');
+            $('body').on('click.activeBody', function (event) {
+                if (!$(event.target).hasClass('submit')) {
+                    $('#post_dialog').addClass('flow_down')
+                        .removeClass('flow_up')
+                        .off('click.activeForm');
 
-                $(this).off('click.activeBody');
+                    $(this).off('click.activeBody');
 
-                $('#new_post').removeClass('hide')
-                    .addClass('show');
+                    $('#new_post').removeClass('hide')
+                        .addClass('show');
+
+                }
             });
         }, 100);
 

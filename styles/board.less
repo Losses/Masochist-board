@@ -124,7 +124,7 @@
 
     input[name=title] {
       width: calc(100% - 7px);
-      height: 1em;
+      height: 2em;
       padding: 20px 20px;
       line-height: 1em;
       border: none;
@@ -138,6 +138,7 @@
       width: 3em;
       height: 3em;
       padding: 5px;
+      margin: 0;
       background: white;
       border-radius: 100%;
       border: 0;
@@ -146,7 +147,19 @@
       font-size: 18px;
       display: block;
       position: absolute;
+      opacity: 1;
       resize: none;
+      transition: all 400ms linear;
+
+      &.lock {
+        opacity: 0.5;
+      }
+
+      &.fly {
+        right:-30px;
+        bottom:28px;
+        opacity: 0;
+      }
     }
 
     textarea {

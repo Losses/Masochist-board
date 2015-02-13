@@ -108,7 +108,7 @@
 }
 #post_dialog form input[name=title] {
   width: calc(93%);
-  height: 1em;
+  height: 2em;
   padding: 20px 20px;
   line-height: 1em;
   border: none;
@@ -121,6 +121,7 @@
   width: 3em;
   height: 3em;
   padding: 5px;
+  margin: 0;
   background: white;
   border-radius: 100%;
   border: 0;
@@ -129,7 +130,17 @@
   font-size: 18px;
   display: block;
   position: absolute;
+  opacity: 1;
   resize: none;
+  transition: all 400ms linear;
+}
+#post_dialog form input[type=submit].lock {
+  opacity: 0.5;
+}
+#post_dialog form input[type=submit].fly {
+  right: -30px;
+  bottom: 28px;
+  opacity: 0;
 }
 #post_dialog form textarea {
   width: calc(93%);

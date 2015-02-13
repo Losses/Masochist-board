@@ -1,0 +1,34 @@
+@keyframes flow_up_f {
+  from {
+    margin-top: -150px;
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    margin-top: -150px;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+@keyframes flow_down_f {
+  to {
+    margin-top: -150px;
+    opacity: 0;
+    visibility: hidden;
+  }
+  from {
+    margin-top: -150px;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+#post_dialog {
+  height: 300px;
+  margin-top: -150px;
+}
+@media only screen and (max-width: 550px) {
+  #post_dialog {
+    height: 100%;
+    top: 150px;
+  }
+}

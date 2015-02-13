@@ -25,7 +25,6 @@ mKnowledge.controller('getPostCtrl', function ($http, $scope) {
         }
     }
 
-    $(window).on('scroll', function (event) {
         if ($(document).scrollTop() + $(window).height() >= $(document).height()) {
             pushContent();
         }

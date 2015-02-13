@@ -21,6 +21,7 @@ $database = new medoo([
 if (isset ($_GET['new'])){
 	
 	$_POST['upid'] = isset($_POST['upid']) ? $_POST['upid'] : 0;
+	$_POST['title'] = isset($_POST['title']) ? $_POST['title'] : '';
 
 	$database->insert('content',[
 		'author'	=>		$_POST['author'],
@@ -51,6 +52,28 @@ elseif (isset ($_GET['list'])){
 			],[
 				'ORDER'		=>		['active_time DESC','time DESC'],
 				'upid[=]'	=>		0
+			]);
+
+	echo json_encode($data);
+	exit();
+}
+
+elseif (isset ($_GET['post'])){
+		$data = $database->select('content',[
+				'id',
+				'title',
+				'content',
+				'author',
+				'time'
+			],[
+				'OR'		=>		[
+										'upid[=]'	=>		$_GET['id'],
+										'AND'		=>		[
+											'upid[=]'		=>		0,
+											'id[=]'			=>		$_GET['id']
+										]
+									],
+				'ORDER'		=>		['upid','id']
 			]);
 
 	echo json_encode($data);

@@ -31,7 +31,7 @@ if (isset ($_GET['new'])){
   $result = $database->insert('content',[
     'author'   =>    $_POST['author'],
     'title'    =>    $_POST['title'],
-    'content'  =>    $_POST['content'],
+    'content'  =>    htmlspecialchars($_POST['content']),
     'upid'     =>    $_POST['upid']
   ]);
 

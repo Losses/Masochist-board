@@ -29,7 +29,6 @@ mKnowledge.controller('getPostCtrl', function ($http, $scope) {
                 var hash = window.location.hash.split('#')[1];
                 $http.get("api/?post&id=" + hash + "&page=" + page)
                     .success(function (response) {
-                        console.log(response);
                         for (var i = 0; i <= response.length - 1; i++) {
                             $scope.posts.push(response[i]);
                         }
@@ -48,6 +47,12 @@ mKnowledge.controller('getPostCtrl', function ($http, $scope) {
     });
 
     pushContent();
+});
+
+mKnowledge.filter('trustHtml', function ($sce) {
+    return function (input) {
+        return $sce.trustAsHtml(input);
+    }
 });
 
 $(document).ready(function () {
@@ -119,7 +124,6 @@ $(document).ready(function () {
     losses.elements.contentElement.change(checkSumitable);
 
     $('form').submit(function (event) {
-        console.log(!losses.elements.submitable);
         if (!losses.elements.submitable)
             return;
 

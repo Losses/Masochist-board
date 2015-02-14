@@ -40,7 +40,7 @@
                 <a class='title' href='#{{post.id}}'>{{post.title}}</a>
             </p>
             <span class="author">{{post.author}}</span>
-            <article>{{post.content}}</article>
+            <article ng-bind-html="post.content | trustHtml">{{post.content}}</article>
         </li>
     </ul>
 

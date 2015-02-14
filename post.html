@@ -33,13 +33,13 @@
 </header>
 <section id="main">
     <ul class="post_list" ng-controller="getPostCtrl">
-        <li class="post" ng-repeat="post in posts">
+        <li class="post" ng-repeat="post in posts track by $index">
             <p class="time">{{post.time}}</p>
 
             <p ng-show="post.title != ''">
                 <a class='title' href='#{{post.id}}'>{{post.title}}</a>
             </p>
-            <span>{{post.author}}</span>
+            <span class="author">{{post.author}}</span>
             <article>{{post.content}}</article>
         </li>
     </ul>

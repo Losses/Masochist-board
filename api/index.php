@@ -68,6 +68,10 @@ elseif (isset ($_GET['list'])){
 
 elseif (isset ($_GET['post'])){
 
+	require_once('../libs/parsedown.php');
+	
+	$Parsedown = new Parsedown();
+
 	$_GET['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
 	
 	$data = $database->select('content',[
@@ -87,7 +91,12 @@ elseif (isset ($_GET['post'])){
 			'ORDER'		=>		['upid','id'],
 			'LIMIT'		=>		[($_GET['page']-1)*10, $_GET['page']*10]
 		]);
-
+		
+	$data_length = count($data);
+	for ($i=0; $i<$data_length; $i++){
+		$data[$i]['content'] = $Parsedown->text($data[$i]['content']);
+	}
+	
 	echo json_encode($data);
 	exit();
 }

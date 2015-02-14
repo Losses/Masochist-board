@@ -8,9 +8,10 @@
     <link type="text/css" rel="stylesheet" href="styles/page.css"/>
     <link type="text/css" rel="stylesheet" href="styles/board.css"/>
     <script src="scripts/jquery.js"></script>
-	<script src="scripts/angular.min.js"></script>
-	<script src="scripts/board.js"></script>
-	<script src="scripts/public.js"></script>
+    <script src="scripts/jquery.form.min.js"></script>
+    <script src="scripts/angular.min.js"></script>
+    <script src="scripts/board.js"></script>
+    <script src="scripts/public.js"></script>
     <script src="scripts/prefixfree.min.js"></script>
     <title>轨道炮 piu——</title>
 </head>
@@ -31,20 +32,19 @@
     </div>
 </header>
 <section id="main">
-	<ul class="post_list" ng-controller="getPostCtrl">
-		<li class="post" ng-repeat="post in posts track by $index">
+    <ul class="post_list" ng-controller="getPostCtrl">
+        <li class="post" ng-repeat="post in posts track by $index">
             <p class="time">{{post.time}}</p>
-			<a class='title' href='post.html#{{post.id}}'>{{post.title}}</a> <br>
-			<span class="author">{{post.author}}</span>
-		</li>
-	</ul>
+            <a class='title' href='post.html#{{post.id}}'>{{post.title}}</a> <br>
+            <span class="author">{{post.author}}</span>
+        </li>
+    </ul>
 
     <div class="dialog" id="post_dialog">
-        <form action='api/?new' method='post'>
-            <input type='text' name='author' value="a person" style='display:none' />
+        <form action='api/?new' method='post' id="post_form">
+            <input type='text' name='author' value="a person" style='display:none'/>
             <input type='text' name='title' placeholder="标题"/>
-            <input type='file' name='image' style='display:none' />
-            <textarea name='content' ></textarea><br>
+            <textarea name='content'></textarea><br>
 
             <button class='icon-menu'></button>
             <div class="icon_group">
@@ -53,6 +53,7 @@
                 </div>
                 <div>
                     <button class="icon-picture upload_image colorful_icon"></button>
+                    <input type='file' name='image' id='upload_image_active' class='submit'/>
                 </div>
                 <div>
                     <button type='submit' class="icon-paper-plane submit"></button>

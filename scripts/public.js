@@ -123,7 +123,9 @@ $(document).ready(function () {
     losses.elements.contentElement.keypress(checkSumitable);
     losses.elements.contentElement.change(checkSumitable);
 
-    $('form').submit(function (event) {
+    $('#post_form').submit(function (event) {
+        event.preventDefault();
+
         if (!losses.elements.submitable)
             return;
 
@@ -142,7 +144,7 @@ $(document).ready(function () {
             flying = false;
         }, 500);
 
-        $.post('api/?new', postContent, function (data) {
+        $(this).ajaxSubmit(function (data) {
             if (inPost)
                 location.reload(true);
             if (data == 'false')
@@ -152,9 +154,21 @@ $(document).ready(function () {
                     window.location.href = 'post.html#' + data;
             }, 100);
         });
-
-        event.preventDefault();
+        /*
+         $.ajax({
+         type: "POST",
+         url: "api/?new",
+         data: $('#post_form').serialize(),
+         contentType: "multipart/form-data",
+         success: ''
+         });
+         */
     });
+
+    $('.upload_image').click(function () {
+        $('#upload_image_active').click();
+    });
+
 
     var iconGroup = $('.icon_group');
 

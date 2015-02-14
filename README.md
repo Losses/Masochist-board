@@ -1,4 +1,4 @@
-#Masochist-board 开源留言本
+#Masochist-board 开源留言本#
 
 ##作者的话##
 

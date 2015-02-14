@@ -90,7 +90,7 @@ $(document).ready(function () {
             submitable: false,
             titleElement: !inPost ? $('input[name="title"]') : null,
             contentElement: $('textarea[name="content"]'),
-            submitIcon: $('input[type="submit"]')
+            submitIcon: $('button[type="submit"]')
         }
     };
 
@@ -154,6 +154,20 @@ $(document).ready(function () {
         });
 
         event.preventDefault();
+    });
+
+    var iconGroup = $('.icon_group');
+
+    $('.icon-menu').mouseenter(function () {
+        var that = $(this);
+
+        that.addClass('hide');
+        iconGroup.addClass('extend bump')
+            .one('mouseleave', function () {
+                $(this).removeClass('extend bump');
+
+                that.removeClass('hide');
+            });
     });
 
     checkSumitable();

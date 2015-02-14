@@ -43,9 +43,21 @@
         <form action='api/?new' method='post'>
             <input type='text' name='author' value="a person" style='display:none' />
             <input type='text' name='title' placeholder="标题"/>
+            <input type='file' name='image' style='display:none' />
             <textarea name='content' ></textarea><br>
 
-            <input type='submit' value=" " class="submit"/>
+            <button class='icon-menu'></button>
+            <div class="icon_group">
+                <div>
+                    <button class="icon-smile upload_image colorful_icon"></button>
+                </div>
+                <div>
+                    <button class="icon-picture upload_image colorful_icon"></button>
+                </div>
+                <div>
+                    <button type='submit' class="icon-paper-plane submit"></button>
+                </div>
+            </div>
         </form>
     </div>
 

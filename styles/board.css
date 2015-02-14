@@ -223,6 +223,39 @@
   font-size: 12px;
   line-height: 2em;
 }
+#post_dialog #emoji_box {
+  height: 205px;
+  position: relative;
+}
+#post_dialog #emoji_box ul {
+  top: 0;
+  left: -500px;
+  height: 160px;
+  opacity: 0;
+  position: absolute;
+  visibility: hidden;
+  transition: all 300ms;
+}
+#post_dialog #emoji_box ul.g-show {
+  left: 0;
+  opacity: 1;
+  visibility: visible;
+}
+#post_dialog #emoji_box ul li {
+  float: left;
+}
+#post_dialog #emoji_box nav {
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  background: #aaaaaa;
+  position: absolute;
+}
+#post_dialog #emoji_box nav li {
+  font-size: 20px;
+  line-height: 40px;
+  float: left;
+}
 .float_icon {
   right: 50px;
   bottom: 50px;

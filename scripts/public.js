@@ -49,6 +49,27 @@ mKnowledge.controller('getPostCtrl', function ($http, $scope) {
     pushContent();
 });
 
+mKnowledge.controller('emojiCtrl', function ($http, $scope) {
+    $scope.groups = [];
+
+    $http.get('dbs/emotions.json')
+        .success(function (response) {
+            for (var i in response) {            /*i是分组名*/
+                var emojiCollection = [];
+                for (var j in response[i]) {     /*j是替代文字*/
+                    emojiCollection.push({
+                        'name': response[i][j],
+                        'value': 'sprite-' + j
+                    })
+                }
+                $scope.groups.push({
+                    'name': i,
+                    'emoji': emojiCollection
+                });
+            }
+        });
+});
+
 mKnowledge.filter('trustHtml', function ($sce) {
     return function (input) {
         return $sce.trustAsHtml(input);
@@ -169,6 +190,27 @@ $(document).ready(function () {
         $('#upload_image_active').click();
     });
 
+    $('.emoji_button').click(function () {
+        $('.g-face').addClass('g-show');
+        losses.elements.contentElement.height(187);
+    });
+
+    $('#emoji_box').click(function (event) {
+        if (!$(event.target).hasClass('emoji'))
+            return;
+        console.log('catch!');
+        var target = losses.elements.contentElement[0]
+            , faceCode = ':' + $(event.target).attr('data-value') + ':';
+
+        console.log(target.value);
+        console.log(target);
+        target.value = target.value.substring(0, target.selectionStart) + faceCode + target.value.substring(target.selectionEnd);
+    });
+
+    $('.group_select').click(function (event) {
+        $('.g-show').removeClass('g-show');
+        $('.' + $(event.target).attr('data-group-name')).addClass('g-show');
+    });
 
     var iconGroup = $('.icon_group');
 

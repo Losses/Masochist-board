@@ -7,6 +7,7 @@
     <link type="text/css" rel="stylesheet" href="styles/main.css"/>
     <link type="text/css" rel="stylesheet" href="styles/page.css"/>
     <link type="text/css" rel="stylesheet" href="styles/board.css"/>
+    <link type="text/css" rel="stylesheet" href="styles/emoji.css" data-noprefix/>
     <script src="scripts/jquery.js"></script>
     <script src="scripts/jquery.form.min.js"></script>
     <script src="scripts/angular.min.js"></script>
@@ -14,6 +15,12 @@
     <script src="scripts/public.js"></script>
     <script src="scripts/prefixfree.min.js"></script>
     <title>轨道炮 piu——</title>
+
+    <style>
+        .sprite-1f601 {
+            background-position: 0 -15923px
+        }
+    </style>
 </head>
 <body>
 <header class="clear">
@@ -44,12 +51,25 @@
         <form action='api/?new' method='post' id="post_form">
             <input type='text' name='author' value="a person" style='display:none'/>
             <input type='text' name='title' placeholder="标题"/>
-            <textarea name='content'></textarea><br>
+            <textarea name='content'></textarea>
+
+            <div ng-controller="emojiCtrl" id="emoji_box">
+                <ul ng-repeat="group in groups" class="clear g-{{group.name}}">
+                    <li ng-repeat="emoji in group.emoji">
+                        <button class="emoji {{emoji.value}}" data-value="{{emoji.name}}"></button>
+                    </li>
+                </ul>
+                <nav class="group_select clear">
+                    <li ng-repeat="group in groups">
+                        <i class="emotion_name icon-{{group.name}}" data-group-name="g-{{group.name}}"></i>
+                    </li>
+                </nav>
+            </div>
 
             <button class='icon-menu'></button>
             <div class="icon_group">
                 <div>
-                    <button class="icon-smile upload_image colorful_icon"></button>
+                    <button class="icon-smile emoji_button colorful_icon"></button>
                 </div>
                 <div>
                     <button class="icon-picture upload_image colorful_icon"></button>

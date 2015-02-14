@@ -26,6 +26,12 @@
   height: 300px;
   margin-top: -150px;
 }
+article {
+  margin: 10px;
+}
+.author {
+  font-size: 13px;
+}
 @media only screen and (max-width: 550px) {
   #post_dialog {
     height: 100%;

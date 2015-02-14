@@ -1,9 +1,18 @@
-#Masochist 开源模板
+#Masochist-board 开源留言本
 
-##作者的话
+##作者的话##
 
-最近得了魅族症，连睡觉做梦都是拿到了个魅族啥的，所以就做了这么个丧尽天良的模板，至于名字啥的，不要在意细节啦(
+依旧是重症魅族病患，求治疗……
 
-##许可协议
+##许可协议##
 
 参见LICENSE.rtf
+
+##引用库##
+
+非常感谢下列作者提供的开源库和作品！
+
+twemoji   https://github.com/twitter/twemoji
+fontello  http://fontello.com
+medoo     http://medoo.in
+parsedown http://parsedown.org

@@ -108,7 +108,8 @@ elseif (isset ($_GET['post'])){
       'title',
       'content',
       'author',
-      'time'
+      'time',
+      'img'
     ],[
       'OR'       =>    [
                      'upid[=]'      =>    $_GET['id'],

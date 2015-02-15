@@ -1,11 +1,16 @@
 <ul class="post_list">
-    <li class="post" ng-repeat="post in posts track by $index">
+    <li class="post clear" ng-repeat="post in posts track by $index">
         <p class="time">{{post.time}}</p>
+        <img ng-show="post.img" ng-src="upload/{{post.img}}" class="uploaded_image lbox"/>
 
-        <p ng-show="post.title != ''">
-            <a class='title' href='#/post/{{post.id}}'>{{post.title}}</a>
-        </p>
-        <span class="author">{{post.author}}</span>
-        <article ng-bind-html="post.content | trustHtml">{{post.content}}</article>
+        <div class="left article_group">
+            <p ng-show="post.title != ''">
+                <a class='title' href='#/post/{{post.id}}'>{{post.title}}</a>
+            </p>
+            <span class="author">{{post.author}}</span>
+            <article ng-bind-html="post.content | trustHtml">
+                {{post.content}}
+            </article>
+        </div>
     </li>
 </ul>

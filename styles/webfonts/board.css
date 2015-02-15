@@ -51,7 +51,7 @@
 }
 
 .icon-pencil:before { content: '\e800'; } /* '' */
-.icon-smile:before { content: '\e801'; } /* '' */
+.icon-smile:before,.icon-face:before { content: '\e801'; } /* '' */
 .icon-frown:before { content: '\e802'; } /* '' */
 .icon-meh:before { content: '\e803'; } /* '' */
 .icon-doc-text:before { content: '\e804'; } /* '' */
@@ -64,3 +64,15 @@
 .icon-paper-plane:before { content: '\e80b'; } /* '' */
 .icon-comment:before { content: '\e80c'; } /* '' */
 .icon-menu:before { content: '\e80d'; } /* '' */
+.icon-transport:before { content: '\e80e'; } /* '' */
+.icon-tool:before { content: '\e80f'; } /* '' */
+.icon-humen:before { content: '\e810'; } /* '' */
+.icon-cloud:before { content: '\e811'; } /* '' */
+.icon-sociaty:before { content: '\e812'; } /* '' */
+.icon-food:before { content: '\e813'; } /* '' */
+.icon-building:before { content: '\e814'; } /* '' */
+.icon-character:before { content: '\e815'; } /* '' */
+.icon-animal:before { content: '\e816'; } /* '' */
+.icon-emotion:before { content: '\e817'; } /* '' */
+.icon-other:before { content: '\e818'; } /* '' */
+.icon-cancel:before { content: '\e819'; } /* '' */

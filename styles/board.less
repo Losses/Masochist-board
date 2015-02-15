@@ -172,6 +172,10 @@
         opacity: 0;
         visibility: hidden;
       }
+
+      &.up {
+        bottom: 195px;
+      }
     }
 
     .icon_group {
@@ -182,6 +186,10 @@
       transition: all 500ms;
       position: absolute;
       visibility: hidden;
+
+      &.up {
+        bottom: 195px;
+      }
 
       button {
         width: 3em;
@@ -256,22 +264,29 @@
 
     textarea {
       width: calc(100% - 7px);
-      height: 407px;
+      height: 392px;
       padding: 20px;
       border: 0;
       font-size: 12px;
       line-height: 2em;
+      transition: all 300ms;
+
+      &.fold {
+        height: 207px;
+      }
     }
   }
 
   #emoji_box {
-    height: 205px;
+    height: 185px;
     position: relative;
 
     ul {
       top: 0;
       left: -500px;
-      height: 160px;
+      height: 155px;
+      width: 545px;
+      padding: 4px;
       opacity: 0;
       position: absolute;
       visibility: hidden;
@@ -284,7 +299,26 @@
       }
 
       li {
+        border-radius: 3px;
+        padding: 3px;
         float: left;
+        position: relative;
+        transition: all 200ms;
+
+        &:hover {
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+          z-index: 5;
+        }
+        &:active {
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+        }
+
+        button {
+          border: 0;
+          background-color: transparent;
+          box-shadow: 0;
+          display: block;
+        }
       }
     }
 
@@ -292,13 +326,31 @@
       bottom: 0;
       width: 100%;
       height: 40px;
-      background: #aaaaaa;
+      background: #c0b5d3;
       position: absolute;
 
       li {
+        padding: 0 5px;
+        color: #5E4092;
         font-size: 20px;
         line-height: 40px;
         float: left;
+        transition: all 200ms;
+        cursor: pointer;
+
+        &:hover {
+          color: #3A265D;
+        }
+
+        &.cancel {
+          padding: 0 10px;
+          color: #3A265D;
+          float: right;
+
+          &:hover {
+            color: #16092D;
+          }
+        }
       }
     }
   }

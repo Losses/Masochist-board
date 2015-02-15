@@ -191,25 +191,36 @@ $(document).ready(function () {
     });
 
     $('.emoji_button').click(function () {
+        $('.icon_group').mouseleave();
+        $('.g-show').removeClass('g-show');
         $('.g-face').addClass('g-show');
-        losses.elements.contentElement.height(187);
+
+        $('.icon-menu,.icon_group').each(function () {
+            $(this).addClass('up');
+        });
+        losses.elements.contentElement.addClass('fold');
     });
 
     $('#emoji_box').click(function (event) {
         if (!$(event.target).hasClass('emoji'))
             return;
-        console.log('catch!');
         var target = losses.elements.contentElement[0]
             , faceCode = ':' + $(event.target).attr('data-value') + ':';
 
-        console.log(target.value);
-        console.log(target);
         target.value = target.value.substring(0, target.selectionStart) + faceCode + target.value.substring(target.selectionEnd);
     });
 
     $('.group_select').click(function (event) {
+        var targetAttr = $(event.target).attr('data-group-name');
+        if (!targetAttr) {
+            losses.elements.contentElement.removeClass('fold');
+            $('.icon-menu,.icon_group').each(function () {
+                $(this).removeClass('up');
+            });
+            return;
+        }
         $('.g-show').removeClass('g-show');
-        $('.' + $(event.target).attr('data-group-name')).addClass('g-show');
+        $('.' + targetAttr).addClass('g-show');
     });
 
     var iconGroup = $('.icon_group');

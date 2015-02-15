@@ -42,9 +42,8 @@ if (isset ($_GET['new'])){
 
 	    	$retype = explode('.', '../upload/' . $_FILES['image']['name']);
 
-	    	rename('../upload/' . $_FILES['image']['name'],
-	    		   '../upload/' . md5(md5_file('../upload/' . $_FILES['image']['name']) . date('Y-m-d H:i:s')) 
-	    		   				. '.' . $retype[count($retype) - 1]);   
+        $name = md5(md5_file('../upload/' . $_FILES['image']['name']) . date('Y-m-d H:i:s')) . '.' . $retype[count($retype) - 1];
+        rename('../upload/' . $_FILES['image']['name'], '../upload/' . $name);
 	  	}
 	}
 
@@ -58,7 +57,7 @@ if (isset ($_GET['new'])){
     'title'    =>    $_POST['title'],
     'content'  =>    htmlspecialchars($_POST['content']),
     'upid'     =>    $_POST['upid'],
-    'img'      =>    $_FILES['image']['name']
+    'img'      =>    $name,
   ]);
 
   if (isset($_POST['upid']) && ($_POST['upid'] != 0)){

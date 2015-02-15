@@ -4,9 +4,9 @@ require_once('../config.php');
 
 require_once('../libs/medoo.php');
 
-//require_once('../libs/emotions.php');
+require_once('../libs/emotions.php');
 
-//$emotion = new emotions;
+$emotion = new emotions();
 
 $database = new medoo([
   'database_type'  =>    'mysql',
@@ -27,25 +27,29 @@ if (isset ($_GET['new'])){
   $_POST['upid']  = isset($_POST['upid'])  ? $_POST['upid']  : 0;
   $_POST['title'] = isset($_POST['title']) ? $_POST['title'] : '';
 
-  if ((($_FILES['image']['type'] == 'image/gif')
-    || ($_FILES['image']['type'] == 'image/jpeg')
-    || ($_FILES['image']['type'] == 'image/pjpeg')
-    || ($_FILES['image']['type'] == 'image/png'))
-    && ($_FILES['image']['size'] < 50000000))
-	{
-		if ($_FILES['image']['error'])
-		{
-			echo 'Error: ' . $_FILES['image']['error'] . '<br>';
-	    }
-	    else{
-	    	move_uploaded_file($_FILES['image']['tmp_name'], '../upload/' . $_FILES['image']['name']);
+  if(count($_FILES) > 0)
+  {
+    if ((($_FILES['image']['type'] == 'image/gif')
+      || ($_FILES['image']['type'] == 'image/jpeg')
+      || ($_FILES['image']['type'] == 'image/pjpeg')
+      || ($_FILES['image']['type'] == 'image/png'))
+      && ($_FILES['image']['size'] < 50000000))
+  	{
+  		if ($_FILES['image']['error'])
+  		{
+  			echo 'Error: ' . $_FILES['image']['error'] . '<br>';
+  	  }
+      else
+      {
+      	move_uploaded_file($_FILES['image']['tmp_name'], '../upload/' . $_FILES['image']['name']);
 
-	    	$retype = explode('.', '../upload/' . $_FILES['image']['name']);
+      	$retype = explode('.', '../upload/' . $_FILES['image']['name']);
 
         $name = md5(md5_file('../upload/' . $_FILES['image']['name']) . date('Y-m-d H:i:s')) . '.' . $retype[count($retype) - 1];
         rename('../upload/' . $_FILES['image']['name'], '../upload/' . $name);
-	  	}
-	}
+  	  }
+  	}
+  }
 
   if(($_POST['upid'] == 0) && ($_POST['title'] == '')){
     print_r('false');
@@ -119,7 +123,7 @@ elseif (isset ($_GET['post'])){
 
   $data_length = count($data);
   for ($i = 0; $i < $data_length; $i++){
-    $data[$i]['content'] = $Parsedown->text($data[$i]['content']);
+    $data[$i]['content'] = $emotion->phrase($Parsedown->text($data[$i]['content']));
   }
 
   echo json_encode($data);

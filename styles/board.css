@@ -23,6 +23,30 @@
     visibility: visible;
   }
 }
+@keyframes flow_up_f_inpost {
+  from {
+    margin-top: -150px;
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    margin-top: -150px;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+@keyframes flow_down_f_inpost {
+  to {
+    margin-top: -150px;
+    opacity: 0;
+    visibility: hidden;
+  }
+  from {
+    margin-top: -150px;
+    opacity: 1;
+    visibility: visible;
+  }
+}
 @keyframes upload_icon_error_gray {
   0% {
     background: #607d8b;
@@ -122,6 +146,9 @@
   font-size: 25px;
   line-height: 62px;
   display: block;
+}
+#new_post i::before {
+  content: '\e800';
 }
 #post_dialog {
   top: 50%;
@@ -374,9 +401,6 @@
   line-height: 2em;
   transition: all 300ms;
 }
-#post_dialog form textarea.fold {
-  height: 207px;
-}
 #post_dialog #emoji_box {
   height: 185px;
   position: relative;
@@ -448,6 +472,9 @@
 #post_dialog #emoji_box nav li.cancel:hover {
   color: #16092D;
 }
+#post_dialog.fold form textarea {
+  height: 207px;
+}
 .float_icon {
   right: 50px;
   bottom: 50px;
@@ -473,6 +500,41 @@
 }
 footer {
   width: 100%;
+}
+.post_page #post_dialog {
+  height: 300px;
+  margin-top: -150px;
+  transition: height, margin 300ms;
+  opacity: 0;
+  visibility: hidden;
+}
+.post_page #post_dialog input[name='title'] {
+  display: none;
+}
+.post_page #post_dialog textarea {
+  height: 300px;
+}
+.post_page #post_dialog.fold {
+  height: 525px;
+  margin-top: -262px !important;
+}
+.post_page #post_dialog.fold textarea {
+  height: 300px;
+}
+.post_page #post_dialog.flow_up {
+  animation: flow_up_f_inpost 300ms ease-in-out forwards;
+}
+.post_page #post_dialog.flow_down {
+  animation: flow_down_f_inpost 300ms ease-in-out forwards;
+}
+.post_page #new_post > i::before {
+  content: '\e80c';
+}
+.post_page article {
+  margin: 10px;
+}
+.post_page .author {
+  font-size: 13px;
 }
 @media only screen and (max-width: 550px) {
   #post_dialog {

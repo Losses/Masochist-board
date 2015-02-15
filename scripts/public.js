@@ -2,73 +2,28 @@
  * Created by Don on 2/13/2015.
  */
 
-var mKnowledge = angular.module('mKnowledge', []);
+var mKnowledge = angular.module('mKnowledge', ['ngRoute']);
 
-mKnowledge.controller('getPostCtrl', function ($http, $scope) {
-
-    var page = 1
-        , loading = false;
-
-    $scope.posts = [];
-
-    function pushContent() {
-        if (!inPost) {
-            if (!loading) {
-                loading = true;
-                $http.get("api/?list&page=" + page)
-                    .success(function (response) {
-                        for (var i = 0; i <= response.length - 1; i++) {
-                            $scope.posts.push(response[i]);
-                        }
-                        loading = false;
-                    });
-            }
-        } else {
-            if (!loading) {
-                loading = true;
-                var hash = window.location.hash.split('#')[1];
-                $http.get("api/?post&id=" + hash + "&page=" + page)
-                    .success(function (response) {
-                        for (var i = 0; i <= response.length - 1; i++) {
-                            $scope.posts.push(response[i]);
-                        }
-                        loading = false;
-                    });
-            }
-        }
-
-        page++;
+mKnowledge.config(['$routeProvider',
+    function ($routeProvider) {
+        $routeProvider.
+            when('/', {
+                templateUrl: 'partials/list.html',
+                controller: postCtrl
+            }).
+            when('/list/:listId', {
+                templateUrl: 'partials/list.html',
+                controller: postCtrl
+            }).
+            when('/post/:postId', {
+                templateUrl: 'partials/post.html',
+                controller: postCtrl
+            }).
+            otherwise({redirectTo: '/'});
     }
+]);
 
-    $(window).on('scroll', function () {
-        if ($(document).scrollTop() + $(window).height() >= $(document).height()) {
-            pushContent();
-        }
-    });
-
-    pushContent();
-});
-
-mKnowledge.controller('emojiCtrl', function ($http, $scope) {
-    $scope.groups = [];
-
-    $http.get('dbs/emotions.json')
-        .success(function (response) {
-            for (var i in response) {            /*i是分组名*/
-                var emojiCollection = [];
-                for (var j in response[i]) {     /*j是替代文字*/
-                    emojiCollection.push({
-                        'name': response[i][j],
-                        'value': 'sprite-' + j
-                    })
-                }
-                $scope.groups.push({
-                    'name': i,
-                    'emoji': emojiCollection
-                });
-            }
-        });
-});
+mKnowledge.controller('emojiCtrl', emojiCtrl);
 
 mKnowledge.filter('trustHtml', function ($sce) {
     return function (input) {
@@ -76,7 +31,43 @@ mKnowledge.filter('trustHtml', function ($sce) {
     }
 });
 
+var losses = {};
+
+function processPageElement(routerResult) {
+    var body = $('body');
+
+    losses.elements.dialogElement.hide();
+
+    if (routerResult.postId) {
+        body.addClass('post_page');
+        losses.elements.titleElement.val('');
+        losses.elements.upidElement.attr('value', routerResult.postId);
+    }
+    else {
+        body.removeClass('post_page');
+        losses.elements.upidElement.attr('value', 0);
+    }
+
+    setTimeout(function () {
+        losses.elements.dialogElement.show()
+    }, 300);
+}
+
 $(document).ready(function () {
+        losses = {
+            elements: {
+                submitable: false,
+                pause: false,
+                dialogElement: $('#post_dialog'),
+                titleElement: $('input[name="title"]'),
+                contentElement: $('textarea[name="content"]'),
+                upidElement: $('#catchId'),
+                submitIcon: $('button[type="submit"]')
+            },
+            event: {
+                menuTimeout: null
+            }
+        };
         $('#new_post').click(function () {
             $('#post_dialog').addClass('flow_up')
                 .removeClass('flow_down')
@@ -105,19 +96,6 @@ $(document).ready(function () {
             }, 100);
 
         });
-
-        var losses = {
-            elements: {
-                submitable: false,
-                pause: false,
-                titleElement: !inPost ? $('input[name="title"]') : null,
-                contentElement: $('textarea[name="content"]'),
-                submitIcon: $('button[type="submit"]')
-            },
-            event: {
-                menuTimeout: null
-            }
-        };
 
         function checkSumitable() {
             setTimeout(function () {
@@ -258,7 +236,7 @@ $(document).ready(function () {
             $('.icon-menu,.icon_group').each(function () {
                 $(this).toggleClass('up');
             });
-            losses.elements.contentElement.toggleClass('fold');
+            $('#post_dialog').toggleClass('fold');
         });
 
         $('#emoji_box').click(function (event) {
@@ -273,7 +251,7 @@ $(document).ready(function () {
         $('.group_select').click(function (event) {
             var targetAttr = $(event.target).attr('data-group-name');
             if (!targetAttr) {
-                losses.elements.contentElement.removeClass('fold');
+                $('#post_dialog').removeClass('fold');
                 $('.icon-menu,.icon_group').each(function () {
                     $(this).removeClass('up');
                 });
@@ -312,5 +290,4 @@ $(document).ready(function () {
 
         checkSumitable();
     }
-)
-;
+);

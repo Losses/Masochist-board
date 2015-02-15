@@ -11,16 +11,12 @@
     <script src="scripts/jquery.js"></script>
     <script src="scripts/jquery.form.min.js"></script>
     <script src="scripts/angular.min.js"></script>
+    <script src="scripts/angular-route.min.js"></script>
+    <script src="scripts/controller.js"></script>
     <script src="scripts/board.js"></script>
     <script src="scripts/public.js"></script>
     <script src="scripts/prefixfree.min.js"></script>
     <title>轨道炮 piu——</title>
-
-    <style>
-        .sprite-1f601 {
-            background-position: 0 -15923px
-        }
-    </style>
 </head>
 <body>
 <header class="clear">
@@ -38,15 +34,10 @@
         <p class="subtitle">了解如何使用你的私人炮姐。</p>
     </div>
 </header>
-<section id="main">
-    <ul class="post_list" ng-controller="getPostCtrl">
-        <li class="post" ng-repeat="post in posts track by $index">
-            <p class="time">{{post.time}}</p>
-            <a class='title' href='post.html#{{post.id}}'>{{post.title}}</a> <br>
-            <span class="author">{{post.author}}</span>
-        </li>
-    </ul>
 
+<section id="main" ng-view></section>
+
+<section id="common">
     <div class="dialog" id="post_dialog">
         <form action='api/?new' method='post' id="post_form">
             <input type='text' name='author' value="a person" style='display:none'/>
@@ -99,6 +90,7 @@
         <i class="icon-pencil"></i>
     </div>
 </section>
+
 <footer>
     <p>&copy; 2015 somebody</p>
 

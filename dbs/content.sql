@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 13, 2015 at 11:01 AM
+-- Generation Time: Feb 15, 2015 at 08:10 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `content` (
   `title` text COLLATE utf8_unicode_ci,
   `content` text COLLATE utf8_unicode_ci NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `active_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `active_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `img` tinytext COLLATE utf8_unicode_ci,
   `upid` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

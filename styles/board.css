@@ -23,6 +23,50 @@
     visibility: visible;
   }
 }
+@keyframes upload_icon_error_gray {
+  0% {
+    background: #607d8b;
+  }
+  50% {
+    background: #f44336;
+  }
+  100% {
+    background: #607d8b;
+  }
+}
+@keyframes upload_icon_error_green {
+  0% {
+    background: #4caf50;
+  }
+  50% {
+    background: #f44336;
+  }
+  100% {
+    background: #4caf50;
+  }
+}
+@keyframes hint_bubble {
+  0% {
+    left: -240px;
+    opacity: 0;
+    visibility: hidden;
+  }
+  20% {
+    left: -215px;
+    opacity: 1;
+    visibility: visible;
+  }
+  80% {
+    left: -215px;
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    left: -240px;
+    opacity: 0;
+    visibility: hidden;
+  }
+}
 #main {
   margin: 30px;
 }
@@ -191,10 +235,19 @@
   position: absolute;
 }
 #post_dialog form .icon_group > div .icon-smile {
-  background: #8bc34a;
+  background: #ff5722;
 }
 #post_dialog form .icon_group > div .icon-picture {
   background: #607d8b;
+}
+#post_dialog form .icon_group > div .icon-picture.selected {
+  background: #4caf50;
+}
+#post_dialog form .icon_group > div .icon-picture.shine_gray {
+  animation: upload_icon_error_gray 1s 2 ease-in-out forwards;
+}
+#post_dialog form .icon_group > div .icon-picture.shine_green {
+  animation: upload_icon_error_green 1s 2 ease-in-out forwards;
 }
 #post_dialog form .icon_group > div .colorful_icon {
   color: white;
@@ -202,13 +255,55 @@
   transition: all 300ms;
 }
 #post_dialog form .icon_group > div:hover .icon-smile {
-  background: #a4d070;
+  background: #ff7e55;
 }
 #post_dialog form .icon_group > div:hover .icon-picture {
   background: #7b96a3;
 }
+#post_dialog form .icon_group > div:hover .icon-picture.selected {
+  background: #6ec071;
+}
 #post_dialog form .icon_group > div:active .colorful_icon {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26), 0 8px 17px 0 rgba(0, 0, 0, 0.2);
+}
+#post_dialog form .icon_group .hint {
+  top: -3px;
+  left: -240px;
+  width: 170px;
+  height: auto !important;
+  padding: 10px;
+  border: 1px solid #b1a6c4;
+  border-radius: 3px;
+  box-shadow: 0 2px 5px rgba(137, 78, 255, 0.5);
+  background: #dacfed;
+  color: #16092D;
+  font-size: 13px;
+  line-height: 20px;
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+}
+#post_dialog form .icon_group .hint::before,
+#post_dialog form .icon_group .hint::after {
+  top: 50%;
+  width: 0;
+  height: 0;
+  margin-top: -3px;
+  border-width: 5px;
+  border-style: solid;
+  position: absolute;
+  content: '\feff';
+}
+#post_dialog form .icon_group .hint::before {
+  right: -10px;
+  border-color: transparent transparent transparent #b1a6c4;
+}
+#post_dialog form .icon_group .hint::after {
+  right: -8px;
+  border-color: transparent transparent transparent #dacfed;
+}
+#post_dialog form .icon_group .hint.bubbling {
+  animation: hint_bubble 2s ease-in-out forwards;
 }
 #post_dialog form .icon_group.extend {
   height: 168px;

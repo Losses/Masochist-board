@@ -26,6 +26,53 @@
   }
 }
 
+@keyframes upload_icon_error_gray {
+  0% {
+    background: #607d8b;
+  }
+  50% {
+    background: #f44336;
+  }
+  100% {
+    background: #607d8b;
+  }
+}
+
+@keyframes upload_icon_error_green {
+  0% {
+    background: #4caf50;
+  }
+  50% {
+    background: #f44336;
+  }
+  100% {
+    background: #4caf50;
+  }
+}
+
+@keyframes hint_bubble {
+  0% {
+    left: -240px;
+    opacity: 0;
+    visibility: hidden;
+  }
+  20% {
+    left: -215px;
+    opacity: 1;
+    visibility: visible;
+  }
+  80% {
+    left: -215px;
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    left: -240px;
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
 #main {
   margin: 30px;
   .post {
@@ -218,11 +265,23 @@
         }
 
         .icon-smile {
-          background: #8bc34a;
+          background: #ff5722;
         }
 
         .icon-picture {
           background: #607d8b;
+
+          &.selected {
+            background: #4caf50;
+          }
+
+          &.shine_gray {
+            animation: upload_icon_error_gray 1s 2 ease-in-out forwards;
+          }
+
+          &.shine_green {
+            animation: upload_icon_error_green 1s 2 ease-in-out forwards;
+          }
         }
 
         .colorful_icon {
@@ -234,11 +293,15 @@
         &:hover {
 
           .icon-smile {
-            background: lighten(#8bc34a, 10%);
+            background: lighten(#ff5722, 10%);
           }
 
           .icon-picture {
             background: lighten(#607d8b, 10%);
+
+            &.selected {
+              background: lighten(#4caf50, 10%);
+            }
           }
         }
 
@@ -246,6 +309,48 @@
           .colorful_icon {
             box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26), 0 8px 17px 0 rgba(0, 0, 0, .2);
           }
+        }
+      }
+
+      .hint {
+        top: -3px;
+        left: -240px;
+        width: 170px;
+        height: auto !important;
+        padding: 10px;
+        border: 1px solid #b1a6c4;
+        border-radius: 3px;
+        box-shadow: 0 2px 5px rgba(137, 78, 263, 0.5);
+        background: #dacfed;
+        color: #16092D;
+        font-size: 13px;
+        line-height: 20px;
+        position: absolute;
+        opacity: 0;
+        visibility: hidden;
+
+        &::before, &::after {
+          top: 50%;
+          width: 0;
+          height: 0;
+          margin-top: -3px;
+          border-width: 5px;
+          border-style: solid;
+          position: absolute;
+          content: '\feff';
+        }
+
+        &::before {
+          right: -10px;
+          border-color: transparent transparent transparent #b1a6c4;
+        }
+        &::after {
+          right: -8px;
+          border-color: transparent transparent transparent #dacfed;
+        }
+
+        &.bubbling {
+          animation: hint_bubble 2s ease-in-out forwards;
         }
       }
 

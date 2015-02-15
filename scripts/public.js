@@ -77,165 +77,231 @@ mKnowledge.filter('trustHtml', function ($sce) {
 });
 
 $(document).ready(function () {
-    $('#new_post').click(function () {
-        $('#post_dialog').addClass('flow_up')
-            .removeClass('flow_down')
-            .on('click.activeForm', function (event) {
-                if (!$(event.target).hasClass('submit'))
-                    return false;
-            });
+        $('#new_post').click(function () {
+            $('#post_dialog').addClass('flow_up')
+                .removeClass('flow_down')
+                .on('click.activeForm', function (event) {
+                    if (!$(event.target).hasClass('submit'))
+                        return false;
+                });
 
-        $('#new_post').addClass('hide')
-            .removeClass('show');
+            $('#new_post').addClass('hide')
+                .removeClass('show');
 
-        setTimeout(function () {
-            $('body').on('click.activeBody', function (event) {
-                if (!$(event.target).hasClass('submit')) {
-                    $('#post_dialog').addClass('flow_down')
-                        .removeClass('flow_up')
-                        .off('click.activeForm');
+            setTimeout(function () {
+                $('body').on('click.activeBody', function (event) {
+                    if (!$(event.target).hasClass('submit')) {
+                        $('#post_dialog').addClass('flow_down')
+                            .removeClass('flow_up')
+                            .off('click.activeForm');
 
-                    $(this).off('click.activeBody');
+                        $(this).off('click.activeBody');
 
-                    $('#new_post').removeClass('hide')
-                        .addClass('show');
+                        $('#new_post').removeClass('hide')
+                            .addClass('show');
 
-                }
-            });
-        }, 100);
+                    }
+                });
+            }, 100);
 
-    });
+        });
 
-    var losses = {
-        elements: {
-            submitable: false,
-            titleElement: !inPost ? $('input[name="title"]') : null,
-            contentElement: $('textarea[name="content"]'),
-            submitIcon: $('button[type="submit"]')
-        }
-    };
-
-    function checkSumitable() {
-        setTimeout(function () {
-            losses.elements.submitable = inPost ? (
-            (losses.elements.contentElement.val().length <= 35)
-            && (losses.elements.contentElement.val().length !== 0)
-            ) : (
-            (losses.elements.titleElement.val().length <= 35)
-            && (losses.elements.titleElement.val().length !== 0)
-            && (losses.elements.contentElement.val().length <= 35)
-            && (losses.elements.contentElement.val().length !== 0)
-            );
-
-            if (!losses.elements.submitable) {
-                losses.elements.submitIcon.addClass('lock');
+        var losses = {
+            elements: {
+                submitable: false,
+                pause: false,
+                titleElement: !inPost ? $('input[name="title"]') : null,
+                contentElement: $('textarea[name="content"]'),
+                submitIcon: $('button[type="submit"]')
+            },
+            event: {
+                menuTimeout: null
             }
-            else {
-                losses.elements.submitIcon.removeClass('lock');
-            }
-        }, 10);
-    }
-
-    if (!inPost) {
-        losses.elements.titleElement.keypress(checkSumitable);
-        losses.elements.titleElement.change(checkSumitable);
-    }
-
-    losses.elements.contentElement.keypress(checkSumitable);
-    losses.elements.contentElement.change(checkSumitable);
-
-    $('#post_form').submit(function (event) {
-        event.preventDefault();
-
-        if (!losses.elements.submitable)
-            return;
-
-        var flying = true;
-        var postContent = {
-            'author': $('input[name="author"]').val(),
-            'title': !inPost ? $('input[name="title"]').val() : null,
-            'content': $('textarea[name="content"]').val(),
-            'upid': $('input[name="upid"]').val()
         };
 
-        losses.elements.submitIcon.blur()
-            .addClass('fly');
+        function checkSumitable() {
+            setTimeout(function () {
+                losses.elements.submitable = inPost ? (
+                (losses.elements.contentElement.val().length <= 35)
+                && (losses.elements.contentElement.val().length !== 0)
+                ) : (
+                (losses.elements.titleElement.val().length <= 35)
+                && (losses.elements.titleElement.val().length !== 0)
+                && (losses.elements.contentElement.val().length <= 35)
+                && (losses.elements.contentElement.val().length !== 0)
+                );
 
-        setTimeout(function () {
-            flying = false;
-        }, 500);
-
-        $(this).ajaxSubmit(function (data) {
-            if (inPost)
-                location.reload(true);
-            if (data == 'false')
-                return;
-            var intervalItem = setInterval(function () {
-                if (!flying)
-                    window.location.href = 'post.html#' + data;
-            }, 100);
-        });
-        /*
-         $.ajax({
-         type: "POST",
-         url: "api/?new",
-         data: $('#post_form').serialize(),
-         contentType: "multipart/form-data",
-         success: ''
-         });
-         */
-    });
-
-    $('.upload_image').click(function () {
-        $('#upload_image_active').click();
-    });
-
-    $('.emoji_button').click(function () {
-        $('.icon_group').mouseleave();
-        $('.g-show').removeClass('g-show');
-        $('.g-face').addClass('g-show');
-
-        $('.icon-menu,.icon_group').each(function () {
-            $(this).addClass('up');
-        });
-        losses.elements.contentElement.addClass('fold');
-    });
-
-    $('#emoji_box').click(function (event) {
-        if (!$(event.target).hasClass('emoji'))
-            return;
-        var target = losses.elements.contentElement[0]
-            , faceCode = ':' + $(event.target).attr('data-value') + ':';
-
-        target.value = target.value.substring(0, target.selectionStart) + faceCode + target.value.substring(target.selectionEnd);
-    });
-
-    $('.group_select').click(function (event) {
-        var targetAttr = $(event.target).attr('data-group-name');
-        if (!targetAttr) {
-            losses.elements.contentElement.removeClass('fold');
-            $('.icon-menu,.icon_group').each(function () {
-                $(this).removeClass('up');
-            });
-            return;
+                if (!losses.elements.submitable) {
+                    losses.elements.submitIcon.addClass('lock');
+                }
+                else {
+                    losses.elements.submitIcon.removeClass('lock');
+                }
+            }, 10);
         }
-        $('.g-show').removeClass('g-show');
-        $('.' + targetAttr).addClass('g-show');
-    });
 
-    var iconGroup = $('.icon_group');
+        if (!inPost) {
+            losses.elements.titleElement.keypress(checkSumitable);
+            losses.elements.titleElement.change(checkSumitable);
+        }
 
-    $('.icon-menu').mouseenter(function () {
-        var that = $(this);
+        losses.elements.contentElement.keypress(checkSumitable);
+        losses.elements.contentElement.change(checkSumitable);
 
-        that.addClass('hide');
-        iconGroup.addClass('extend bump')
-            .one('mouseleave', function () {
-                $(this).removeClass('extend bump');
+        $('#post_form').submit(function (event) {
+            event.preventDefault();
 
-                that.removeClass('hide');
+            if (!losses.elements.submitable)
+                return;
+
+            var flying = true;
+            var postContent = {
+                'author': $('input[name="author"]').val(),
+                'title': !inPost ? $('input[name="title"]').val() : null,
+                'content': $('textarea[name="content"]').val(),
+                'upid': $('input[name="upid"]').val()
+            };
+
+            losses.elements.submitIcon.blur()
+                .addClass('fly');
+
+            setTimeout(function () {
+                flying = false;
+            }, 500);
+
+            $(this).ajaxSubmit(function (data) {
+                if (inPost)
+                    location.reload(true);
+                if (data == 'false')
+                    return;
+                var intervalItem = setInterval(function () {
+                    if (!flying)
+                        window.location.href = 'post.html#' + data;
+                }, 100);
             });
-    });
+            /*
+             $.ajax({
+             type: "POST",
+             url: "api/?new",
+             data: $('#post_form').serialize(),
+             contentType: "multipart/form-data",
+             success: ''
+             });
+             */
+        });
 
-    checkSumitable();
-});
+        $('.icon_group').delegate('#upload_image_active', 'change', function (evt) {
+            var element = $('.hint')
+                , icon = $('.icon-picture')
+                , target = this
+                , f = evt.target.files[0]
+                , reader = new FileReader();
+
+            function warning(text) {
+                losses.elements.pause = true;
+
+                element.html(text)
+                    .addClass('bubbling');
+
+                var iconClass = icon.hasClass('selected') ? 'shine_green' : 'shine_gray';
+
+                icon.addClass(iconClass);
+
+                setTimeout(function () {
+                    element.removeClass('bubbling');
+                    icon.removeClass('shine_gray shine_green selected');
+                }, 2000);
+            }
+
+            if (!f.type.match('image.*')) {
+                warning('您选择的文件不是图片，请选择一张图片。');
+                target.outerHTML = target.outerHTML;
+
+                return false;
+            }
+
+            reader.onload = (function (theFile) {
+
+                return function (e) {
+                    // Render thumbnail.
+                    var span = document.createElement('span');
+                    span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                        '" title="', escape(theFile.name), '"/>'].join('');
+
+                    icon.addClass('selected');
+                    console.log(span.innerHTML);
+                    //document.getElementById('list').insertBefore(span, null);
+                };
+            })(f);
+
+            reader.readAsDataURL(f);
+        });
+
+        $('.upload_image').click(function () {
+            $('#upload_image_active').click();
+        });
+
+        $('.emoji_button').click(function () {
+            $('.icon_group').mouseleave();
+            $('.g-show').removeClass('g-show');
+            $('.g-face').addClass('g-show');
+
+            $('.icon-menu,.icon_group').each(function () {
+                $(this).addClass('up');
+            });
+            losses.elements.contentElement.addClass('fold');
+        });
+
+        $('#emoji_box').click(function (event) {
+            if (!$(event.target).hasClass('emoji'))
+                return;
+            var target = losses.elements.contentElement[0]
+                , faceCode = ':' + $(event.target).attr('data-value') + ':';
+
+            target.value = target.value.substring(0, target.selectionStart) + faceCode + target.value.substring(target.selectionEnd);
+        });
+
+        $('.group_select').click(function (event) {
+            var targetAttr = $(event.target).attr('data-group-name');
+            if (!targetAttr) {
+                losses.elements.contentElement.removeClass('fold');
+                $('.icon-menu,.icon_group').each(function () {
+                    $(this).removeClass('up');
+                });
+                return;
+            }
+            $('.g-show').removeClass('g-show');
+            $('.' + targetAttr).addClass('g-show');
+        });
+
+        var iconGroup = $('.icon_group');
+
+        $('.icon-menu').mouseenter(function () {
+            var that = $(this);
+
+            if (losses.event.menuTimeout)
+                clearTimeout(losses.event.menuTimeout);
+
+            that.addClass('hide');
+            iconGroup.addClass('extend bump')
+                .one('mouseleave', function () {
+                    var menu = $(this);
+
+                    function action() {
+                        losses.elements.pause = false;
+                        menu.removeClass('extend bump');
+
+                        that.removeClass('hide');
+                    }
+
+                    if (losses.elements.pause)
+                        losses.event.menuTimeout = setTimeout(action, 2000);
+                    else
+                        action();
+                });
+        });
+
+        checkSumitable();
+    }
+)
+;

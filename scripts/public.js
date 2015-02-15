@@ -256,9 +256,9 @@ $(document).ready(function () {
             $('.g-face').addClass('g-show');
 
             $('.icon-menu,.icon_group').each(function () {
-                $(this).addClass('up');
+                $(this).toggleClass('up');
             });
-            losses.elements.contentElement.addClass('fold');
+            losses.elements.contentElement.toggleClass('fold');
         });
 
         $('#emoji_box').click(function (event) {

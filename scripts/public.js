@@ -206,6 +206,7 @@ $(document).ready(function () {
                 var iconClass = icon.hasClass('selected') ? 'shine_green' : 'shine_gray';
 
                 icon.addClass(iconClass);
+                $('.upload_warp').removeClass('selected');
 
                 setTimeout(function () {
                     element.removeClass('bubbling');
@@ -224,13 +225,11 @@ $(document).ready(function () {
 
                 return function (e) {
                     // Render thumbnail.
-                    var span = document.createElement('span');
-                    span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                    $('.image_preview')[0].innerHTML = ['<img class="thumb" src="', e.target.result,
                         '" title="', escape(theFile.name), '"/>'].join('');
 
+                    $('.upload_warp').addClass('selected');
                     icon.addClass('selected');
-                    console.log(span.innerHTML);
-                    //document.getElementById('list').insertBefore(span, null);
                 };
             })(f);
 
@@ -239,6 +238,16 @@ $(document).ready(function () {
 
         $('.upload_image').click(function () {
             $('#upload_image_active').click();
+        });
+
+        $('.remove_image').click(function () {
+            var target = $('#upload_image_active')[0];
+            target.outerHTML = target.outerHTML;
+
+            $('.upload_image').removeClass('selected');
+            $('.upload_warp').removeClass('selected');
+
+            console.log(target);
         });
 
         $('.emoji_button').click(function () {

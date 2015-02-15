@@ -4,6 +4,10 @@ require_once('../config.php');
 
 require_once('../libs/medoo.php');
 
+require_once('../libs/emotions.php');
+
+$emotion = new emotions;
+
 $database = new medoo([
   'database_type'  =>    'mysql',
   'database_name'  =>    DB_NAME,

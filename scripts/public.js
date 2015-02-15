@@ -68,6 +68,31 @@ $(document).ready(function () {
                 menuTimeout: null
             }
         };
+
+        /*lightbox*/
+        $('body').append('<section class="lightbox"><div class="darkness"><img src="" class="image" /></section>')
+            .delegate('.lbox', 'click', function () {
+                var that = this
+                    , imageElement = $('.lightbox .image');
+
+                imageElement.attr('src', $(this).attr('src'))
+                    .css({
+                        'margin-top': -(imageElement.height() / 2),
+                        'margin-left': -(imageElement.width() / 2)
+                    });
+
+                
+                $(this).addClass('up');
+                $('.lightbox').addClass('up');
+
+                $('.darkness').one('click', function () {
+                    $(that).removeClass('up');
+                    $('.lightbox').removeClass('up');
+                });
+            });
+
+        /*lightbox end*/
+
         $('#new_post').click(function () {
             $('#post_dialog').addClass('flow_up')
                 .removeClass('flow_down')

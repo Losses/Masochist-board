@@ -557,6 +557,18 @@
     }
   }
 
+  .close_dialog {
+    top: 10px;
+    right: 0;
+    color: #3c324d;
+    position: absolute;
+    transform: rotate(180);
+    visibility: hidden;
+    transition: all 300ms;
+    opacity: 0;
+    cursor: pointer;
+  }
+
   &.fold {
     form {
       textarea {
@@ -637,8 +649,28 @@ footer {
     }
   }
 
-  article {
-    margin: 10px;
+  .article_group {
+    margin: 0 0 0 20px;
+    article {
+      margin: 10px;
+    }
+  }
+
+  img.uploaded_image {
+    max-width: 300px;
+    max-height: 300px;
+    border-radius: 3px;
+    float: left;
+    transition: all 0.3s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+
+    &:hover {
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    }
+
+    &:active {
+      box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+    }
   }
 
   .author {
@@ -653,5 +685,96 @@ footer {
     margin: 0 0 0 0;
     width: 100%;
     height: 100%;
+    overflow: hidden;
+
+    textarea {
+      height: ~"calc(100% - 68px)" !important;
+    }
+
+    .close_dialog {
+      right: 10px;
+      transform: rotate(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    &.fold {
+      textarea {
+        height: ~"calc(100% - 293px)" !important;
+      }
+    }
+  }
+
+  .post_page {
+    #post_dialog {
+      left: 0;
+      top: 150px;
+      margin: 0 0 0 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+
+      textarea {
+        height: ~"calc(100%)" !important;
+      }
+
+      &.fold {
+        textarea {
+          height: ~"calc(100% - 225px)" !important;
+        }
+      }
+    }
+  }
+}
+
+.lightbox {
+  * {
+    transition: all 400ms;
+  }
+  .darkness {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .image {
+    top: 50%;
+    left: 50%;
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 3px;
+    display: inline;
+    transform: scale(1.4);
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+  }
+
+  &.up {
+    .darkness {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .image {
+      opacity: 1;
+      transform: scale(1);
+      visibility: visible;
+    }
+  }
+}
+
+.lbox {
+  transform: scale(1);
+  opacity: 1;
+  transition: all 400ms;
+  .up {
+    opacity: 0;
+    transform: scale(1.4);
   }
 }

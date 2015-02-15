@@ -4,7 +4,8 @@
 
 function postCtrl($http, $scope, $routeParams) {
 
-    processPageElement($routeParams);
+    losses.router = $routeParams;
+    processPageElement(losses.router);
 
     var page = 1
         , loading = false;

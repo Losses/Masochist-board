@@ -58,7 +58,7 @@ if (isset ($_GET['new'])){
     'title'    =>    $_POST['title'],
     'content'  =>    htmlspecialchars($_POST['content']),
     'upid'     =>    $_POST['upid'],
-    'img'      =>    $_FILES['image']
+    'img'      =>    $_FILES['image']['name']
   ]);
 
   if (isset($_POST['upid']) && ($_POST['upid'] != 0)){

@@ -27,23 +27,26 @@ if (isset ($_GET['new'])){
   $_POST['upid']  = isset($_POST['upid'])  ? $_POST['upid']  : 0;
   $_POST['title'] = isset($_POST['title']) ? $_POST['title'] : '';
 
-  $retype = explode('.', $_FILES['image']['name']);
-
-  rename($_FILES['image']['name'],
-    md5(md5_file($_FILES['image']['name']) . date('Y-m-d H:i:s') . $retype[count($retype) - 1]));
-
   if ((($_FILES['image']['type'] == 'image/gif')
     || ($_FILES['image']['type'] == 'image/jpeg')
     || ($_FILES['image']['type'] == 'image/pjpeg')
     || ($_FILES['image']['type'] == 'image/png'))
-    && ($_FILES['image']['size'] < 50000000)){
-    if ($_FILES['image']['error']) {
-      echo 'Error: ' . $_FILES['image']['error'] . '<br>';
-    }else{
-      move_uploaded_file($_FILES['image']['tmp_name'],
-        'upload/' . $_FILES['image']['name']);
-      }
-    }
+    && ($_FILES['image']['size'] < 50000000))
+	{
+		if ($_FILES['image']['error'])
+		{
+			echo 'Error: ' . $_FILES['image']['error'] . '<br>';
+	    }
+	    else{
+	    	move_uploaded_file($_FILES['image']['tmp_name'], '../upload/' . $_FILES['image']['name']);
+
+	    	$retype = explode('.', '../upload/' . $_FILES['image']['name']);
+
+	    	rename('../upload/' . $_FILES['image']['name'],
+	    		   '../upload/' . md5(md5_file('../upload/' . $_FILES['image']['name']) . date('Y-m-d H:i:s')) 
+	    		   				. '.' . $retype[count($retype) - 1]);   
+	  	}
+	}
 
   if(($_POST['upid'] == 0) && ($_POST['title'] == '')){
     print_r('false');

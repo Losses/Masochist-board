@@ -482,6 +482,10 @@
         }
         &:active {
           box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+          button {
+            transform: scale(1.05);
+          }
         }
 
         button {
@@ -489,6 +493,7 @@
           background-color: transparent;
           box-shadow: 0;
           display: block;
+          transition: all 200ms;
         }
       }
     }

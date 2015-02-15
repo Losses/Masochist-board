@@ -31,7 +31,7 @@ mKnowledge.filter('trustHtml', function ($sce) {
     }
 });
 
-var losses = {};
+var losses = {router: {}};
 
 function processPageElement(routerResult) {
     var body = $('body');
@@ -99,7 +99,9 @@ $(document).ready(function () {
 
         function checkSumitable() {
             setTimeout(function () {
-                losses.elements.submitable = inPost ? (
+                if (!losses.router)
+                    return;
+                losses.elements.submitable = losses.router.postId ? (
                 (losses.elements.contentElement.val().length <= 35)
                 && (losses.elements.contentElement.val().length !== 0)
                 ) : (
@@ -118,13 +120,17 @@ $(document).ready(function () {
             }, 10);
         }
 
-        if (!inPost) {
-            losses.elements.titleElement.keypress(checkSumitable);
-            losses.elements.titleElement.change(checkSumitable);
-        }
+        var MutationObserver = window.MutationObserver
+            , postArea = losses.elements.dialogElement[0]
+            , DocumentObserver = new MutationObserver(checkSumitable)
+            , DocumentObserverConfig = {
+                attributes: true,
+                childList: true,
+                characterData: true,
+                subtree: true
+            };
+        DocumentObserver.observe(postArea, DocumentObserverConfig);
 
-        losses.elements.contentElement.keypress(checkSumitable);
-        losses.elements.contentElement.change(checkSumitable);
 
         $('#post_form').submit(function (event) {
             event.preventDefault();
@@ -135,7 +141,7 @@ $(document).ready(function () {
             var flying = true;
             var postContent = {
                 'author': $('input[name="author"]').val(),
-                'title': !inPost ? $('input[name="title"]').val() : null,
+                'title': !losses.router.postId ? $('input[name="title"]').val() : null,
                 'content': $('textarea[name="content"]').val(),
                 'upid': $('input[name="upid"]').val()
             };
@@ -148,24 +154,19 @@ $(document).ready(function () {
             }, 500);
 
             $(this).ajaxSubmit(function (data) {
-                if (inPost)
+                if (losses.router.postId)
                     location.reload(true);
                 if (data == 'false')
                     return;
                 var intervalItem = setInterval(function () {
-                    if (!flying)
-                        window.location.href = 'post.html#' + data;
+                    if (!flying) {
+                        //window.location.href = '#/post/' + data;
+
+                        console.log('#/post/' + data);
+                        clearInterval(intervalItem);
+                    }
                 }, 100);
             });
-            /*
-             $.ajax({
-             type: "POST",
-             url: "api/?new",
-             data: $('#post_form').serialize(),
-             contentType: "multipart/form-data",
-             success: ''
-             });
-             */
         });
 
         $('.icon_group').delegate('#upload_image_active', 'change', function (evt) {
@@ -261,6 +262,10 @@ $(document).ready(function () {
             $('.' + targetAttr).addClass('g-show');
         });
 
+        $('.close_dialog').click(function () {
+            $('body').click();
+        });
+
         var iconGroup = $('.icon_group');
 
         $('.icon-menu').mouseenter(function () {
@@ -288,6 +293,6 @@ $(document).ready(function () {
                 });
         });
 
-        checkSumitable();
+        setTimeout(checkSumitable, 1000);
     }
 );

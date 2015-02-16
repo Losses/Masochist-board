@@ -302,17 +302,23 @@ $(document).ready(function () {
                 if (losses.router.postId)
                     location.reload(true);
 
-                var intervalItem = setInterval(function () {
-                    if (!flying) {
-                        $('.remove_image').click();
-                        magicalLocation('#/post/' + data.message);
-                        losses.elements.submitIcon.removeClass('fly');
-                        $('#post_form')[0].reset();
-                        clearInterval(intervalItem);
-                    }
-                }, 500);
-            });
+                function finishProcess() {
+                    console.log('!');
+                    magicalLocation('#/post/' + data.message);
+                    removeImage();
+                    losses.elements.submitIcon.removeClass('fly');
+                    $('#post_form')[0].reset();
 
+                }
+
+
+                if (!flying) {
+                    finishProcess();
+                } else {
+                    setTimeout(finishProcess, 500);
+                }
+
+            });
         });
 
         $('body').delegate('#search', 'submit', function (event) {
@@ -366,19 +372,19 @@ $(document).ready(function () {
             reader.readAsDataURL(f);
         });
 
-        $('.upload_image').click(function () {
-            $('#upload_image_active').click();
-        });
-
-        $('.remove_image').click(function () {
+        function removeImage() {
             var target = $('#upload_image_active')[0];
             target.outerHTML = target.outerHTML;
 
             $('.upload_image').removeClass('selected');
             $('.upload_warp').removeClass('selected');
+        }
 
-            console.log(target);
+        $('.upload_image').click(function () {
+            $('#upload_image_active').click();
         });
+
+        $('.remove_image').click(removeImage);
 
         $('.emoji_button').click(function () {
             $('.icon_group').mouseleave();
@@ -446,4 +452,5 @@ $(document).ready(function () {
 
         setTimeout(checkSumitable, 1000);
     }
-);
+)
+;

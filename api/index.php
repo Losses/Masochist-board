@@ -44,8 +44,7 @@ if (isset ($_GET['new'])) {
       {
         response_message(500, 'Internal Server Error!');
       }
-      else
-      {
+      else{
         move_uploaded_file($_FILES['image']['tmp_name'],
           '../upload/' . $_FILES['image']['name']);
 
@@ -68,7 +67,13 @@ if (isset ($_GET['new'])) {
     'img'      =>    $name,
   ]);
 
-  if (isset($_POST['upid']) && ($_POST['upid'] != 0)) {
+  $issage = $database->select('content',[
+    'sage'
+    ],[
+        'upid[=]' => $_POST['upid']
+    ]);
+
+  if (isset($_POST['upid']) && ($_POST['upid'] != 0 && $issage == 0)) {
     $database->update('content',[
       'active_time'    =>    date('Y-m-d H:i:s')
     ],[
@@ -83,30 +88,33 @@ elseif (isset ($_GET['list'])) {
 
   $_GET['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
 
-  $condition_cate =
+  $condition_cate=[];
+
+  if (isset($_GET['category']))
+  {
+    $condition_cate['AND']['category[=]'] = (int)$_GET['category'];
+  }
+
+  $condition_cate +=
   [
+        'AND'      =>    ['upid[=]' =>  0],
+        
         'ORDER'    =>    ['active_time DESC','time DESC'],
-        'upid[=]'  =>    0,
+        
         'LIMIT'    =>    [($_GET['page']-1)*10, $_GET['page']*10]
   ];
-  $where_cate =
-  [
+
+  $data = $database->select('content',[
     'id',
     'title',
     'author',
     'time',
     'category',
     'sage'
-  ];
-  if (isset($_GET['category']))
-  {
-    $where_cate['category'];
-    $condition_cate['category[=]'] = _GET['category'];
-  }
-
-  $data = $database->select('content', $where_cate, $condition_cate);
+  ], $condition_cate);
 
   echo json_encode($data);
+  
   exit();
 }
 
@@ -159,21 +167,19 @@ function response_message($code,$message){
     'message' =>    $message
   ];
 
-  json_encode($response);
+  echo json_encode($response);
 
   exit();
 }
 
-//search功能
-//$searchs = $_GET['search']
+$search_text = $_GET['search'];
+$search_cate = $_GET['category'];
 
-/*
-function search($searchs, $_POST['category']) {
+function post_search($search_text, $search_cate) {
   $returndata = $database->select('content', ['*'],[
-    'title[~]'    =>  '%'.$searchs.'%',
-    'author[~]'   =>  '%'.$searchs.'%',
-    'content[~]'  =>  '%'.$searchs.'%',
-    'category'
+    'title[~]'    =>  '%'.$search_text.'%',
+    'author[~]'   =>  '%'.$search_text.'%',
+    'content[~]'  =>  '%'.$search_text.'%',
+    'category[=]' =>  $_POST['category']
   ]);
 }
-*/

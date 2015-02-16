@@ -22,39 +22,42 @@ $database = new medoo([
                          ]
 ]);
 
-if (isset ($_GET['new'])){
-  $_POST['upid']  = isset($_POST['upid'])  ? $_POST['upid']  : 0;
-  $_POST['title'] = isset($_POST['title']) ? $_POST['title'] : '';
+if (isset ($_GET['new'])) {
+  $_POST['upid']     = isset($_POST['upid'])  ? $_POST['upid']  : 0;
+  $_POST['category'] = isset($_POST['category']) && ($_POST['upid'] == 0)
+    ? $_POST['category'] : 0;
+  $_POST['title']    = isset($_POST['title']) ? $_POST['title'] : '';
 
-  if(count($_FILES) > 0)
-  {
+  if(($_POST['upid'] == 0) && ($_POST['title'] == '')) {
+    response_message(403, 'You need a title!');
+    exit();
+  }
+
+  if(count($_FILES) > 0) {
     if ((($_FILES['image']['type'] == 'image/gif')
       || ($_FILES['image']['type'] == 'image/jpeg')
       || ($_FILES['image']['type'] == 'image/pjpeg')
       || ($_FILES['image']['type'] == 'image/png'))
       && ($_FILES['image']['size'] < 50000000))
-  	{
-  		if ($_FILES['image']['error'])
-  		{
-  			echo 'Error: ' . $_FILES['image']['error'] . '<br>';
-  	  }
+    {
+      if ($_FILES['image']['error'])
+      {
+        response_message(500, 'Internal Server Error!');
+      }
       else
       {
-      	move_uploaded_file($_FILES['image']['tmp_name'], '../upload/' . $_FILES['image']['name']);
+        move_uploaded_file($_FILES['image']['tmp_name'],
+          '../upload/' . $_FILES['image']['name']);
 
-      	$retype = explode('.', '../upload/' . $_FILES['image']['name']);
+        $retype = explode('.', '../upload/' . $_FILES['image']['name']);
 
-        $name = md5(md5_file('../upload/' . $_FILES['image']['name']) . date('Y-m-d H:i:s')) . '.' . $retype[count($retype) - 1];
+        $name = md5(md5_file('../upload/' . $_FILES['image']['name']) .
+          date('Y-m-d H:i:s')) . '.' . $retype[count($retype) - 1];
         rename('../upload/' . $_FILES['image']['name'], '../upload/' . $name);
-  	  }
-  	}
-  } else {
-	$name = null;
-  }
-
-  if(($_POST['upid'] == 0) && ($_POST['title'] == '')){
-    print_r('false');
-    exit();
+      }
+    }
+  }else{
+  $name = null;
   }
 
   $result = $database->insert('content',[
@@ -65,7 +68,7 @@ if (isset ($_GET['new'])){
     'img'      =>    $name,
   ]);
 
-  if (isset($_POST['upid']) && ($_POST['upid'] != 0)){
+  if (isset($_POST['upid']) && ($_POST['upid'] != 0)) {
     $database->update('content',[
       'active_time'    =>    date('Y-m-d H:i:s')
     ],[
@@ -73,11 +76,10 @@ if (isset ($_GET['new'])){
     ]);
   }
 
-  print_r($result);
-  exit();
+  response_message(200,$result);
 }
 
-elseif (isset ($_GET['list'])){
+elseif (isset ($_GET['list'])) {
 
   $_GET['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
 
@@ -93,6 +95,8 @@ elseif (isset ($_GET['list'])){
     'title',
     'author',
     'time',
+    'category',
+    'sage'
   ];
   if (isset($_GET['category']))
   {
@@ -106,14 +110,14 @@ elseif (isset ($_GET['list'])){
   exit();
 }
 
-elseif (isset($_GET['category'])){
+elseif (isset($_GET['category'])) {
 
   $data = $database->select('category', '*');
 
   echo json_encode($data);
 }
 
-elseif (isset ($_GET['post'])){
+elseif (isset ($_GET['post'])) {
 
   require_once('../libs/parsedown.php');
 
@@ -152,68 +156,20 @@ elseif (isset ($_GET['post'])){
 /*
 //search功能
 $searchs = _POST('search')
-function search($searchs)
-{
+function search($searchs) {
   $returndata = $database->select('content',
     [
 
     ])
 }
 */
+function response_message($code,$message){
+  $response = [
+    'code'    =>    $code,
+    'message' =>    $message
+  ];
 
-//response_message
-function response_message($code)
-{
-  switch ($code) {
-    case '200':
-      echo '200 OK';
-      break;
-    case '201':
-      echo '201 Created';
-      break;
-    case '202':
-      echo '202 Accepted';
-      break;
-    case '203':
-      echo '203 Non-Authoritative Information';
-      break;
-    case '204':
-      echo '204 No Content';
-      break;
-    case '205':
-      echo '205 Reset Content';
-      break;
-    case '206':
-      echo '206 Partial Content';
-      break;
-    case '207':
-      echo '207 Multi-Status';
-      break;
-    case '300':
-      echo '300 Multiple Choices';
-      break;
-    case '301':
-      echo '301 Moved Permanently';
-      break;
-    case '302':
-      echo '302 Found';
-      break;
-    case '303':
-      echo '303 See Other';
-      break;
-    case '304':
-      echo '304 Not Modified';
-      break;
-    case '305':
-      echo '305 Use Proxy';
-      break;
-    case '306':
-      echo '306 Switch Proxy';
-      break;
-    case '307':
-      echo '307 Temporary Redirect';
-      break;
-    default:
-      break;
-  }
+  json_encode($response);
+
+  exit();
 }

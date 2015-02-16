@@ -146,6 +146,11 @@
   border-radius: 14px;
   transition: all 200ms;
 }
+.function_list .category a:link,
+.function_list .category a:visited {
+  text-decoration: none;
+  color: #3e00a4;
+}
 .function_list .category a:hover {
   color: white;
   border-color: transparent;
@@ -189,11 +194,6 @@
 }
 .function_list .category a:hover.light_green {
   background: #8bc34a;
-}
-.function_list .category a:link,
-.function_list .category avisited {
-  text-decoration: none;
-  color: white;
 }
 .function_list .search i::before {
   color: #3e00a4;

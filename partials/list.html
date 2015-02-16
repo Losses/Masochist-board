@@ -1,9 +1,6 @@
 <div class="function_list clear">
     <div class="category left">
-        <a class="left orange">分类</a>
-        <a class="left">分类</a>
-        <a class="left">分类</a>
-        <a class="left">分类</a>
+        <a ng-repeat="category in categories" href="#/category/{{category.id}}" class="left {{categoriy.theme}}">{{category.name}}</a>
     </div>
     <div class="search right">
         <form action="api/?list&search">

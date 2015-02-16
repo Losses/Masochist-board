@@ -13,28 +13,27 @@ function postCtrl($http, $scope, $routeParams) {
     $scope.posts = [];
 
     function pushContent() {
+        function getContent(apiRule) {
+            if (!loading) {
+                loading = true;
+                $http.get(apiRule)
+                    .success(function (response) {
+                        for (var i = 0; i <= response.length - 1; i++) {
+                            $scope.posts.push(response[i]);
+                        }
+                        loading = false;
+                    });
+            }
+        }
+
         if (!$routeParams.postId) {
-            if (!loading) {
-                loading = true;
-                $http.get("api/?list&page=" + page)
-                    .success(function (response) {
-                        for (var i = 0; i <= response.length - 1; i++) {
-                            $scope.posts.push(response[i]);
-                        }
-                        loading = false;
-                    });
-            }
+            getContent("api/?list&page=" + page);
+        } else if ($routeParams.categoryId) {
+            getContent("api/?category=" + $routeParams.categoryId + "&page=" + page);
+        } else if ($routeParams.searchKey) {
+            getContent("api/?search=" + $routeParams.searchKey + "&page=" + page);
         } else {
-            if (!loading) {
-                loading = true;
-                $http.get("api/?post&id=" + $routeParams.postId + "&page=" + page)
-                    .success(function (response) {
-                        for (var i = 0; i <= response.length - 1; i++) {
-                            $scope.posts.push(response[i]);
-                        }
-                        loading = false;
-                    });
-            }
+            getContent("api/?post&id=" + $routeParams.postId + "&page=" + page);
         }
 
         page++;
@@ -46,11 +45,20 @@ function postCtrl($http, $scope, $routeParams) {
         }
     });
 
+    if (!$routeParams.postId) {
+        $http.get("api/?category")
+            .success(function (response) {
+                losses.scope.categories = response;
+                $scope.categories = response;
+            });
+    }
+
     pushContent();
 }
 
-function emojiCtrl($http, $scope) {
+function dialogCtrl($http, $scope, $interval) {
     $scope.groups = [];
+    $scope.categories = [];
 
     $http.get('dbs/emotions.json')
         .success(function (response) {
@@ -68,4 +76,15 @@ function emojiCtrl($http, $scope) {
                 });
             }
         });
+
+    var intervalItem = $interval(function () {
+        if (losses.scope.categories !== undefined) {
+            $scope.categories = losses.scope.categories;
+
+            setTimeout(sSelect, 500);
+            $interval.cancel(intervalItem);
+        }
+    }, 500);
+
+
 }

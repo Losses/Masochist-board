@@ -15,6 +15,14 @@ mKnowledge.config(['$routeProvider',
                 templateUrl: 'partials/list.html',
                 controller: postCtrl
             }).
+            when('/category/:categoryId', {
+                templateUrl: 'partials/list.html',
+                controller: postCtrl
+            }).
+            when('/search/:searchKey', {
+                templateUrl: 'partials/list.html',
+                controller: postCtrl
+            }).
             when('/post/:postId', {
                 templateUrl: 'partials/post.html',
                 controller: postCtrl
@@ -23,7 +31,7 @@ mKnowledge.config(['$routeProvider',
     }
 ]);
 
-mKnowledge.controller('emojiCtrl', emojiCtrl);
+mKnowledge.controller('dialogCtrl', dialogCtrl);
 
 mKnowledge.filter('trustHtml', function ($sce) {
     return function (input) {
@@ -31,7 +39,7 @@ mKnowledge.filter('trustHtml', function ($sce) {
     }
 });
 
-var losses = {router: {}};
+var losses = {router: {}, scope: {}};
 
 function processPageElement(routerResult) {
     var body = $('body');
@@ -61,21 +69,123 @@ function magicalLocation(path) {
         .remove();
 }
 
+function sSelect() {
+    var select = $('.select_rebuild');
+    select.wrap('<span class="s_select"></span>');
+    $('.s_select').append('<button class="s_choosen"></button><ul class="s_select_body"></ul>');
+    select.each(function () {
+        var options = [],
+            values = [],
+            classes = [],
+            x;
+        $(this).children('option').each(function () {
+            var className = $(this).attr('ls-class') ? $(this).attr('ls-class') : '';
+            options.push($(this).html());
+            values.push($(this).attr('value'));
+            classes.push(className);
+        });
+        $(this).next('.s_choosen').html(options[0]);
+        var selectBody = $(this).nextAll('.s_select_body');
+        for (x in options) {
+            selectBody.append('<li val="' + values[x] + '" class="' + classes[x] + '">' + options[x] + '</li>');
+        }
+    });
+
+    $('.s_choosen').click(function (event) {
+        var that = this;
+        var selectBody = $(this).next('.s_select_body');
+        var selectList = selectBody.children('li');
+
+        if (!selectBody.hasClass("selected")) {
+            $('body').off('.s_select_body');
+
+            selectBody.addClass("selected");
+
+            setTimeout(function () {
+                $("body").one("click.s_select_body", function () {
+                    $('.s_select_body').each(function () {
+                        $(this).removeClass('selected');
+                        $(document).off('.s_select_keydown');
+                    });
+                });
+            }, 1);
+
+            var _S_ = {
+                select: {
+                    itemId: -1,
+                    totalNum: selectList.length - 1
+                }
+            };
+
+            $(document).on('keydown.s_select_keydown', function (event) {
+                selectList.each(function () {
+                    $(this).addClass('keyboard');
+                });
+
+                $(selectList).one('mousemove', function () {
+                    _S_.select.itemId = -1;
+                    selectList.each(function () {
+                        $(this).removeClass('selected keyboard');
+                    });
+                });
+
+                function changeItem() {
+                    if (_S_.select.itemId < 0) _S_.select.itemId = _S_.select.totalNum;
+                    if (_S_.select.itemId > _S_.select.totalNum) _S_.select.itemId = 0;
+
+                    selectList.each(function () {
+                        $(this).removeClass("selected");
+                    });
+
+                    $(selectList[_S_.select.itemId]).addClass("selected");
+                }
+
+                if (event.which === 38) {
+                    _S_.select.itemId -= 1;
+                    changeItem();
+                }
+                if (event.which === 40) {
+                    _S_.select.itemId += 1;
+                    changeItem();
+                }
+
+                if (event.which === 13) {
+                    $(that).blur();
+                    $(selectList[_S_.select.itemId]).click();
+                }
+
+            });
+
+            $('.s_select_body>li').click(function () {
+                var selectObject = $(this).parents('.s_select').children('select');
+                selectObject.val($(this).attr('val'));
+                selectObject.next('.s_choosen').html($(this).html());
+                $(document).off(".s_select");
+
+                selectObject.nextAll('.s_select_body').removeClass('selected');
+            });
+
+            event.preventDefault();
+
+        } else {
+            $("body").click();
+        }
+    });
+}
+
 $(document).ready(function () {
-        losses = {
-            elements: {
-                submitable: false,
-                pause: false,
-                submited: false,
-                dialogElement: $('#post_dialog'),
-                titleElement: $('input[name="title"]'),
-                contentElement: $('textarea[name="content"]'),
-                upidElement: $('input[name="upid"]'),
-                submitIcon: $('button[type="submit"]')
-            },
-            event: {
-                menuTimeout: null
-            }
+        losses.elements = {
+            submitable: false,
+            pause: false,
+            submited: false,
+            dialogElement: $('#post_dialog'),
+            titleElement: $('input[name="title"]'),
+            contentElement: $('textarea[name="content"]'),
+            upidElement: $('input[name="upid"]'),
+            submitIcon: $('button[type="submit"]')
+        };
+        losses.event = {
+            menuTimeout: null
         };
 
         (function lightBox() {
@@ -100,110 +210,6 @@ $(document).ready(function () {
                         $('.lightbox').removeClass('up');
                     });
                 });
-        })();
-
-        (function sSelect() {
-            var select = $('.select_rebuild');
-            select.wrap('<span class="s_select"></span>');
-            $('.s_select').append('<button class="s_choosen"></button><ul class="s_select_body"></ul>');
-            select.each(function () {
-                var options = [],
-                    values = [],
-                    classes = [],
-                    x;
-                $(this).children('option').each(function () {
-                    var className = $(this).attr('ls-class') ? $(this).attr('ls-class') : '';
-                    options.push($(this).html());
-                    values.push($(this).attr('value'));
-                    classes.push(className);
-                });
-                $(this).next('.s_choosen').html(options[0]);
-                var selectBody = $(this).nextAll('.s_select_body');
-                for (x in options) {
-                    selectBody.append('<li val="' + values[x] + '" class="' + classes[x] + '">' + options[x] + '</li>');
-                }
-            });
-
-            $('.s_choosen').click(function (event) {
-                var that = this;
-                var selectBody = $(this).next('.s_select_body');
-                var selectList = selectBody.children('li');
-
-                if (!selectBody.hasClass("selected")) {
-                    $('body').off('.s_select_body');
-
-                    selectBody.addClass("selected");
-
-                    setTimeout(function () {
-                        $("body").one("click.s_select_body", function () {
-                            $('.s_select_body').each(function () {
-                                $(this).removeClass('selected');
-                                $(document).off('.s_select_keydown');
-                            });
-                        });
-                    }, 1);
-
-                    var _S_ = {
-                        select: {
-                            itemId: -1,
-                            totalNum: selectList.length - 1
-                        }
-                    };
-
-                    $(document).on('keydown.s_select_keydown', function (event) {
-                        selectList.each(function () {
-                            $(this).addClass('keyboard');
-                        });
-
-                        $(selectList).one('mousemove', function () {
-                            _S_.select.itemId = -1;
-                            selectList.each(function () {
-                                $(this).removeClass('selected keyboard');
-                            });
-                        });
-
-                        function changeItem() {
-                            if (_S_.select.itemId < 0) _S_.select.itemId = _S_.select.totalNum;
-                            if (_S_.select.itemId > _S_.select.totalNum) _S_.select.itemId = 0;
-
-                            selectList.each(function () {
-                                $(this).removeClass("selected");
-                            });
-
-                            $(selectList[_S_.select.itemId]).addClass("selected");
-                        }
-
-                        if (event.which === 38) {
-                            _S_.select.itemId -= 1;
-                            changeItem();
-                        }
-                        if (event.which === 40) {
-                            _S_.select.itemId += 1;
-                            changeItem();
-                        }
-
-                        if (event.which === 13) {
-                            $(that).blur();
-                            $(selectList[_S_.select.itemId]).click();
-                        }
-
-                    });
-
-                    $('.s_select_body>li').click(function () {
-                        var selectObject = $(this).parents('.s_select').children('select');
-                        selectObject.val($(this).attr('val'));
-                        selectObject.next('.s_choosen').html($(this).html());
-                        $(document).off(".s_select");
-
-                        selectObject.nextAll('.s_select_body').removeClass('selected');
-                    });
-
-                    event.preventDefault();
-
-                } else {
-                    $("body").click();
-                }
-            });
         })();
 
         $('#new_post').click(function () {

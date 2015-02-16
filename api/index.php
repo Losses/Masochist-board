@@ -23,7 +23,6 @@ $database = new medoo([
 ]);
 
 if (isset ($_GET['new'])){
-
   $_POST['upid']  = isset($_POST['upid'])  ? $_POST['upid']  : 0;
   $_POST['title'] = isset($_POST['title']) ? $_POST['title'] : '';
 
@@ -49,6 +48,8 @@ if (isset ($_GET['new'])){
         rename('../upload/' . $_FILES['image']['name'], '../upload/' . $name);
   	  }
   	}
+  } else {
+	$name = null;
   }
 
   if(($_POST['upid'] == 0) && ($_POST['title'] == '')){

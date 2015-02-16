@@ -81,24 +81,26 @@ elseif (isset ($_GET['list'])){
 
   $_GET['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
 
-  $condition_cate = [
+  $condition_cate =
+  [
         'ORDER'    =>    ['active_time DESC','time DESC'],
         'upid[=]'  =>    0,
         'LIMIT'    =>    [($_GET['page']-1)*10, $_GET['page']*10]
-      ];
-
+  ];
+  $where_cate =
+  [
+    'id',
+    'title',
+    'author',
+    'time',
+  ];
   if (isset($_GET['category']))
   {
+    $where_cate['category'];
     $condition_cate['category[=]'] = _GET['category'];
   }
 
-  $data = $database->select('content',[
-        'id',
-        'title',
-        'author',
-        'time',
-        'category'
-      ],$condition_cate);
+  $data = $database->select('content', $where_cate, $condition_cate);
 
   echo json_encode($data);
   exit();
@@ -158,3 +160,60 @@ function search($searchs)
     ])
 }
 */
+
+//response_message
+function response_message($code)
+{
+  switch ($code) {
+    case '200':
+      echo '200 OK';
+      break;
+    case '201':
+      echo '201 Created';
+      break;
+    case '202':
+      echo '202 Accepted';
+      break;
+    case '203':
+      echo '203 Non-Authoritative Information';
+      break;
+    case '204':
+      echo '204 No Content';
+      break;
+    case '205':
+      echo '205 Reset Content';
+      break;
+    case '206':
+      echo '206 Partial Content';
+      break;
+    case '207':
+      echo '207 Multi-Status';
+      break;
+    case '300':
+      echo '300 Multiple Choices';
+      break;
+    case '301':
+      echo '301 Moved Permanently';
+      break;
+    case '302':
+      echo '302 Found';
+      break;
+    case '303':
+      echo '303 See Other';
+      break;
+    case '304':
+      echo '304 Not Modified';
+      break;
+    case '305':
+      echo '305 Use Proxy';
+      break;
+    case '306':
+      echo '306 Switch Proxy';
+      break;
+    case '307':
+      echo '307 Temporary Redirect';
+      break;
+    default:
+      break;
+  }
+}

@@ -25,7 +25,7 @@
 }
 @keyframes flow_up_f_inpost {
   from {
-    margin-top: -150px;
+    margin-top: -100px;
     opacity: 0;
     visibility: hidden;
   }
@@ -37,7 +37,7 @@
 }
 @keyframes flow_down_f_inpost {
   to {
-    margin-top: -150px;
+    margin-top: -100px;
     opacity: 0;
     visibility: hidden;
   }

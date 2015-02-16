@@ -92,7 +92,7 @@
   }
 }
 #main {
-  margin: 30px;
+  margin: 15px 30px;
 }
 #main .post {
   padding: 10px;
@@ -134,16 +134,61 @@
 #main .post:hover .time {
   background: #c0b5d3;
 }
+.function_list {
+  margin-bottom: 15px;
+}
 .function_list .category a {
-  color: white;
+  color: #3e00a4;
   margin: 0 3px;
   padding: 3px 10px;
   font-size: 11px;
-  background: #3e00a4;
+  border: #3e00a4 1px solid;
   border-radius: 14px;
+  transition: all 200ms;
 }
 .function_list .category a:hover {
-  background: #5100d7;
+  color: white;
+  border-color: transparent;
+  background: #3e00a4;
+}
+.function_list .category a:hover.orange {
+  background: #ff9800;
+}
+.function_list .category a:hover.deep_orange {
+  background: #ff5722;
+}
+.function_list .category a:hover.red {
+  background: #f44336;
+}
+.function_list .category a:hover.pink {
+  background: #e91e63;
+}
+.function_list .category a:hover.purple {
+  background: #9c27b0;
+}
+.function_list .category a:hover.deep_purple {
+  background: #673ab7;
+}
+.function_list .category a:hover.indigo {
+  background: #3f51b5;
+}
+.function_list .category a:hover.blue {
+  background: #2196f3;
+}
+.function_list .category a:hover.light_blue {
+  background: #03a9f4;
+}
+.function_list .category a:hover.cyan {
+  background: #00bcd4;
+}
+.function_list .category a:hover.teal {
+  background: #009688;
+}
+.function_list .category a:hover.green {
+  background: #4caf50;
+}
+.function_list .category a:hover.light_green {
+  background: #8bc34a;
 }
 .function_list .category a:link,
 .function_list .category avisited {
@@ -515,9 +560,9 @@
   width: 60px;
   height: 26px;
   padding: 0;
+  text-align: left;
   background: white;
-  border: 1px solid #CCC;
-  border-radius: 13px;
+  border: 0;
   outline: none;
   position: relative;
 }
@@ -535,33 +580,71 @@
   position: absolute;
   -webkit-transform: rotate(90deg);
 }
-.s_select .s_choosen:hover {
-  border: 1px solid #DDD;
-}
 .s_select .s_choosen:hover::after {
   background: #0096ff;
-}
-.s_select .s_choosen:active {
-  border: 1px solid #BBB;
 }
 .s_select .s_choosen:active::after {
   -webkit-transform: rotate(-90deg);
 }
 .s_select .s_select_body {
-  top: 19px;
-  left: 15px;
+  top: 22px;
+  left: 0;
   height: 0;
-  width: 90px;
+  width: 80px;
   border: 1px solid transparent;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.8);
   box-sizing: border-box;
   overflow: hidden;
   position: absolute;
 }
 .s_select .s_select_body li {
-  padding: 5px 10px;
+  padding: 5px 6px;
+  cursor: pointer;
+  transition: all 300ms;
 }
 .s_select .s_select_body li:hover {
   background: #deedf1;
+  color: white;
+}
+.s_select .s_select_body li:hover.orange {
+  background: #ff9800;
+}
+.s_select .s_select_body li:hover.deep_orange {
+  background: #ff5722;
+}
+.s_select .s_select_body li:hover.red {
+  background: #f44336;
+}
+.s_select .s_select_body li:hover.pink {
+  background: #e91e63;
+}
+.s_select .s_select_body li:hover.purple {
+  background: #9c27b0;
+}
+.s_select .s_select_body li:hover.deep_purple {
+  background: #673ab7;
+}
+.s_select .s_select_body li:hover.indigo {
+  background: #3f51b5;
+}
+.s_select .s_select_body li:hover.blue {
+  background: #2196f3;
+}
+.s_select .s_select_body li:hover.light_blue {
+  background: #03a9f4;
+}
+.s_select .s_select_body li:hover.cyan {
+  background: #00bcd4;
+}
+.s_select .s_select_body li:hover.teal {
+  background: #009688;
+}
+.s_select .s_select_body li:hover.green {
+  background: #4caf50;
+}
+.s_select .s_select_body li:hover.light_green {
+  background: #8bc34a;
 }
 .s_select .s_select_body li.keyboard:hover {
   background: transparent;
@@ -570,8 +653,9 @@
   background: #deedf1 !important;
 }
 .s_select .s_select_body.selected {
-  border: 1px solid #ddd;
   height: auto;
+  border-color: #c0b5d3;
+  background: rgba(255, 255, 255, 0.8);
 }
 .float_icon {
   right: 50px;

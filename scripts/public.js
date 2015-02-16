@@ -109,15 +109,18 @@ $(document).ready(function () {
             select.each(function () {
                 var options = [],
                     values = [],
+                    classes = [],
                     x;
                 $(this).children('option').each(function () {
+                    var className = $(this).attr('ls-class') ? $(this).attr('ls-class') : '';
                     options.push($(this).html());
                     values.push($(this).attr('value'));
+                    classes.push(className);
                 });
                 $(this).next('.s_choosen').html(options[0]);
                 var selectBody = $(this).nextAll('.s_select_body');
                 for (x in options) {
-                    selectBody.append('<li val="' + values[x] + '">' + options[x] + '</li>');
+                    selectBody.append('<li val="' + values[x] + '" class="' + classes[x] + '">' + options[x] + '</li>');
                 }
             });
 

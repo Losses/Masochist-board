@@ -277,6 +277,9 @@
   padding: 20px 20px;
   border-bottom: 1px solid #c0b5d3;
 }
+#post_dialog form #dialog_head {
+  display: none;
+}
 #post_dialog form input[name=title] {
   width: calc(100% - 67px);
   height: 2em;
@@ -725,7 +728,7 @@ footer {
   opacity: 0;
   visibility: hidden;
 }
-.post_page #post_dialog input[name='title'] {
+.post_page #post_dialog .dialog_head {
   display: none;
 }
 .post_page #post_dialog textarea {

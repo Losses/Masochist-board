@@ -66,10 +66,11 @@ $(document).ready(function () {
             elements: {
                 submitable: false,
                 pause: false,
+                submited: false,
                 dialogElement: $('#post_dialog'),
                 titleElement: $('input[name="title"]'),
                 contentElement: $('textarea[name="content"]'),
-                upidElement: $('#catchId'),
+                upidElement: $('input[name="upid"]'),
                 submitIcon: $('button[type="submit"]')
             },
             event: {
@@ -194,6 +195,8 @@ $(document).ready(function () {
                 var intervalItem = setInterval(function () {
                     if (!flying) {
                         magicalLocation('#/post/' + data);
+                        losses.elements.submitIcon.removeClass('fly');
+                        $('#post_form')[0].reset();
                         clearInterval(intervalItem);
                     }
                 }, 100);

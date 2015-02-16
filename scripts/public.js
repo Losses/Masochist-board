@@ -53,6 +53,14 @@ function processPageElement(routerResult) {
     }, 300);
 }
 
+/*魔法！*/
+function magicalLocation(path) {
+    $('body').append('<a href= "' + path + '" id="magicalLocation" stype="display:none"></a>');
+
+    $('#magicalLocation').click()
+        .remove();
+}
+
 $(document).ready(function () {
         losses = {
             elements: {
@@ -81,7 +89,7 @@ $(document).ready(function () {
                         'margin-left': -(imageElement.width() / 2)
                     });
 
-                
+
                 $(this).addClass('up');
                 $('.lightbox').addClass('up');
 
@@ -185,9 +193,7 @@ $(document).ready(function () {
                     return;
                 var intervalItem = setInterval(function () {
                     if (!flying) {
-                        //window.location.href = '#/post/' + data;
-
-                        console.log('#/post/' + data);
+                        magicalLocation('#/post/' + data);
                         clearInterval(intervalItem);
                     }
                 }, 100);

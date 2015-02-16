@@ -42,7 +42,16 @@
         <form action='api/?new' method='post' id="post_form">
             <input type='text' name='author' value="a person" style='display:none'/>
             <input type='text' name='upid' value="0" style='display:none'/>
-            <input type='text' name='title' placeholder="标题"/>
+
+            <div class="dialog_head clear">
+                <select class="select_rebuild">
+                    <option>分类</option>
+                    <option>分类</option>
+                    <option>分类</option>
+                </select>
+                <input class='right' type='text' name='title' placeholder="标题"/>
+            </div>
+
             <textarea name='content'></textarea>
 
             <div ng-controller="emojiCtrl" id="emoji_box">
@@ -70,7 +79,7 @@
                     </div>
                     <div class="icon_cotainer">
                         <button class="icon-picture upload_image colorful_icon"></button>
-                        <input type='file' name='image' id='upload_image_active' class='submit'/>
+                        <input type='file' name='image' id='upload_image_active'/>
                     </div>
                 </div>
 
@@ -81,7 +90,7 @@
                 </div>
 
                 <div>
-                    <button type='submit' class="icon-paper-plane submit"></button>
+                    <button type='submit' class="icon-paper-plane"></button>
                 </div>
             </div>
         </form>

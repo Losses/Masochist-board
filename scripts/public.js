@@ -78,47 +78,144 @@ $(document).ready(function () {
             }
         };
 
-        /*lightbox*/
-        $('body').append('<section class="lightbox"><div class="darkness"><img src="" class="image" /></section>')
-            .delegate('.lbox', 'click', function () {
-                var that = this
-                    , imageElement = $('.lightbox .image');
+        (function lightBox() {
+            /*lightbox*/
+            $('body').append('<section class="lightbox"><div class="darkness"><img src="" class="image" /></section>')
+                .delegate('.lbox', 'click', function () {
+                    var that = this
+                        , imageElement = $('.lightbox .image');
 
-                imageElement.attr('src', $(this).attr('src'))
-                    .css({
-                        'margin-top': -(imageElement.height() / 2),
-                        'margin-left': -(imageElement.width() / 2)
+                    imageElement.attr('src', $(this).attr('src'))
+                        .css({
+                            'margin-top': -(imageElement.height() / 2),
+                            'margin-left': -(imageElement.width() / 2)
+                        });
+
+
+                    $(this).addClass('up');
+                    $('.lightbox').addClass('up');
+
+                    $('.darkness').one('click', function () {
+                        $(that).removeClass('up');
+                        $('.lightbox').removeClass('up');
                     });
-
-
-                $(this).addClass('up');
-                $('.lightbox').addClass('up');
-
-                $('.darkness').one('click', function () {
-                    $(that).removeClass('up');
-                    $('.lightbox').removeClass('up');
                 });
+        })();
+
+        (function sSelect() {
+            var select = $('.select_rebuild');
+            select.wrap('<span class="s_select"></span>');
+            $('.s_select').append('<button class="s_choosen"></button><ul class="s_select_body"></ul>');
+            select.each(function () {
+                var options = [],
+                    values = [],
+                    x;
+                $(this).children('option').each(function () {
+                    options.push($(this).html());
+                    values.push($(this).attr('value'));
+                });
+                $(this).next('.s_choosen').html(options[0]);
+                var selectBody = $(this).nextAll('.s_select_body');
+                for (x in options) {
+                    selectBody.append('<li val="' + values[x] + '">' + options[x] + '</li>');
+                }
             });
 
-        /*lightbox end*/
+            $('.s_choosen').click(function (event) {
+                var that = this;
+                var selectBody = $(this).next('.s_select_body');
+                var selectList = selectBody.children('li');
+
+                if (!selectBody.hasClass("selected")) {
+                    $('body').off('.s_select_body');
+
+                    selectBody.addClass("selected");
+
+                    setTimeout(function () {
+                        $("body").one("click.s_select_body", function () {
+                            $('.s_select_body').each(function () {
+                                $(this).removeClass('selected');
+                                $(document).off('.s_select_keydown');
+                            });
+                        });
+                    }, 1);
+
+                    var _S_ = {
+                        select: {
+                            itemId: -1,
+                            totalNum: selectList.length - 1
+                        }
+                    };
+
+                    $(document).on('keydown.s_select_keydown', function (event) {
+                        selectList.each(function () {
+                            $(this).addClass('keyboard');
+                        });
+
+                        $(selectList).one('mousemove', function () {
+                            _S_.select.itemId = -1;
+                            selectList.each(function () {
+                                $(this).removeClass('selected keyboard');
+                            });
+                        });
+
+                        function changeItem() {
+                            if (_S_.select.itemId < 0) _S_.select.itemId = _S_.select.totalNum;
+                            if (_S_.select.itemId > _S_.select.totalNum) _S_.select.itemId = 0;
+
+                            selectList.each(function () {
+                                $(this).removeClass("selected");
+                            });
+
+                            $(selectList[_S_.select.itemId]).addClass("selected");
+                        }
+
+                        if (event.which === 38) {
+                            _S_.select.itemId -= 1;
+                            changeItem();
+                        }
+                        if (event.which === 40) {
+                            _S_.select.itemId += 1;
+                            changeItem();
+                        }
+
+                        if (event.which === 13) {
+                            $(that).blur();
+                            $(selectList[_S_.select.itemId]).click();
+                        }
+
+                    });
+
+                    $('.s_select_body>li').click(function () {
+                        var selectObject = $(this).parents('.s_select').children('select');
+                        selectObject.val($(this).attr('val'));
+                        selectObject.next('.s_choosen').html($(this).html());
+                        $(document).off(".s_select");
+
+                        selectObject.nextAll('.s_select_body').removeClass('selected');
+                    });
+
+                    event.preventDefault();
+
+                } else {
+                    $("body").click();
+                }
+            });
+        })();
 
         $('#new_post').click(function () {
             $('#post_dialog').addClass('flow_up')
-                .removeClass('flow_down')
-                .on('click.activeForm', function (event) {
-                    if (!$(event.target).hasClass('submit'))
-                        return false;
-                });
+                .removeClass('flow_down');
 
             $('#new_post').addClass('hide')
                 .removeClass('show');
 
             setTimeout(function () {
                 $('body').on('click.activeBody', function (event) {
-                    if (!$(event.target).hasClass('submit')) {
+                    console.log($(event.target).parents('#post_dialog'));
+                    if ($(event.target).parents('#post_dialog').length == 0) {
                         $('#post_dialog').addClass('flow_down')
-                            .removeClass('flow_up')
-                            .off('click.activeForm');
+                            .removeClass('flow_up');
 
                         $(this).off('click.activeBody');
 
@@ -194,6 +291,7 @@ $(document).ready(function () {
                     return;
                 var intervalItem = setInterval(function () {
                     if (!flying) {
+                        $('.remove_image').click();
                         magicalLocation('#/post/' + data);
                         losses.elements.submitIcon.removeClass('fly');
                         $('#post_form')[0].reset();

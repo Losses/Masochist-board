@@ -149,6 +149,30 @@
   }
 }
 
+.function_list {
+  .category {
+    @theme_color: #3e00a4;
+
+    a {
+      color: white;
+      margin: 0 3px;
+      padding: 3px 10px;
+      font-size: 11px;
+      background: @theme_color;
+      border-radius: 14px;
+
+      &:hover {
+        background: lighten(@theme_color, 10%);
+      }
+
+      &:link, &visited {
+        text-decoration: none;
+        color: white;
+      }
+    }
+  }
+}
+
 #new_post {
   background: #fd9b00;
 
@@ -199,13 +223,16 @@
     height: 100%;
     font-size: 12px;
 
-    input[name=title] {
-      width: calc(100% - 7px);
-      height: 2em;
+    .dialog_head {
       padding: 20px 20px;
+      border-bottom: 1px solid #c0b5d3;
+    }
+
+    input[name=title] {
+      width: ~"calc(100% - 67px)";
+      height: 2em;
       line-height: 1em;
       border: none;
-      border-bottom: 1px solid #c0b5d3;
       display: block;
     }
 
@@ -575,6 +602,77 @@
         height: 207px;
       }
     }
+  }
+}
+
+.s_select {
+  width: 60px;
+  position: relative;
+  select {
+    display: none;
+  }
+  .s_choosen {
+    width: 60px;
+    height: 26px;
+    padding: 0;
+    background: white;
+    border: 1px solid #CCC;
+    border-radius: 13px;
+    outline: none;
+    position: relative;
+  }
+  .s_choosen::after {
+    //content: '>';
+    top: -1px;
+    right: -1px;
+    width: 26px;
+    height: 26px;
+    color: white;
+    background: #00a2ff;
+    border-radius: 50%;
+    line-height: 26px;
+    text-align: center;
+    display: block;
+    position: absolute;
+    -webkit-transform: rotate(90deg);
+  }
+  .s_choosen:hover {
+    border: 1px solid #DDD;
+  }
+  .s_choosen:hover::after {
+    background: #0096ff;
+  }
+  .s_choosen:active {
+    border: 1px solid #BBB;
+  }
+  .s_choosen:active::after {
+    -webkit-transform: rotate(-90deg);
+  }
+  .s_select_body {
+    top: 19px;
+    left: 15px;
+    height: 0;
+    width: 90px;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: absolute;
+    li {
+      padding: 5px 10px;
+    }
+    li:hover {
+      background: #deedf1;
+    }
+    li.keyboard:hover {
+      background: transparent;
+    }
+    li.selected {
+      background: #deedf1 !important;
+    }
+  }
+  .s_select_body.selected {
+    border: 1px solid #ddd;
+    height: auto;
   }
 }
 

@@ -278,12 +278,6 @@ $(document).ready(function () {
                 return;
 
             var flying = true;
-            var postContent = {
-                'author': $('input[name="author"]').val(),
-                'title': !losses.router.postId ? $('input[name="title"]').val() : null,
-                'content': $('textarea[name="content"]').val(),
-                'upid': $('input[name="upid"]').val()
-            };
 
             losses.elements.submitIcon.blur()
                 .addClass('fly');
@@ -293,20 +287,24 @@ $(document).ready(function () {
             }, 500);
 
             $(this).ajaxSubmit(function (data) {
+                data = JSON.parse(data);
+                if (data.code != 200)
+                    return;
+
                 if (losses.router.postId)
                     location.reload(true);
-                if (data == 'false')
-                    return;
+
                 var intervalItem = setInterval(function () {
                     if (!flying) {
                         $('.remove_image').click();
-                        magicalLocation('#/post/' + data);
+                        magicalLocation('#/post/' + data.message);
                         losses.elements.submitIcon.removeClass('fly');
                         $('#post_form')[0].reset();
                         clearInterval(intervalItem);
                     }
-                }, 100);
+                }, 500);
             });
+
         });
 
         $('.icon_group').delegate('#upload_image_active', 'change', function (evt) {

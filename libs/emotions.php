@@ -25,7 +25,7 @@
 			foreach($results[0] as $result){
 				$name = explode(":",$result)[1];
 				if (isset($this->emotions[$name])){
-					$process = str_replace($result , '<i class="emoji sprite-' . $this->emotions[$name] . "></i>",$process);
+					$process = str_replace($result , '<i class="emoji sprite-' . $this->emotions[$name] . '"></i>',$process);
 				}
 			}
 

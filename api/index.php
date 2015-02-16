@@ -68,20 +68,23 @@ if (isset ($_GET['new'])) {
     'img'      =>    $name,
   ]);
 
-  $issage = $database->select('content',[
-    'sage'
-    ],[
-    'id[=]' => $_POST['upid']
-    ])[0][0] == 1;
+  if(isset($_POST['upid'])){
 
-
-  if (isset($_POST['upid']) && !$issage ) {
-    $current_time = $database->query('SELECT NOW()')->fetchAll()[0][0];
-    $database->update('content',[
-      'active_time'    =>    $current_time
+    $issage = $database->select('content',[
+      'sage'
     ],[
-      'id'             =>    $_POST['upid']
-    ]);
+      'id[=]' => $_POST['upid']
+    ])[0]['sage'] === "1";
+
+    if (!$issage) {
+      $current_time = $database->query('SELECT NOW()')->fetchAll()[0][0];
+
+      $database->update('content',[
+        'active_time' =>  $current_time
+      ],[
+        'id'          =>  $_POST['upid']
+      ]);
+    }
   }
 
   response_message(200,$result);

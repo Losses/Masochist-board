@@ -6,6 +6,7 @@ require_once('../libs/medoo.php');
 
 require_once('../libs/emotions.php');
 
+
 $emotion = new emotions();
 
 $database = new medoo([
@@ -70,12 +71,14 @@ if (isset ($_GET['new'])) {
   $issage = $database->select('content',[
     'sage'
     ],[
-        'upid[=]' => $_POST['upid']
-    ]);
+    'id[=]' => $_POST['upid']
+    ])[0][0] == 1;
 
-  if (isset($_POST['upid']) && ($_POST['upid'] != 0 && $issage == 0)) {
+
+  if (isset($_POST['upid']) && !$issage ) {
+    $current_time = $database->query('SELECT NOW()')->fetchAll()[0][0];
     $database->update('content',[
-      'active_time'    =>    date('Y-m-d H:i:s')
+      'active_time'    =>    $current_time
     ],[
       'id'             =>    $_POST['upid']
     ]);
@@ -88,11 +91,16 @@ elseif (isset ($_GET['list'])) {
 
   $_GET['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
 
+  if (isset($_GET['search'])) {
+    $search_text = $_GET['search'];
+  }
+
   $condition_cate=[];
 
   if (isset($_GET['category']))
   {
     $condition_cate['AND']['category[=]'] = (int)$_GET['category'];
+    $search_cate = $_GET['category'];
   }
 
   $condition_cate +=
@@ -114,7 +122,16 @@ elseif (isset ($_GET['list'])) {
   ], $condition_cate);
 
   echo json_encode($data);
-  
+
+  function post_search($search_text, $search_cate) {
+    $returndata = $database->select('content', ['*'],[
+      'title[~]'    =>  '%'.$search_text.'%',
+      'author[~]'   =>  '%'.$search_text.'%',
+      'content[~]'  =>  '%'.$search_text.'%',
+      'category[=]' =>  $_POST['category']
+    ]);
+}
+
   exit();
 }
 
@@ -170,16 +187,4 @@ function response_message($code,$message){
   echo json_encode($response);
 
   exit();
-}
-
-$search_text = $_GET['search'];
-$search_cate = $_GET['category'];
-
-function post_search($search_text, $search_cate) {
-  $returndata = $database->select('content', ['*'],[
-    'title[~]'    =>  '%'.$search_text.'%',
-    'author[~]'   =>  '%'.$search_text.'%',
-    'content[~]'  =>  '%'.$search_text.'%',
-    'category[=]' =>  $_POST['category']
-  ]);
 }

@@ -303,7 +303,6 @@ $(document).ready(function () {
                     location.reload(true);
 
                 function finishProcess() {
-                    console.log('!');
                     magicalLocation('#/post/' + data.message);
                     removeImage();
                     losses.elements.submitIcon.removeClass('fly');

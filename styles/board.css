@@ -135,7 +135,7 @@
   background: #c0b5d3;
 }
 .function_list {
-  margin-bottom: 15px;
+  margin: 0 10px 15px 10px;
 }
 .function_list .category a {
   color: #3e00a4;

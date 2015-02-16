@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.3.9
+-- version 4.2.11
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: 2015-02-16 11:16:53
--- 服务器版本： 10.0.16-MariaDB-log
--- PHP Version: 5.6.5
+-- Host: 127.0.0.1
+-- Generation Time: Feb 16, 2015 at 12:25 PM
+-- Server version: 5.6.21
+-- PHP Version: 5.6.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -23,19 +23,28 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- 表的结构 `category`
+-- Table structure for table `category`
 --
 
 CREATE TABLE IF NOT EXISTS `category` (
-  `ID` int(11) NOT NULL,
+`ID` int(11) NOT NULL,
   `name` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
   `theme` varchar(8) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`ID`, `name`, `theme`) VALUES
+(0, '百合', 'blue'),
+(1, '卖萌 ', 'orange'),
+(2, '搞基', 'pink');
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `content`
+-- Table structure for table `content`
 --
 
 CREATE TABLE IF NOT EXISTS `content` (
@@ -59,13 +68,7 @@ CREATE TABLE IF NOT EXISTS `content` (
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `content`
---
-ALTER TABLE `content`
-  ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`ID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -75,12 +78,7 @@ ALTER TABLE `content`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `content`
---
-ALTER TABLE `content`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

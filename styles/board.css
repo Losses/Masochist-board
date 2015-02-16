@@ -547,6 +547,9 @@ footer {
 .post_page .article_group article {
   margin: 10px;
 }
+.post_page .article_group article .emoji {
+  display: inline-block;
+}
 .post_page img.uploaded_image {
   max-width: 300px;
   max-height: 300px;

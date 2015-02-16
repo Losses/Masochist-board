@@ -268,7 +268,7 @@
       }
     }
 
-    input[name="key"] {
+    input[name="search"] {
       width: 0;
       border: 0;
       margin: 0 10px;
@@ -277,14 +277,14 @@
       transition: width 200ms;
     }
 
-    &:hover {
+    &:hover, &.extend {
       span {
         &::after {
           opacity: 1;
           width: 100%;
         }
       }
-      input[name="key"] {
+      input[name="search"] {
         width: 200px;
         opacity: 1;
       }

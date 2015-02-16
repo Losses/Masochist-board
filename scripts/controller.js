@@ -26,14 +26,14 @@ function postCtrl($http, $scope, $routeParams) {
             }
         }
 
-        if (!$routeParams.postId) {
-            getContent("api/?list&page=" + page);
-        } else if ($routeParams.categoryId) {
-            getContent("api/?category=" + $routeParams.categoryId + "&page=" + page);
+        if ($routeParams.categoryId) {
+            getContent("api/?list&category=" + $routeParams.categoryId + "&page=" + page);
         } else if ($routeParams.searchKey) {
-            getContent("api/?search=" + $routeParams.searchKey + "&page=" + page);
-        } else {
+            getContent("api/?list&search=" + $routeParams.searchKey + "&page=" + page);
+        } else if ($routeParams.postId) {
             getContent("api/?post&id=" + $routeParams.postId + "&page=" + page);
+        } else {
+            getContent("api/?list&page=" + page);
         }
 
         page++;

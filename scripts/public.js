@@ -56,6 +56,14 @@ function processPageElement(routerResult) {
         losses.elements.upidElement.attr('value', 0);
     }
 
+    if (routerResult.searchKey) {
+        $('input[name="search"]').val(routerResult.searchKey);
+
+        $('.search').addClass('extend');
+    } else {
+        $('.search').removeClass('extend');
+    }
+
     setTimeout(function () {
         losses.elements.dialogElement.show()
     }, 300);
@@ -305,6 +313,11 @@ $(document).ready(function () {
                 }, 500);
             });
 
+        });
+
+        $('body').delegate('#search', 'submit', function (event) {
+            event.preventDefault();
+            magicalLocation('#/search/' + $('input[name="search"]').val());
         });
 
         $('.icon_group').delegate('#upload_image_active', 'change', function (evt) {

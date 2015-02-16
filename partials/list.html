@@ -3,8 +3,8 @@
         <a ng-repeat="category in categories" href="#/category/{{category.id}}" class="left {{category.theme}}">{{category.name}}</a>
     </div>
     <div class="search right">
-        <form action="api/?list&search">
-            <i class="icon-search"></i><span><input name="key" type="text"/></span>
+        <form action="api/?list" action="get" id="search">
+            <i class="icon-search"></i><span><input name="search" type="text"/></span>
         </form>
     </div>
 </div>

@@ -214,7 +214,7 @@
   opacity: 0;
   display: block;
 }
-.function_list .search input[name="key"] {
+.function_list .search input[name="search"] {
   width: 0;
   border: 0;
   margin: 0 10px;
@@ -222,11 +222,13 @@
   opacity: 0;
   transition: width 200ms;
 }
-.function_list .search:hover span::after {
+.function_list .search:hover span::after,
+.function_list .search.extend span::after {
   opacity: 1;
   width: 100%;
 }
-.function_list .search:hover input[name="key"] {
+.function_list .search:hover input[name="search"],
+.function_list .search.extend input[name="search"] {
   width: 200px;
   opacity: 1;
 }

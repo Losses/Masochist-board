@@ -247,6 +247,50 @@
       }
     }
   }
+  .search {
+    i::before {
+      color: #3e00a4;
+    }
+    span {
+      position: relative;
+      &::after {
+        content: '\feff';
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 5px;
+        margin: 0 5px;
+        border: #3e00a4 solid 1px;
+        border-top: none;
+        position: absolute;
+        opacity: 0;
+        display: block;
+      }
+    }
+
+    input[name="key"] {
+      width: 0;
+      border: 0;
+      margin: 0 10px;
+      color: #20113c;
+      opacity: 0;
+      transition: width 200ms;
+    }
+
+    &:hover {
+      span {
+        &::after {
+          opacity: 1;
+          width: 100%;
+        }
+      }
+      input[name="key"] {
+        width: 200px;
+        opacity: 1;
+      }
+    }
+  }
+
 }
 
 #new_post {

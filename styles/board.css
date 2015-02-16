@@ -195,6 +195,41 @@
   text-decoration: none;
   color: white;
 }
+.function_list .search i::before {
+  color: #3e00a4;
+}
+.function_list .search span {
+  position: relative;
+}
+.function_list .search span::after {
+  content: '\feff';
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 5px;
+  margin: 0 5px;
+  border: #3e00a4 solid 1px;
+  border-top: none;
+  position: absolute;
+  opacity: 0;
+  display: block;
+}
+.function_list .search input[name="key"] {
+  width: 0;
+  border: 0;
+  margin: 0 10px;
+  color: #20113c;
+  opacity: 0;
+  transition: width 200ms;
+}
+.function_list .search:hover span::after {
+  opacity: 1;
+  width: 100%;
+}
+.function_list .search:hover input[name="key"] {
+  width: 200px;
+  opacity: 1;
+}
 #new_post {
   background: #fd9b00;
 }

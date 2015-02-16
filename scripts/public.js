@@ -140,7 +140,7 @@ $(document).ready(function () {
                 ) : (
                 (losses.elements.titleElement.val().length <= 35)
                 && (losses.elements.titleElement.val().length !== 0)
-                && (losses.elements.contentElement.val().length <= 35)
+                && (losses.elements.contentElement.val().length <= 10000)
                 && (losses.elements.contentElement.val().length !== 0)
                 );
 

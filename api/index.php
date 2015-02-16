@@ -81,19 +81,34 @@ elseif (isset ($_GET['list'])){
 
   $_GET['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
 
+  $condition_cate = [
+        'ORDER'    =>    ['active_time DESC','time DESC'],
+        'upid[=]'  =>    0,
+        'LIMIT'    =>    [($_GET['page']-1)*10, $_GET['page']*10]
+      ];
+
+  if (isset($_GET['category']))
+  {
+    $condition_cate['category[=]'] = _GET['category'];
+  }
+
   $data = $database->select('content',[
         'id',
         'title',
         'author',
-        'time'
-      ],[
-        'ORDER'    =>    ['active_time DESC','time DESC'],
-        'upid[=]'  =>    0,
-        'LIMIT'    =>    [($_GET['page']-1)*10, $_GET['page']*10]
-      ]);
+        'time',
+        'category'
+      ],$condition_cate);
 
   echo json_encode($data);
   exit();
+}
+
+elseif (isset($_GET['category'])){
+
+  $data = $database->select('category', '*');
+
+  echo json_encode($data);
 }
 
 elseif (isset ($_GET['post'])){
@@ -131,3 +146,15 @@ elseif (isset ($_GET['post'])){
   echo json_encode($data);
   exit();
 }
+
+/*
+//search功能
+$searchs = _POST('search')
+function search($searchs)
+{
+  $returndata = $database->select('content',
+    [
+
+    ])
+}
+*/

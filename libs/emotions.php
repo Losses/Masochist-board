@@ -11,8 +11,10 @@
 
 			$emotion_group = json_decode($file_emoji, true);
 
-			foreach($emotion_group as $group){
-				foreach ($group as $key=>$value){
+			foreach($emotion_group as $group)
+			{
+				foreach ($group as $key=>$value)
+				{
 					$this->emotions[$value] = $key;
 				}
 			}
@@ -21,14 +23,19 @@
 		public function phrase($text)
 		{
 			preg_match_all('/(:.*?:)/i',$text,$results);
+	
 			$process = $text;		
-			foreach($results[0] as $result){
+			
+			foreach($results[0] as $result)
+			{
 				$name = explode(":",$result)[1];
-				if (isset($this->emotions[$name])){
-					$process = str_replace($result , '<i class="emoji sprite-' . $this->emotions[$name] . '"></i>',$process);
+
+				if (isset($this->emotions[$name]))
+				{
+					$process = str_replace($result , '<i class="emoji sprite-' .
+						$this->emotions[$name] . '"></i>',$process);
 				}
 			}
-
 
 			return($process);
 		}

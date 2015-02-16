@@ -212,7 +212,6 @@ $(document).ready(function () {
 
             setTimeout(function () {
                 $('body').on('click.activeBody', function (event) {
-                    console.log($(event.target).parents('#post_dialog'));
                     if ($(event.target).parents('#post_dialog').length == 0) {
                         $('#post_dialog').addClass('flow_down')
                             .removeClass('flow_up');

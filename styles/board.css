@@ -274,14 +274,16 @@
   font-size: 12px;
 }
 #post_dialog form .dialog_head {
+  width: 100%;
   padding: 20px 20px;
   border-bottom: 1px solid #c0b5d3;
+  display: flex;
+  align-content: flex-start;
 }
-#post_dialog form #dialog_head {
-  display: none;
+#post_dialog form .s_select {
+  margin-right: 20px;
 }
 #post_dialog form input[name=title] {
-  width: calc(100% - 67px);
   height: 2em;
   line-height: 1em;
   border: none;
@@ -588,14 +590,14 @@
   height: 207px;
 }
 .s_select {
-  width: 60px;
+  width: auto;
   position: relative;
 }
 .s_select select {
   display: none;
 }
 .s_select .s_choosen {
-  width: 60px;
+  width: auto;
   height: 26px;
   padding: 0;
   text-align: left;
@@ -605,24 +607,19 @@
   position: relative;
 }
 .s_select .s_choosen::after {
-  top: -1px;
-  right: -1px;
-  width: 26px;
-  height: 26px;
-  color: white;
-  background: #00a2ff;
-  border-radius: 50%;
-  line-height: 26px;
-  text-align: center;
+  content: '\feff';
+  top: 13px;
+  right: -9px;
+  width: 0px;
+  height: 0px;
+  border-width: 4px;
+  border-style: solid;
+  border-color: #2c184f transparent transparent transparent;
   display: block;
   position: absolute;
-  -webkit-transform: rotate(90deg);
 }
 .s_select .s_choosen:hover::after {
-  background: #0096ff;
-}
-.s_select .s_choosen:active::after {
-  -webkit-transform: rotate(-90deg);
+  border-color: #c0b5d3 transparent transparent transparent;
 }
 .s_select .s_select_body {
   top: 22px;

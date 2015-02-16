@@ -168,7 +168,7 @@ function sSelect() {
             event.preventDefault();
 
         } else {
-            $("body").click();
+            $(".dialog_head").click();
         }
     });
 }

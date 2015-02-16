@@ -153,16 +153,6 @@ elseif (isset ($_GET['post'])) {
   exit();
 }
 
-/*
-//search功能
-$searchs = _POST('search')
-function search($searchs) {
-  $returndata = $database->select('content',
-    [
-
-    ])
-}
-*/
 function response_message($code,$message){
   $response = [
     'code'    =>    $code,
@@ -173,3 +163,17 @@ function response_message($code,$message){
 
   exit();
 }
+
+//search功能
+//$searchs = $_GET['search']
+
+/*
+function search($searchs, $_POST['category']) {
+  $returndata = $database->select('content', ['*'],[
+    'title[~]'    =>  '%'.$searchs.'%',
+    'author[~]'   =>  '%'.$searchs.'%',
+    'content[~]'  =>  '%'.$searchs.'%',
+    'category'
+  ]);
+}
+*/

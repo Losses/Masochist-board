@@ -317,10 +317,9 @@ $(document).ready(function () {
         })();
 
         $.post('api/?manage', {'check': ''}, function (data) {
-            console.log(data);
-            //var response = JSON.parse(data);
+            var response = JSON.parse(data);
 
-            losses.logined = (data.code == 200);
+            losses.logined = (response.message);
 
             if (losses.logined)
                 $('body').addClass('manager');

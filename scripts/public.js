@@ -200,6 +200,8 @@ $(document).ready(function () {
             /*lightbox*/
             $('body').append('<section class="lightbox"><div class="darkness"><img src="" class="image" /></section>')
                 .delegate('.lbox', 'click', function () {
+                    var scale = 1;
+
                     var that = this
                         , imageElement = $('.lightbox .image');
 
@@ -213,9 +215,67 @@ $(document).ready(function () {
                     $(this).addClass('up');
                     $('.lightbox').addClass('up');
 
-                    $('.darkness').one('click', function () {
-                        $(that).removeClass('up');
-                        $('.lightbox').removeClass('up');
+                    $(window).bind('mousewheel.lightboxwheel', function (event, delta) {
+                        scale += delta * 0.06;
+
+                        imageElement.css('transform', 'scale(' + scale + ')');
+
+                        event.preventDefault();
+                    });
+
+                    var moving = false;
+
+                    imageElement.on('mousedown', function (event) {
+                        event.preventDefault();
+                        var x = event.pageX
+                            , y = event.pageY
+                            , imageX = parseInt(imageElement.css('margin-left'))
+                            , imageY = parseInt(imageElement.css('margin-top'))
+                            , frame = false
+                            , intervalEvent;
+
+                        imageElement.css('cursor', 'move');
+
+                        $(window).on('mousemove.lmove', function (event) {
+                            if (frame)
+                                return;
+
+                            var moveX = x - event.pageX
+                                , moveY = y - event.pageY;
+
+                            moving = true;
+
+                            imageElement.css({
+                                'margin-left': imageX - moveX,
+                                'margin-top': imageY - moveY
+                            });
+
+                            frame = true;
+
+                            setTimeout(function () {
+                                frame = false
+                            }, 30);
+                        })
+                            .on('mouseup.lup', function () {
+                                imageElement.css('cursor', 'default');
+                                $(this).off('mousemove.lmove')
+                                    .off('mouseup.lup');
+                            });
+                    });
+
+                    $('.darkness').on('click.lclick', function () {
+                        if (moving) {
+                            moving = false;
+                        } else {
+                            $(that).removeClass('up');
+                            $('.lightbox').removeClass('up');
+                            imageElement.attr('src', '')
+                                .css({
+                                    'margin-top': 0,
+                                    'margin-left': 0,
+                                    'transform': 'default'
+                                });
+                        }
                     });
                 });
         })();
@@ -451,5 +511,4 @@ $(document).ready(function () {
 
         setTimeout(checkSumitable, 1000);
     }
-)
-;
+);

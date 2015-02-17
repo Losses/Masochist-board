@@ -815,9 +815,6 @@ footer {
     height: calc(100% - 225px) !important;
   }
 }
-.lightbox * {
-  transition: all 400ms;
-}
 .lightbox .darkness {
   top: 0;
   left: 0;
@@ -827,6 +824,7 @@ footer {
   position: fixed;
   opacity: 0;
   visibility: hidden;
+  transition: opacity 400ms;
 }
 .lightbox .image {
   top: 50%;
@@ -839,6 +837,7 @@ footer {
   opacity: 0;
   visibility: hidden;
   position: absolute;
+  transition: opacity 400ms, transform 400ms;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 .lightbox.up .darkness {

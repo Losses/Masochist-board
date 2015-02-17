@@ -960,9 +960,6 @@ footer {
 }
 
 .lightbox {
-  * {
-    transition: all 400ms;
-  }
   .darkness {
     top: 0;
     left: 0;
@@ -972,6 +969,7 @@ footer {
     position: fixed;
     opacity: 0;
     visibility: hidden;
+    transition: opacity 400ms;
   }
 
   .image {
@@ -985,6 +983,7 @@ footer {
     opacity: 0;
     visibility: hidden;
     position: absolute;
+    transition: opacity 400ms, transform 400ms;
     .drop_shadow(3);
   }
 

@@ -347,6 +347,13 @@ $(document).ready(function () {
                 });
             }, 100);
 
+        }).mouseenter(function () {
+            if (losses.logined) {
+                $('.manage_menu').addClass('extend')
+                    .one('mouseleave', function () {
+                        $(this).removeClass('extend');
+                    });
+            }
         });
 
         $('.checkbox_rebuild>input').each(function () {

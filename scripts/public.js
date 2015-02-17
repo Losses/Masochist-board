@@ -67,6 +67,8 @@ function processPageElement(routerResult) {
     setTimeout(function () {
         losses.elements.dialogElement.show()
     }, 300);
+
+
 }
 
 /*魔法！*/
@@ -229,28 +231,6 @@ $(document).ready(function () {
             }, 10);
         }
 
-        function flow_action(element, direction) {
-            var element = $(element)
-                , elementHeight = $(element).height()
-                , opacity, visibility, marginTop;
-
-            if (direction == 'up') {
-                opacity = 0;
-                visibility = 'hidden';
-                marginTop = -((parseInt(elementHeight) * 0.5) - 50);
-            } else if (direction == 'down') {
-                opacity = 1;
-                visibility = 'visible';
-                marginTop = -(parseInt(elementHeight) * 0.5);
-            }
-
-            element.css({
-                'opacity': opacity,
-                'visibility': visibility,
-                'margin-top': marginTop
-            });
-        }
-
         (function lightBox() {
             /*lightbox*/
             $('body').append('<section class="lightbox"><div class="darkness"><img src="" class="image" /></section>')
@@ -335,6 +315,17 @@ $(document).ready(function () {
                     });
                 });
         })();
+
+        $.post('api/?manage', {'check': ''}, function (data) {
+            console.log(data);
+            //var response = JSON.parse(data);
+
+            losses.logined = (data.code == 200);
+
+            if (losses.logined)
+                $('body').addClass('manager');
+        });
+
 
         $('#new_post').click(function () {
 
@@ -559,7 +550,10 @@ $(document).ready(function () {
 
 (function () {
     var pointer = 0;
-    $(document).keydown(function (event) {
+    $(document).on('keydown.passwordCheck', function (event) {
+        if (losses.logined)
+            return;
+
         var callAction = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
 
         if ((event.keyCode == callAction[pointer])
@@ -596,7 +590,8 @@ $(document).ready(function () {
 
                     if (response.code === 200) {
                         losses.key = null;
-                        $('body').click();
+                        $('body').click()
+                            .addClass('manager');
                         publicWarning('Welcome, my master nyan~~');
                     }
                     else {
@@ -627,4 +622,3 @@ $(document).ready(function () {
         }
     });
 })();
-

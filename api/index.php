@@ -1,24 +1,23 @@
 <?php
 
-require_once('../config.php');
+require_once ('../config.php');
 
-require_once('../libs/medoo.php');
+require_once ('../libs/medoo.php');
 
-require_once('../libs/emotions.php');
-
+require_once ('../libs/emotions.php');
 
 $emotion = new emotions();
 
 $database = new medoo([
-  'database_type'  =>    'mysql',
-  'database_name'  =>    DB_NAME,
-  'server'         =>    DB_HOST,
-  'username'       =>    DB_USER,
-  'password'       =>    DB_PASSWORD,
-  'charset'        =>    'utf8',
-  'port'           =>    DB_PORT,
-  'option'         =>    [
-                            PDO::ATTR_CASE => PDO::CASE_NATURAL
+  'database_type' =>  'mysql',
+  'database_name' =>  DB_NAME,
+  'server'        =>  DB_HOST,
+  'username'      =>  DB_USER,
+  'password'      =>  DB_PASSWORD,
+  'charset'       =>  'utf8',
+  'port'          =>  DB_PORT,
+  'option'        =>  [
+                        PDO::ATTR_CASE => PDO::CASE_NATURAL
 ]]);
 
 if (isset ($_GET['new'])) {
@@ -27,12 +26,12 @@ if (isset ($_GET['new'])) {
     ? $_POST['category']  : 0;
   $_POST['title']     = isset($_POST['title'])    ?   $_POST['title'] : '';
 
-  if(($_POST['upid']  ==  0) && ($_POST['title'] == '')) {
+  if (($_POST['upid'] ==  0)  &&  ($_POST['title']  ==  '')) {
     response_message(403, 'You need a title!');
     exit();
   }
 
-  if(count($_FILES) > 0) {
+  if (count($_FILES) > 0) {
     if ((($_FILES['image']['type'] == 'image/gif')
       || ($_FILES['image']['type'] == 'image/jpeg')
       || ($_FILES['image']['type'] == 'image/pjpeg')
@@ -40,7 +39,7 @@ if (isset ($_GET['new'])) {
       && ($_FILES['image']['size'] < 50000000)) {
       if ($_FILES['image']['error']) {
         response_message(500, 'Internal Server Error!');
-      }else{
+      }else {
         move_uploaded_file($_FILES['image']['tmp_name'],
           '../upload/' . $_FILES['image']['name']);
         $retype = explode('.', '../upload/' . $_FILES['image']['name']);
@@ -49,33 +48,33 @@ if (isset ($_GET['new'])) {
         rename('../upload/' . $_FILES['image']['name'], '../upload/' . $name);
       }
     }
-  }else{
+  }else {
     $name = null;
   }
 
   $insert_sql = [
-    'author'   =>    $_POST['author'],
-    'title'    =>    $_POST['title'],
-    'content'  =>    htmlspecialchars($_POST['content']),
-    'upid'     =>    $_POST['upid'],
-    'img'      =>    $name,
+    'author'  =>  $_POST['author'],
+    'title'   =>  $_POST['title'],
+    'content' =>  htmlspecialchars($_POST['content']),
+    'upid'    =>  $_POST['upid'],
+    'img'     =>  $name,
   ];
 
   if ($_POST['upid'] == 0) {
-    $insert_sql +=  ['category' => $_POST['category']];
+    $insert_sql +=  ['category' =>  $_POST['category']];
   }
 
   if (isset($_POST['sage'])) {
-    $insert_sql += ['sage' => $_POST['sage']];
+    $insert_sql +=  ['sage' =>  $_POST['sage']];
   }
 
   $result = $database->insert('content', $insert_sql);
 
-  if(isset($_POST['upid'])){
+  if (isset($_POST['upid']) && $_POST['upid'] != 0) {
     $issage = $database->select('content',[
       'sage'
     ],[
-      'id[=]' => $_POST['upid']
+      'id[=]' =>  $_POST['upid']
     ])[0]['sage'] === '1';
 
     if ($issage) {
@@ -87,12 +86,11 @@ if (isset ($_GET['new'])) {
       ]);
     }
   }
-  
+
   response_message(200,$result);
 }
 
 elseif (isset ($_GET['list'])) {
-
   $_GET['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
 
   function post_search($search_text) {
@@ -106,26 +104,23 @@ elseif (isset ($_GET['list'])) {
 
   if (isset($_GET['search'])) {
     $search_text = $_GET['search'];
-
     echo json_encode(post_search($search_text));
-
     exit();
   }
 
-  $condition_cate=[];
+  $condition_sql = [];
 
-  if (isset($_GET['category']))
-  {
-    $condition_cate['AND']['category[=]'] = (int)$_GET['category'];
+  if (isset($_GET['category'])) {
+    $condition_sql['AND']['category[=]'] = (int)$_GET['category'];
   }
 
-  $condition_cate +=
+  $condition_sql +=
   [
-        'AND'      =>    ['upid[=]' =>  0],
+        'AND'     =>    ['upid[=]' =>  0],
         
-        'ORDER'    =>    ['active_time DESC','time DESC'],
+        'ORDER'   =>    ['active_time DESC','time DESC'],
         
-        'LIMIT'    =>    [($_GET['page']-1)*10, $_GET['page']*10]
+        'LIMIT'   =>    [($_GET['page']-1)*10, $_GET['page']*10]
   ];
 
   $data = $database->select('content',[
@@ -135,7 +130,7 @@ elseif (isset ($_GET['list'])) {
     'time',
     'category',
     'sage'
-  ], $condition_cate);
+  ], $condition_sql);
 
   echo json_encode($data);
 
@@ -143,14 +138,12 @@ elseif (isset ($_GET['list'])) {
 }
 
 elseif (isset($_GET['category'])) {
-
   $data = $database->select('category', '*');
 
   echo json_encode($data);
 }
 
 elseif (isset ($_GET['post'])) {
-
   require_once('../libs/parsedown.php');
 
   $Parsedown = new Parsedown();
@@ -158,40 +151,68 @@ elseif (isset ($_GET['post'])) {
   $_GET['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
 
   $data = $database->select('content',[
-      'id',
-      'title',
-      'content',
-      'author',
-      'time',
-      'img'
+    'id',
+    'title',
+    'content',
+    'author',
+    'time',
+    'img'
     ],[
-      'OR'       =>    [
-                     'upid[=]'      =>    $_GET['id'],
-                     'AND'          =>    [
-                                               'upid[=]'    =>    0,
-                                               'id[=]'      =>    $_GET['id']
-                                          ]
-                ],
-      'ORDER'    =>    ['upid','id'],
-      'LIMIT'    =>    [($_GET['page']-1)*10, $_GET['page']*10]
-    ]);
+      'OR'        =>  [
+        'upid[=]' =>  $_GET['id'],
+        'AND'     =>  [
+        'upid[=]' =>  0,
+        'id[=]'   =>  $_GET['id']
+        ]],
+      'ORDER'     =>  ['upid','id'],
+      'LIMIT'     =>  [($_GET['page'] - 1) * 10, $_GET['page'] * 10]
+  ]);
 
   $data_length = count($data);
-  for ($i = 0; $i < $data_length; $i++){
+
+  for ($i = 0; $i < $data_length; $i++) {
     $data[$i]['content'] = $emotion->phrase($Parsedown->text($data[$i]['content']));
   }
 
   echo json_encode($data);
+
   exit();
 }
-elseif ($_POST['manager']) {
+
+elseif (isset($_GET['manage'])) {
+  session_start();
+
+  if (isset($_POST['key'])) {
+    $_SESSION['key'] = md5(md5(date('Y-m-d H:i:s')) . UR_SALT);
+    response_message(200, $_SESSION['key']);
+  }elseif (isset($_POST['password'])) {
+    if (!isset($_SESSION['key'])) {
+      response_message(403,'You need a key!');
+    }else {
+      if(md5(md5(UR_PASSWORD) . $_SESSION['key'])  ==  $_POST['password']) {
+        $_SESSION['logined'] = true;
+        unset($_SESSION['logined']);
+        response_message(200, 'Login success!');
+      }else {
+        $_SESSION['logined'] = false;
+        response_message(403, 'Wrong password!');
+      }
+    }
+  }elseif (isset($_POST['check'])) {
+    if ($_SESSION['logined'] == true) {
+      response_message(200, true);
+    }else {
+      response_message(200, false);
+    }
+  }
+}
 
 }
 
-function response_message($code,$message){
+function response_message($code,$message) {
   $response = [
-    'code'    =>    $code,
-    'message' =>    $message
+    'code'    =>  $code,
+    'message' =>  $message
   ];
 
   echo json_encode($response);

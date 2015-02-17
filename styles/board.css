@@ -43,6 +43,17 @@
     visibility: hidden;
   }
 }
+@keyframes shake {
+  0% {
+    left: 49%;
+  }
+  50% {
+    left: 50%;
+  }
+  100% {
+    left: 51%;
+  }
+}
 .card {
   background: white;
   border-radius: 3px;
@@ -345,6 +356,9 @@
   right: -30px;
   bottom: 28px;
   opacity: 0;
+}
+#post_dialog form button[type=submit].shake {
+  animation: shake 20ms 14 alternate;
 }
 #post_dialog form .icon-menu {
   right: 10px;
@@ -778,6 +792,9 @@
   visibility: visible;
   transition: all 300ms;
 }
+.manage.shake {
+  animation: shake 20ms 14 alternate;
+}
 .manage > input {
   width: 100%;
   height: 100%;
@@ -786,6 +803,26 @@
   text-align: center;
   font-size: 20px;
   line-height: 50px;
+}
+.public_warning {
+  left: 0;
+  width: 100%;
+  bottom: 150px;
+  padding: 15px 0;
+  color: white;
+  font-size: 18px;
+  line-height: 20px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.6);
+  display: block;
+  opacity: 0;
+  transition: all 300ms;
+  position: fixed;
+  visibility: hidden;
+}
+.public_warning.show {
+  opacity: 1;
+  visibility: visible;
 }
 footer {
   width: 100%;

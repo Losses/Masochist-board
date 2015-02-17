@@ -181,6 +181,15 @@ function sSelect() {
     });
 }
 
+function publicWarning(text) {
+    losses.elements.warningElement.html(text)
+        .addClass('show');
+
+    setTimeout(function () {
+        losses.elements.warningElement.removeClass('show');
+    }, 2000);
+}
+
 $(document).ready(function () {
         losses.elements = {
             submitable: false,
@@ -190,7 +199,8 @@ $(document).ready(function () {
             titleElement: $('input[name="title"]'),
             contentElement: $('textarea[name="content"]'),
             upidElement: $('input[name="upid"]'),
-            submitIcon: $('button[type="submit"]')
+            submitIcon: $('button[type="submit"]'),
+            warningElement: $('.public_warning')
         };
         losses.event = {
             menuTimeout: null
@@ -569,13 +579,27 @@ $(document).ready(function () {
                 var response = JSON.parse(data);
                 if (response.code === 200)
                     losses.key = response.message;
+                else {
+                    losses.key = null;
+                    publicWarning(response.message);
+                }
             });
-
-            /*当未正确获得key时的代码需要补充*/
 
             manageElement.on('submit.lsubmit', function () {
                 $.post('api/?manage', {'password': md5(md5(inputElement.val()) + losses.key)}, function (data) {
-                    console.log(data);
+                    var response = JSON.parse(data);
+                    if (response.code === 200)
+                        losses.key = response.message;
+                    else {
+                        manageElement.removeClass('shake');
+
+                        setTimeout(function () {
+                            manageElement.addClass('shake');
+                        }, 10);
+
+                        losses.key = null;
+                        publicWarning(response.message);
+                    }
                 });
             });
 

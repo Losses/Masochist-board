@@ -37,9 +37,11 @@ CREATE TABLE IF NOT EXISTS `category` (
 --
 
 INSERT INTO `category` (`id`, `name`, `theme`) VALUES
-(1, '卖萌 ', 'orange'),
-(2, '搞基', 'pink'),
-(4, '百合', 'blue');
+('1', '兄贵', 'red'),
+('2', '卖萌', 'orange'),
+('3', '搞基', 'pink'),
+('4', '天空', 'green'),
+('5', '百合', 'blue');
 
 -- --------------------------------------------------------
 

@@ -77,3 +77,10 @@
 .icon-other:before { content: '\e818'; } /* '' */
 .icon-cancel:before { content: '\e819'; } /* '' */
 .icon-search:before { content: '\e81a'; } /* '' */
+
+.icon-trash:before { content: '\e81b'; } /* '' */
+.icon-lock:before { content: '\e81c'; } /* '' */
+.icon-eye:before { content: '\e81d'; } /* '' */
+.icon-eye-off:before { content: '\e81e'; } /* '' */
+.icon-hammer:before { content: '\e81f'; } /* '' */
+.icon-sage:before { content: '\e820'; } /* '' */

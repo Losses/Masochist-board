@@ -196,6 +196,51 @@ $(document).ready(function () {
             menuTimeout: null
         };
 
+        function checkSumitable() {
+            setTimeout(function () {
+                if (!losses.router)
+                    return;
+                losses.elements.submitable = losses.router.postId ? (
+                (losses.elements.contentElement.val().length <= 35)
+                && (losses.elements.contentElement.val().length !== 0)
+                ) : (
+                (losses.elements.titleElement.val().length <= 35)
+                && (losses.elements.titleElement.val().length !== 0)
+                && (losses.elements.contentElement.val().length <= 10000)
+                && (losses.elements.contentElement.val().length !== 0)
+                );
+
+                if (!losses.elements.submitable) {
+                    losses.elements.submitIcon.addClass('lock');
+                }
+                else {
+                    losses.elements.submitIcon.removeClass('lock');
+                }
+            }, 10);
+        }
+
+        function flow_action(element, direction) {
+            var element = $(element)
+                , elementHeight = $(element).height()
+                , opacity, visibility, marginTop;
+
+            if (direction == 'up') {
+                opacity = 0;
+                visibility = 'hidden';
+                marginTop = -((parseInt(elementHeight) * 0.5) - 50);
+            } else if (direction == 'down') {
+                opacity = 1;
+                visibility = 'visible';
+                marginTop = -(parseInt(elementHeight) * 0.5);
+            }
+
+            element.css({
+                'opacity': opacity,
+                'visibility': visibility,
+                'margin-top': marginTop
+            });
+        }
+
         (function lightBox() {
             /*lightbox*/
             $('body').append('<section class="lightbox"><div class="darkness"><img src="" class="image" /></section>')
@@ -282,8 +327,8 @@ $(document).ready(function () {
         })();
 
         $('#new_post').click(function () {
-            $('#post_dialog').addClass('flow_up')
-                .removeClass('flow_down');
+
+            $('#post_dialog').addClass('flow_up');
 
             $('#new_post').addClass('hide')
                 .removeClass('show');
@@ -291,8 +336,7 @@ $(document).ready(function () {
             setTimeout(function () {
                 $('body').on('click.activeBody', function (event) {
                     if ($(event.target).parents('#post_dialog').length == 0) {
-                        $('#post_dialog').addClass('flow_down')
-                            .removeClass('flow_up');
+                        $('#post_dialog').removeClass('flow_up');
 
                         $(this).off('click.activeBody');
 
@@ -316,29 +360,6 @@ $(document).ready(function () {
                 }, 10);
             });
         });
-
-        function checkSumitable() {
-            setTimeout(function () {
-                if (!losses.router)
-                    return;
-                losses.elements.submitable = losses.router.postId ? (
-                (losses.elements.contentElement.val().length <= 35)
-                && (losses.elements.contentElement.val().length !== 0)
-                ) : (
-                (losses.elements.titleElement.val().length <= 35)
-                && (losses.elements.titleElement.val().length !== 0)
-                && (losses.elements.contentElement.val().length <= 10000)
-                && (losses.elements.contentElement.val().length !== 0)
-                );
-
-                if (!losses.elements.submitable) {
-                    losses.elements.submitIcon.addClass('lock');
-                }
-                else {
-                    losses.elements.submitIcon.removeClass('lock');
-                }
-            }, 10);
-        }
 
         var MutationObserver = window.MutationObserver
             , postArea = losses.elements.dialogElement[0]

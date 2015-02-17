@@ -1,52 +1,4 @@
 @import url('webfonts/board.css');
-@keyframes flow_up_f {
-  from {
-    margin-top: -200px;
-    opacity: 0;
-    visibility: hidden;
-  }
-  to {
-    margin-top: -250px;
-    opacity: 1;
-    visibility: visible;
-  }
-}
-@keyframes flow_down_f {
-  to {
-    margin-top: -200px;
-    opacity: 0;
-    visibility: hidden;
-  }
-  from {
-    margin-top: -250px;
-    opacity: 1;
-    visibility: visible;
-  }
-}
-@keyframes flow_up_f_inpost {
-  from {
-    margin-top: -100px;
-    opacity: 0;
-    visibility: hidden;
-  }
-  to {
-    margin-top: -150px;
-    opacity: 1;
-    visibility: visible;
-  }
-}
-@keyframes flow_down_f_inpost {
-  to {
-    margin-top: -100px;
-    opacity: 0;
-    visibility: hidden;
-  }
-  from {
-    margin-top: -150px;
-    opacity: 1;
-    visibility: visible;
-  }
-}
 @keyframes upload_icon_error_gray {
   0% {
     background: #607d8b;
@@ -331,15 +283,15 @@
   overflow: hidden;
   position: fixed;
   z-index: 5;
+  transition: all 300ms;
   margin-top: -200px;
   opacity: 0;
   visibility: hidden;
 }
 #post_dialog.flow_up {
-  animation: flow_up_f 300ms ease-in-out forwards;
-}
-#post_dialog.flow_down {
-  animation: flow_down_f 300ms ease-in-out forwards;
+  margin-top: -250px;
+  opacity: 1;
+  visibility: visible;
 }
 #post_dialog form {
   width: 100%;
@@ -810,8 +762,8 @@ footer {
 }
 .post_page #post_dialog {
   height: 300px;
-  margin-top: -150px;
-  transition: height, margin 300ms;
+  margin-top: -100px;
+  transition: height 300ms, margin 300ms, opacity 300ms, margin-top 300ms;
   opacity: 0;
   visibility: hidden;
 }
@@ -829,10 +781,9 @@ footer {
   height: 300px;
 }
 .post_page #post_dialog.flow_up {
-  animation: flow_up_f_inpost 300ms ease-in-out forwards;
-}
-.post_page #post_dialog.flow_down {
-  animation: flow_down_f_inpost 300ms ease-in-out forwards;
+  margin-top: -150px;
+  opacity: 1;
+  visibility: visible;
 }
 .post_page #new_post > i::before {
   content: '\e80c';

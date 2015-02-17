@@ -189,7 +189,7 @@
     .category {
       top: -2px;
       margin: 0 3px;
-      padding: 3px 8px;
+      padding: 2px 7px;
       color: white;
       border-radius: 10px;
       font-size: 11px;
@@ -203,6 +203,19 @@
       line-height: 20px;
       text-decoration: none;
       color: #20113c;
+
+      .sage {
+        top: -3px;
+        font-size: 11px;
+        margin: 0 0 0 5px;
+        padding: 0 5px;
+        color: red;
+        border: red 1px solid;
+        border-radius: 14px;
+        position: relative;
+        transition: all 200ms;
+        display:inline-block;
+      }
 
       &:hover {
         color: #3e00a4;
@@ -229,6 +242,10 @@
 
         &:hover {
           color: #5c00ff;
+        }
+
+        .sage {
+          transform: rotate(5deg);
         }
       }
 

@@ -105,7 +105,7 @@
 #main .post .category {
   top: -2px;
   margin: 0 3px;
-  padding: 3px 8px;
+  padding: 2px 7px;
   color: white;
   border-radius: 10px;
   font-size: 11px;
@@ -160,6 +160,18 @@
   text-decoration: none;
   color: #20113c;
 }
+#main .post .title .sage {
+  top: -3px;
+  font-size: 11px;
+  margin: 0 0 0 5px;
+  padding: 0 5px;
+  color: red;
+  border: red 1px solid;
+  border-radius: 14px;
+  position: relative;
+  transition: all 200ms;
+  display: inline-block;
+}
 #main .post .title:hover {
   color: #3e00a4;
 }
@@ -183,6 +195,9 @@
 }
 #main .post:hover .title:hover {
   color: #5c00ff;
+}
+#main .post:hover .title .sage {
+  transform: rotate(5deg);
 }
 #main .post:hover .time {
   background: #c0b5d3;

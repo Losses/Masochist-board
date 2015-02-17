@@ -17,19 +17,17 @@ $database = new medoo([
   'password'       =>    DB_PASSWORD,
   'charset'        =>    'utf8',
   'port'           =>    DB_PORT,
-
   'option'         =>    [
                             PDO::ATTR_CASE => PDO::CASE_NATURAL
-                         ]
-]);
+]]);
 
 if (isset ($_GET['new'])) {
-  $_POST['upid']     = isset($_POST['upid'])  ? $_POST['upid']  : 0;
-  $_POST['category'] = isset($_POST['category']) && ($_POST['upid'] == 0)
-    ? $_POST['category'] : 0;
-  $_POST['title']    = isset($_POST['title']) ? $_POST['title'] : '';
+  $_POST['upid']      = isset($_POST['upid'])     ?   $_POST['upid']  : 0;
+  $_POST['category']  = isset($_POST['category']) &&  ($_POST['upid'] == 0)
+    ? $_POST['category']  : 0;
+  $_POST['title']     = isset($_POST['title'])    ?   $_POST['title'] : '';
 
-  if(($_POST['upid'] == 0) && ($_POST['title'] == '')) {
+  if(($_POST['upid']  ==  0) && ($_POST['title'] == '')) {
     response_message(403, 'You need a title!');
     exit();
   }
@@ -39,46 +37,49 @@ if (isset ($_GET['new'])) {
       || ($_FILES['image']['type'] == 'image/jpeg')
       || ($_FILES['image']['type'] == 'image/pjpeg')
       || ($_FILES['image']['type'] == 'image/png'))
-      && ($_FILES['image']['size'] < 50000000))
-    {
-      if ($_FILES['image']['error'])
-      {
+      && ($_FILES['image']['size'] < 50000000)) {
+      if ($_FILES['image']['error']) {
         response_message(500, 'Internal Server Error!');
-      }
-      else{
+      }else{
         move_uploaded_file($_FILES['image']['tmp_name'],
           '../upload/' . $_FILES['image']['name']);
-
         $retype = explode('.', '../upload/' . $_FILES['image']['name']);
-
         $name = md5(md5_file('../upload/' . $_FILES['image']['name']) .
           date('Y-m-d H:i:s')) . '.' . $retype[count($retype) - 1];
         rename('../upload/' . $_FILES['image']['name'], '../upload/' . $name);
       }
     }
   }else{
-  $name = null;
+    $name = null;
   }
 
-  $result = $database->insert('content',[
+  $insert_sql = [
     'author'   =>    $_POST['author'],
     'title'    =>    $_POST['title'],
     'content'  =>    htmlspecialchars($_POST['content']),
     'upid'     =>    $_POST['upid'],
     'img'      =>    $name,
-  ]);
+  ];
+
+  if ($_POST['upid'] == 0) {
+    $insert_sql +=  ['category' => $_POST['category']];
+  }
+
+  if (isset($_POST['sage'])) {
+    $insert_sql += ['sage' => $_POST['sage']];
+  }
+
+  $result = $database->insert('content', $insert_sql);
 
   if(isset($_POST['upid'])){
-
     $issage = $database->select('content',[
       'sage'
     ],[
       'id[=]' => $_POST['upid']
-    ])[0]['sage'] === "1";
+    ])[0]['sage'] === '1';
 
-    if (!$issage) {
+    if ($issage) {
       $current_time = $database->query('SELECT NOW()')->fetchAll()[0][0];
-
       $database->update('content',[
         'active_time' =>  $current_time
       ],[
@@ -86,7 +87,7 @@ if (isset ($_GET['new'])) {
       ]);
     }
   }
-
+  
   response_message(200,$result);
 }
 
@@ -94,8 +95,21 @@ elseif (isset ($_GET['list'])) {
 
   $_GET['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
 
+  function post_search($search_text) {
+    $returndata = $database->select('content', '*',[
+      'OR'          =>  [
+      'title[~]'    =>  '%'.$search_text.'%',
+      'author[~]'   =>  '%'.$search_text.'%',
+      'content[~]'  =>  '%'.$search_text.'%'
+    ]]);
+  }
+
   if (isset($_GET['search'])) {
     $search_text = $_GET['search'];
+
+    echo json_encode(post_search($search_text));
+
+    exit();
   }
 
   $condition_cate=[];
@@ -103,7 +117,6 @@ elseif (isset ($_GET['list'])) {
   if (isset($_GET['category']))
   {
     $condition_cate['AND']['category[=]'] = (int)$_GET['category'];
-    $search_cate = $_GET['category'];
   }
 
   $condition_cate +=
@@ -125,15 +138,6 @@ elseif (isset ($_GET['list'])) {
   ], $condition_cate);
 
   echo json_encode($data);
-
-  function post_search($search_text, $search_cate) {
-    $returndata = $database->select('content', ['*'],[
-      'title[~]'    =>  '%'.$search_text.'%',
-      'author[~]'   =>  '%'.$search_text.'%',
-      'content[~]'  =>  '%'.$search_text.'%',
-      'category[=]' =>  $_POST['category']
-    ]);
-}
 
   exit();
 }
@@ -179,6 +183,9 @@ elseif (isset ($_GET['post'])) {
 
   echo json_encode($data);
   exit();
+}
+elseif ($_POST['manager']) {
+
 }
 
 function response_message($code,$message){

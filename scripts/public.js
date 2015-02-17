@@ -39,9 +39,10 @@ mKnowledge.filter('trustHtml', function ($sce) {
     }
 });
 
-var losses = {router: {}, scope: {}, data: {}};
+var losses = {router: {}, scope: {}, data: {}, multiSelect: []};
 
 function processPageElement(routerResult) {
+    losses.multiSelect = [];
     var body = $('body');
 
     losses.elements.dialogElement.hide();
@@ -424,6 +425,25 @@ $(document).ready(function () {
         $('body').delegate('#search', 'submit', function (event) {
             event.preventDefault();
             magicalLocation('#/search/' + $('input[name="search"]').val());
+        }).delegate('.post', 'click', function () {
+            var that = $(this);
+
+            if (!losses.logined)
+                return;
+
+            var multiSelectElement = $(this).children('.multi_select');
+            console.log(multiSelectElement.is(':checked'));
+            setTimeout(function () {
+                if (multiSelectElement.is(':checked')) {
+                    $(that).removeClass('selected');
+                    losses.multiSelect.push(multiSelectElement.attr('data-post-id'));
+                    multiSelectElement.attr("checked", false);
+                } else {
+                    $(that).addClass('selected');
+                    losses.multiSelect.splice($.inArray('b', losses.multiSelect), multiSelectElement.attr('data-post-id'));
+                    multiSelectElement.attr("checked", true);
+                }
+            }, 100);
         });
 
         $('.icon_group').delegate('#upload_image_active', 'change', function (evt) {

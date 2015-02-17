@@ -148,6 +148,13 @@
 
 #main {
   margin: 15px 30px;
+
+  .post_list {
+    .multi_select {
+      display: none;
+    }
+  }
+
   .post {
     padding: 10px;
     border-bottom: 1px dashed #c0b5d3;
@@ -205,7 +212,7 @@
       display: block;
     }
 
-    &:hover {
+    &:hover, &.selected {
       background: #ece8f5;
       .title {
         color: #3e00a4;
@@ -987,6 +994,10 @@ footer {
   }
 }
 
+.manage_ {
+  display: none;
+}
+
 .manage_menu {
   display: none;
   right: 63px;
@@ -1072,6 +1083,10 @@ footer {
 }
 
 .manager {
+  .manage_ {
+    display: block;
+  }
+
   &.post_page {
     .float_icon {
       i::before {

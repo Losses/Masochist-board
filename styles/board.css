@@ -63,6 +63,9 @@
 #main {
   margin: 15px 30px;
 }
+#main .post_list .multi_select {
+  display: none;
+}
 #main .post {
   padding: 10px;
   border-bottom: 1px dashed #c0b5d3;
@@ -156,19 +159,24 @@
   background: #d7cceb;
   display: block;
 }
-#main .post:hover {
+#main .post:hover,
+#main .post.selected {
   background: #ece8f5;
 }
-#main .post:hover .title {
+#main .post:hover .title,
+#main .post.selected .title {
   color: #3e00a4;
 }
-#main .post:hover .title:hover {
+#main .post:hover .title:hover,
+#main .post.selected .title:hover {
   color: #5c00ff;
 }
-#main .post:hover .title .sage {
+#main .post:hover .title .sage,
+#main .post.selected .title .sage {
   transform: rotate(5deg);
 }
-#main .post:hover .time {
+#main .post:hover .time,
+#main .post.selected .time {
   background: #c0b5d3;
 }
 .function_list {
@@ -885,6 +893,9 @@ footer {
 .post_page .author {
   font-size: 13px;
 }
+.manage_ {
+  display: none;
+}
 .manage_menu {
   display: none;
   right: 63px;
@@ -952,6 +963,9 @@ footer {
 .manage_menu.extend li {
   height: 52px;
   transition-timing-function: cubic-bezier(0.45, 1.36, 0.97, 1.17);
+}
+.manager .manage_ {
+  display: block;
 }
 .manager.post_page .float_icon i::before {
   content: '\e80d' !important;

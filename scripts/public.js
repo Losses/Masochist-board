@@ -565,6 +565,20 @@ $(document).ready(function () {
             manageElement.addClass('up');
             inputElement.click();
 
+            $.post('api/?manage', {'key': ''}, function (data) {
+                var response = JSON.parse(data);
+                if (response.code === 200)
+                    losses.key = response.message;
+            });
+
+            /*当未正确获得key时的代码需要补充*/
+
+            manageElement.on('submit.lsubmit', function () {
+                $.post('api/?manage', {'password': md5(md5(inputElement.val()) + losses.key)}, function (data) {
+                    console.log(data);
+                });
+            });
+
             $('body').on('click.manage', function (event) {
                 if ($(event.target).hasClass('password_acion')) {
                     return false;
@@ -572,6 +586,7 @@ $(document).ready(function () {
                     manageElement.removeClass('up');
                     inputElement.val('');
                     $(this).off('click.manage');
+                    manageElement.off('submit.lsubmit');
                 }
             });
             pointer = 0;

@@ -6,4 +6,4 @@
 	define('DB_NAME', 'gun');
 	define('DB_PORT', '3306');
 	define('UR_PASSWORD', 'LOSSSKY');
-	define('UR_SALT', 'bedfrontniconiconi')
+	define('UR_SALT', 'bedfrontniconiconi');

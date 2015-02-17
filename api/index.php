@@ -178,7 +178,7 @@ elseif (isset ($_GET['post'])) {
 
   exit();
 }
-
+/*
 elseif (isset($_GET['manage'])) {
   session_start();
 
@@ -206,9 +206,7 @@ elseif (isset($_GET['manage'])) {
     }
   }
 }
-
-}
-
+*/
 function response_message($code,$message) {
   $response = [
     'code'    =>  $code,

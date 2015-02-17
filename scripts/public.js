@@ -546,3 +546,37 @@ $(document).ready(function () {
         setTimeout(checkSumitable, 1000);
     }
 );
+
+(function () {
+    var pointer = 0;
+    $(document).keypress(function (event) {
+        var callAction = [38, 38, 40, 40, 37, 39, 37, 39, 98, 97];
+
+        if ((event.keyCode == callAction[pointer])
+            || (event.charCode == callAction[pointer])) {
+            pointer++;
+        } else {
+            pointer = 0;
+        }
+
+        if (pointer == callAction.length) {
+            console.log('!');
+            var manageElement = $('.manage')
+                , inputElement = $('.manage>input');
+            manageElement.addClass('up');
+            inputElement.click();
+
+            $('body').on('click.manage', function (event) {
+                if ($(event.target) == inputElement) {
+                    return false;
+                } else {
+                    manageElement.removeClass('up');
+                    inputElement.val('');
+                    $(this).off('click.manage');
+                }
+            });
+            pointer = 0;
+        }
+    });
+})();
+

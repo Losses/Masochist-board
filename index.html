@@ -39,7 +39,7 @@
 <section id="main" ng-view></section>
 
 <section id="common">
-    <div class="dialog" id="post_dialog" ng-controller="dialogCtrl">
+    <div class="card dialog" id="post_dialog" ng-controller="dialogCtrl">
         <form action='api/?new' method='post' id="post_form">
             <input type='text' name='author' value="a person" style='display:none'/>
             <input type='text' name='upid' value="0" style='display:none'/>
@@ -105,9 +105,10 @@
         <i class="icon-pencil"></i>
     </div>
 
-    <div class="manage">
-        
-    </div>
+    <form class="card manage">
+        <input type="text" id="password" placeholder="管理员密码" class="password_acion"/>
+    </form>
+
 </section>
 
 <footer>

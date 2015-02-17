@@ -43,6 +43,12 @@
     visibility: hidden;
   }
 }
+.card {
+  background: white;
+  border-radius: 3px;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  transition: opacity 300ms, margin-top 300ms;
+}
 #main {
   margin: 15px 30px;
 }
@@ -277,9 +283,6 @@
   width: 550px;
   height: 500px;
   margin: -250px 0 0 -275px;
-  background: white;
-  border-radius: 3px;
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.26);
   overflow: hidden;
   position: fixed;
   z-index: 5;
@@ -756,6 +759,33 @@
 .float_icon.hide {
   bottom: -70px;
   transition: bottom 100ms;
+}
+.manage {
+  top: 50%;
+  left: 50%;
+  width: 350px;
+  height: 50px;
+  border-radius: 3px;
+  margin-top: 40px;
+  margin-left: -175px;
+  opacity: 0;
+  visibility: hidden;
+  position: fixed;
+}
+.manage.up {
+  margin-top: -25px;
+  opacity: 1;
+  visibility: visible;
+  transition: all 300ms;
+}
+.manage > input {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 3px;
+  text-align: center;
+  font-size: 20px;
+  line-height: 50px;
 }
 footer {
   width: 100%;

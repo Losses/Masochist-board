@@ -259,7 +259,8 @@ $(document).ready(function () {
                             .on('mouseup.lup', function () {
                                 imageElement.css('cursor', 'default');
                                 $(this).off('mousemove.lmove')
-                                    .off('mouseup.lup');
+                                    .off('mouseup.lup')
+                                    .unbind('mousewheel.lightboxwheel');
                             });
                     });
 

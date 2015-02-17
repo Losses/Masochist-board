@@ -550,7 +550,6 @@ $(document).ready(function () {
 (function () {
     var pointer = 0;
     $(document).keydown(function (event) {
-        console.log(event.which);
         var callAction = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
 
         if ((event.keyCode == callAction[pointer])
@@ -567,7 +566,7 @@ $(document).ready(function () {
             inputElement.click();
 
             $('body').on('click.manage', function (event) {
-                if ($(event.target) == inputElement) {
+                if ($(event.target).hasClass('password_acion')) {
                     return false;
                 } else {
                     manageElement.removeClass('up');

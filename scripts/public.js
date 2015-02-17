@@ -570,27 +570,37 @@ $(document).ready(function () {
         }
 
         if (pointer >= callAction.length) {
+
+            function requireCode() {
+                $.post('api/?manage', {'key': ''}, function (data) {
+                    var response = JSON.parse(data);
+                    if (response.code === 200)
+                        losses.key = response.message;
+                    else {
+                        losses.key = null;
+                        publicWarning('无法与服务器正确沟通！');
+                    }
+                });
+            }
+
             var manageElement = $('.manage')
                 , inputElement = $('.manage>input');
             manageElement.addClass('up');
             inputElement.click();
 
-            $.post('api/?manage', {'key': ''}, function (data) {
-                var response = JSON.parse(data);
-                if (response.code === 200)
-                    losses.key = response.message;
-                else {
-                    losses.key = null;
-                    publicWarning(response.message);
-                }
-            });
+            requireCode();
 
             manageElement.on('submit.lsubmit', function () {
                 $.post('api/?manage', {'password': md5(md5(inputElement.val()) + losses.key)}, function (data) {
                     var response = JSON.parse(data);
-                    if (response.code === 200)
-                        losses.key = response.message;
+
+                    if (response.code === 200) {
+                        losses.key = null;
+                        $('body').click();
+                        publicWarning('Welcome, my master nyan~~');
+                    }
                     else {
+                        requireCode();
                         manageElement.removeClass('shake');
 
                         setTimeout(function () {
@@ -598,7 +608,7 @@ $(document).ready(function () {
                         }, 10);
 
                         losses.key = null;
-                        publicWarning(response.message);
+                        publicWarning('密钥错误，请重新输入。');
                     }
                 });
             });

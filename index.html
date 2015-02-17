@@ -45,12 +45,13 @@
             <input type='text' name='upid' value="0" style='display:none'/>
 
             <div class="dialog_head">
-                    <select class="select_rebuild">
+                <select class="select_rebuild">
                     <option ng-repeat="category in categories" ls-class="{{category.theme}}" value="{{category.id}}">
                         {{category.name}}
                     </option>
                 </select>
                 <input class='right' type='text' name='title' placeholder="标题"/>
+                <label class="checkbox_rebuild">SAGE<input type="checkbox" name="sage" class="checkbox_rebuild"></label>
             </div>
 
             <textarea name='content'></textarea>

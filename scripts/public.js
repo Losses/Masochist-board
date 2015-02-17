@@ -304,6 +304,18 @@ $(document).ready(function () {
 
         });
 
+        $('.checkbox_rebuild>input').each(function () {
+            $(this).on("change", function () {
+                var that = $(this);
+                setTimeout(function () {
+                    if (that.is(":checked"))
+                        that.parent("label").addClass("selected");
+                    else
+                        that.parent("label").removeClass("selected");
+                }, 10);
+            });
+        });
+
         function checkSumitable() {
             setTimeout(function () {
                 if (!losses.router)

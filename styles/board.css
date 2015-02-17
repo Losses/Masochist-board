@@ -354,13 +354,27 @@
   align-content: flex-start;
 }
 #post_dialog form .s_select {
-  margin-right: 20px;
+  margin-right: 10px;
+  width: 63px;
 }
 #post_dialog form input[name=title] {
   height: 2em;
   line-height: 1em;
   border: none;
   display: block;
+  width: 405px;
+}
+#post_dialog form .checkbox_rebuild {
+  padding: 5px 0;
+  color: #ddd;
+  letter-spacing: 1px;
+  transition: color 300ms;
+}
+#post_dialog form .checkbox_rebuild.selected {
+  color: red;
+}
+#post_dialog form .checkbox_rebuild input {
+  display: none;
 }
 #post_dialog form button[type=submit] {
   right: 0;

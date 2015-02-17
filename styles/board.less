@@ -214,7 +214,7 @@
         border-radius: 14px;
         position: relative;
         transition: all 200ms;
-        display:inline-block;
+        display: inline-block;
       }
 
       &:hover {
@@ -386,7 +386,8 @@
     }
 
     .s_select {
-      margin-right: 20px;
+      margin-right: 10px;
+      width: 63px;
     }
 
     input[name=title] {
@@ -394,6 +395,21 @@
       line-height: 1em;
       border: none;
       display: block;
+      width: 405px;
+    }
+
+    .checkbox_rebuild {
+      padding: 5px 0;
+      color: #ddd;
+      letter-spacing: 1px;
+      transition: color 300ms;
+
+      &.selected {
+        color: red;
+      }
+      input {
+        display: none;
+      }
     }
 
     button[type=submit] {

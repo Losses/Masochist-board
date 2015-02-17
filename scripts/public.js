@@ -39,7 +39,7 @@ mKnowledge.filter('trustHtml', function ($sce) {
     }
 });
 
-var losses = {router: {}, scope: {}};
+var losses = {router: {}, scope: {}, data: {}};
 
 function processPageElement(routerResult) {
     var body = $('body');

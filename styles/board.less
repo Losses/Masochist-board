@@ -71,6 +71,10 @@
     background: #8bc34a;
   }
 
+  &.blue_gray {
+    background: #607d8b;
+  }
+
 }
 
 @keyframes flow_up_f {
@@ -182,8 +186,21 @@
     line-height: 1.5em;
     transition: all 300ms;
 
+    .category {
+      top: -2px;
+      margin: 0 3px;
+      padding: 3px 8px;
+      color: white;
+      border-radius: 10px;
+      font-size: 11px;
+      line-height: 18px;
+      position: relative;
+      .color_sheet();
+    }
+
     .title {
       font-size: 18px;
+      line-height: 20px;
       text-decoration: none;
       color: #20113c;
 

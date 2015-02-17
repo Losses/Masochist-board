@@ -1,84 +1,95 @@
--- MySQL dump 10.13  Distrib 5.6.17, for Win64 (x86_64)
+-- phpMyAdmin SQL Dump
+-- version 4.3.9
+-- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1    Database: gun
--- ------------------------------------------------------
--- Server version	5.6.21
+-- Host: localhost
+-- Generation Time: 2015-02-17 11:24:40
+-- 服务器版本： 10.0.16-MariaDB-log
+-- PHP Version: 5.6.5
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `category`
+-- Database: `gun`
 --
 
-DROP TABLE IF EXISTS `category`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `category` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `category`
+--
+
+CREATE TABLE IF NOT EXISTS `category` (
+  `id` int(11) NOT NULL,
   `name` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
-  `theme` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `theme` varchar(8) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `category`
+-- 转存表中的数据 `category`
 --
 
-LOCK TABLES `category` WRITE;
-/*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (1,'卖萌 ','orange'),(2,'搞基','pink'),(4,'百合','blue');
-/*!40000 ALTER TABLE `category` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `category` (`id`, `name`, `theme`) VALUES
+(1, '卖萌 ', 'orange'),
+(2, '搞基', 'pink'),
+(4, '百合', 'blue');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `content`
+-- 表的结构 `content`
 --
 
-DROP TABLE IF EXISTS `content`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `content` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `content` (
+  `id` int(11) NOT NULL,
   `author` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `title` text COLLATE utf8_unicode_ci,
   `content` text COLLATE utf8_unicode_ci NOT NULL,
-  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `active_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `img` tinytext COLLATE utf8_unicode_ci,
   `upid` int(11) NOT NULL,
   `sage` tinyint(4) NOT NULL DEFAULT '0',
-  `category` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
+  `category` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `content`
+-- Indexes for dumped tables
 --
 
-LOCK TABLES `content` WRITE;
-/*!40000 ALTER TABLE `content` DISABLE KEYS */;
-/*!40000 ALTER TABLE `content` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+--
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`id`);
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+--
+-- Indexes for table `content`
+--
+ALTER TABLE `content`
+  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `id_UNIQUE` (`id`), ADD FULLTEXT KEY `index_content` (`title`,`content`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `category`
+--
+ALTER TABLE `category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `content`
+--
+ALTER TABLE `content`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2015-02-16 20:14:29

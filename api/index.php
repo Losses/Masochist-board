@@ -92,19 +92,36 @@ if (isset ($_GET['new'])) {
 
 elseif (isset ($_GET['list'])) {
   $_GET['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
-
+/*
   function post_search($search_text) {
-    $returndata = $database->select('content', '*',[
-      'OR'          =>  [
-      'title[~]'    =>  '%'.$search_text.'%',
-      'author[~]'   =>  '%'.$search_text.'%',
-      'content[~]'  =>  '%'.$search_text.'%'
-    ]]);
-  }
+    global $database;
+    $search_text = explode(' ', $search_text);
+    $returndata = $database->select('content', '*', [
+      'OR'  =>  [
+        'author[~]'   =>  $search_text,
+        'title[~]'    =>  $search_text,
+        'content[~]'  =>  $search_text
+        ]
+      'ORDER' =>  ['active_time DESC', 'time DESC']
+      ]);
 
+    return $returndata;
+  }
+*/
   if (isset($_GET['search'])) {
-    $search_text = $_GET['search'];
-    echo json_encode(post_search($search_text));
+
+    $search_text = explode(" ", $_GET['search']);
+
+    foreach ($search_text as $word){
+      $result_condition .= "*" . $word . "* ";
+    }
+
+
+    $search_text = $database->quote($result_condition);
+    $data = $database->query("SELECT * FROM content 
+                              WHERE MATCH (title,content)
+                              AGAINST ($search_text IN BOOLEAN MODE)")->fetchAll();
+    echo json_encode($data);
     exit();
   }
 

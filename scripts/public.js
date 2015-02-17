@@ -549,18 +549,18 @@ $(document).ready(function () {
 
 (function () {
     var pointer = 0;
-    $(document).keypress(function (event) {
-        var callAction = [38, 38, 40, 40, 37, 39, 37, 39, 98, 97];
+    $(document).keydown(function (event) {
+        console.log(event.which);
+        var callAction = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
 
         if ((event.keyCode == callAction[pointer])
-            || (event.charCode == callAction[pointer])) {
+            || (event.which === callAction[pointer])) {
             pointer++;
         } else {
             pointer = 0;
         }
 
-        if (pointer == callAction.length) {
-            console.log('!');
+        if (pointer >= callAction.length) {
             var manageElement = $('.manage')
                 , inputElement = $('.manage>input');
             manageElement.addClass('up');

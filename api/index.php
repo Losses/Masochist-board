@@ -208,7 +208,6 @@ elseif (isset($_GET['manage'])) {
     }else {
       if(md5(md5(UR_PASSWORD) . $_SESSION['key'])  ==  $_POST['password']) {
         $_SESSION['logined'] = true;
-        unset($_SESSION['logined']);
         response_message(200, 'Login success!');
       }else {
         $_SESSION['logined'] = false;

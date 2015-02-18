@@ -92,35 +92,17 @@ if (isset ($_GET['new'])) {
 
 elseif (isset ($_GET['list'])) {
   $_GET['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
-/*
-  function post_search($search_text) {
-    global $database;
-    $search_text = explode(' ', $search_text);
-    $returndata = $database->select('content', '*', [
-      'OR'  =>  [
-        'author[~]'   =>  $search_text,
-        'title[~]'    =>  $search_text,
-        'content[~]'  =>  $search_text
-        ]
-      'ORDER' =>  ['active_time DESC', 'time DESC']
-      ]);
 
-    return $returndata;
-  }
-*/
   if (isset($_GET['search'])) {
-
     $search_text = explode(" ", $_GET['search']);
-
-    foreach ($search_text as $word){
-      $result_condition .= "*" . $word . "* ";
+    foreach ($search_text as $word) {
+      $result_condition   .=  '*' . $word . '* ';
     }
-
-
     $search_text = $database->quote($result_condition);
-    $data = $database->query("SELECT * FROM content 
+    $data  = $database->query("SELECT * FROM content 
                               WHERE MATCH (title,content)
-                              AGAINST ($search_text IN BOOLEAN MODE)")->fetchAll();
+                              AGAINST ($search_text IN BOOLEAN MODE)")
+                            ->fetchAll();
     echo json_encode($data);
     exit();
   }
@@ -167,7 +149,7 @@ elseif (isset ($_GET['post'])) {
 
   $_GET['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
 
-  $data = $database->select('content',[
+  $data = $database->select('content', [
     'id',
     'title',
     'content',
@@ -177,13 +159,15 @@ elseif (isset ($_GET['post'])) {
     ],[
       'OR'        =>  [
         'upid[=]' =>  $_GET['id'],
-        'AND'     =>  [
-        'upid[=]' =>  0,
         'id[=]'   =>  $_GET['id']
-        ]],
+        ],
       'ORDER'     =>  ['upid','id'],
       'LIMIT'     =>  [($_GET['page'] - 1) * 10, $_GET['page'] * 10]
   ]);
+
+  if ($data[0]['upid'] != 0) {
+    response_message(301, $data[0]['upid']);
+  }
 
   $data_length = count($data);
 
@@ -208,7 +192,6 @@ elseif (isset($_GET['manage'])) {
     }else {
       if(md5(md5(UR_PASSWORD) . $_SESSION['key'])  ==  $_POST['password']) {
         $_SESSION['logined'] = true;
-        unset($_SESSION['logined']);
         response_message(200, 'Login success!');
       }else {
         $_SESSION['logined'] = false;
@@ -216,10 +199,86 @@ elseif (isset($_GET['manage'])) {
       }
     }
   }elseif (isset($_POST['check'])) {
-    if ($_SESSION['logined'] == true) {
+    if (isset($_SESSION['logined']) && $_SESSION['logined'] == true) {
       response_message(200, true);
     }else {
       response_message(200, false);
+    }
+  }
+
+  if (isset($_POST['action']) && ($_POST['action'] == 'delete')) {
+    foreach ($_POST['target'] as $post_target) {
+      $post_target_id = $database->select('content', [
+        'upid'
+      ],[
+        'id[=]'  =>  $post_target
+      ]);
+      if (isset($post_target_id) && $post_target_id != 0) {
+        $data = $database->delete('content', [
+          'upid[=]' =>  $post_target_id
+        ]);
+      }else {
+        $data = $database->delete('content', [
+          'AND' =>  [
+            'upid'  =>  $post_target_id,
+            'id'    =>  $post_target_idk
+        ]]);
+      }
+      if ($data == false) {
+        echo $post_target_id;
+      }
+    }
+    if ($data == true) {
+      response_message(200,'Delet Success!');
+    }else{
+      response_message(403,'Delet Failed!');
+    }
+  }
+
+  if (isset($_POST['action']) && ($_POST['action'] == 'sage')) {
+    foreach ($_POST['target'] as $post_target) {
+      $data = $database->update('content', [
+        'sage'  =>  1
+      ],[
+        'id[=]'    =>  $post_target
+      ]);
+      if ($date == false) {
+        echo $post_target;
+      }
+    }
+    if ($data  == false) {
+      response_message(403, 'Sage Failed!');
+    }else {
+      response_message(200, 'Sage Success!');
+    }
+  }
+
+  if (isset($_POST['action']) && ($_POST['action'] == 'trans')) {
+    foreach ($_POST['target'] as $post_target) {
+      $data = $database->update('content', [
+        'category'  =>  $_POST['target_cate']
+      ],[
+        'id[=]'        =>  $post_target
+      ]);
+      if ($data == false) {
+        echo $post_target;
+      }
+    }
+    if ($data == false) {
+      response_message(403, "Die, Autobots!");
+    }else {
+      response_message(200, "Autobots, Transform and Roll Out.");
+    }
+  }
+
+  if (isset($_POST['action']) && ($_POST['action'] == 'hummer')) {
+    $data = $database->update('content', [
+        'hummer' => $_POST['content']
+      ]);
+    if ($data == false) {
+      response_message(403, 'UCCU');
+    }else {
+      response_message(200, '炸鸡馒头');
     }
   }
 }

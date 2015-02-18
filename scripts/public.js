@@ -203,6 +203,7 @@ $(document).ready(function () {
             contentElement: $('textarea[name="content"]'),
             upidElement: $('input[name="upid"]'),
             submitIcon: $('button[type="submit"]'),
+            iconGroupElement: $('.icon_group'),
             warningElement: $('.public_warning')
         };
         losses.event = {
@@ -318,6 +319,8 @@ $(document).ready(function () {
         })();
 
         $.post('api/?manage', {'check': ''}, function (data) {
+            console.log(data);
+
             var response = JSON.parse(data);
 
             losses.logined = (response.message);
@@ -327,7 +330,7 @@ $(document).ready(function () {
         });
 
 
-        $('#new_post').click(function () {
+        $('#new_post>i').click(function () {
 
             $('#post_dialog').addClass('flow_up');
 
@@ -348,13 +351,6 @@ $(document).ready(function () {
                 });
             }, 100);
 
-        }).mouseenter(function () {
-            if (losses.logined) {
-                $('.manage_menu').addClass('extend')
-                    .one('mouseleave', function () {
-                        $(this).removeClass('extend');
-                    });
-            }
         });
 
         $('.checkbox_rebuild>input').each(function () {
@@ -432,7 +428,6 @@ $(document).ready(function () {
                 return;
 
             var multiSelectElement = $(this).children('.multi_select');
-            console.log(multiSelectElement.is(':checked'));
             setTimeout(function () {
                 if (multiSelectElement.is(':checked')) {
                     $(that).removeClass('selected');
@@ -446,7 +441,7 @@ $(document).ready(function () {
             }, 100);
         });
 
-        $('.icon_group').delegate('#upload_image_active', 'change', function (evt) {
+        losses.elements.iconGroupElement.delegate('#upload_image_active', 'change', function (evt) {
             var element = $('.hint')
                 , icon = $('.icon-picture')
                 , target = this
@@ -507,7 +502,7 @@ $(document).ready(function () {
         $('.remove_image').click(removeImage);
 
         $('.emoji_button').click(function () {
-            $('.icon_group').mouseleave();
+            losses.elements.iconGroupElement.mouseleave();
             $('.g-show').removeClass('g-show');
             $('.g-face').addClass('g-show');
 
@@ -543,8 +538,6 @@ $(document).ready(function () {
             $('body').click();
         });
 
-        var iconGroup = $('.icon_group');
-
         $('.icon-menu').mouseenter(function () {
             var that = $(this);
 
@@ -552,7 +545,7 @@ $(document).ready(function () {
                 clearTimeout(losses.event.menuTimeout);
 
             that.addClass('hide');
-            iconGroup.addClass('extend bump')
+            losses.elements.iconGroupElement.addClass('extend bump')
                 .one('mouseleave', function () {
                     var menu = $(this);
 
@@ -616,6 +609,7 @@ $(document).ready(function () {
 
                     if (response.code === 200) {
                         losses.key = null;
+                        losses.logined = true;
                         $('body').click()
                             .addClass('manager');
                         publicWarning('Welcome, my master nyan~~');

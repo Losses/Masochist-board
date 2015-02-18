@@ -433,25 +433,26 @@ $(document).ready(function () {
         $('body').delegate('#search', 'submit', function (event) {
             event.preventDefault();
             magicalLocation('#/search/' + $('input[name="search"]').val());
-        }).delegate('.post', 'click', function () {
-            var that = $(this);
+        })
+            .delegate('.post', 'click', function () {
+                var that = $(this);
 
-            if (!losses.logined)
-                return;
+                if (!losses.logined)
+                    return;
 
-            var multiSelectElement = $(this).children('.multi_select');
-            setTimeout(function () {
-                if (multiSelectElement.is(':checked')) {
-                    $(that).removeClass('selected');
-                    losses.multiSelect.push(multiSelectElement.attr('data-post-id'));
-                    multiSelectElement.attr("checked", false);
-                } else {
-                    $(that).addClass('selected');
-                    losses.multiSelect.splice($.inArray('b', losses.multiSelect), multiSelectElement.attr('data-post-id'));
-                    multiSelectElement.attr("checked", true);
-                }
-            }, 100);
-        });
+                var multiSelectElement = $(this).children('.multi_select');
+                setTimeout(function () {
+                    if (multiSelectElement.is(':checked')) {
+                        $(that).removeClass('selected');
+                        losses.multiSelect.push(multiSelectElement.attr('data-post-id'));
+                        multiSelectElement.attr("checked", false);
+                    } else {
+                        $(that).addClass('selected');
+                        losses.multiSelect.splice($.inArray(multiSelectElement.attr('data-post-id'), losses.multiSelect), losses.multiSelect);
+                        multiSelectElement.attr("checked", true);
+                    }
+                }, 100);
+            });
 
         losses.elements.iconGroupElement.delegate('#upload_image_active', 'change', function (evt) {
             var element = $('.hint')

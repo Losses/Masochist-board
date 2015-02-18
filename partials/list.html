@@ -1,6 +1,16 @@
 <div class="function_list clear">
     <div class="category left">
-        <a ng-repeat="category in categories" href="#/category/{{category.id}}" class="left {{category.theme}}">{{category.name}}</a>
+        <span ng-repeat="category in categories" class="left">
+            <a href="#/category/{{category.id}}" class="{{category.theme}}">
+                {{category.name}}
+            </a>
+            <i class="manage_category_button">
+                <span class="card">
+                    <i class="hide_category icon-" data-category="{{category.id}}"></i>
+                    <i class="mute_category icon-" data-category="{{category.id}}"></i>
+                </span>
+            </i>
+        </span>
     </div>
     <div class="search right">
         <form action="api/?list" action="get" id="search">

@@ -182,7 +182,7 @@
 .function_list {
   margin: 0 10px 15px 10px;
 }
-.function_list .category a {
+.function_list .category span a {
   color: #3e00a4;
   margin: 0 3px;
   padding: 3px 10px;
@@ -191,57 +191,60 @@
   border-radius: 14px;
   transition: all 200ms;
 }
-.function_list .category a:link,
-.function_list .category a:visited {
+.function_list .category span a:link,
+.function_list .category span a:visited {
   text-decoration: none;
   color: #3e00a4;
 }
-.function_list .category a:hover {
+.function_list .category span:hover a {
   color: white;
   border-color: transparent;
   background: #3e00a4;
 }
-.function_list .category a:hover.orange {
+.function_list .category span:hover a.orange {
   background: #ff9800;
 }
-.function_list .category a:hover.deep_orange {
+.function_list .category span:hover a.deep_orange {
   background: #ff5722;
 }
-.function_list .category a:hover.red {
+.function_list .category span:hover a.red {
   background: #f44336;
 }
-.function_list .category a:hover.pink {
+.function_list .category span:hover a.pink {
   background: #e91e63;
 }
-.function_list .category a:hover.purple {
+.function_list .category span:hover a.purple {
   background: #9c27b0;
 }
-.function_list .category a:hover.deep_purple {
+.function_list .category span:hover a.deep_purple {
   background: #673ab7;
 }
-.function_list .category a:hover.indigo {
+.function_list .category span:hover a.indigo {
   background: #3f51b5;
 }
-.function_list .category a:hover.blue {
+.function_list .category span:hover a.blue {
   background: #2196f3;
 }
-.function_list .category a:hover.light_blue {
+.function_list .category span:hover a.light_blue {
   background: #03a9f4;
 }
-.function_list .category a:hover.cyan {
+.function_list .category span:hover a.cyan {
   background: #00bcd4;
 }
-.function_list .category a:hover.teal {
+.function_list .category span:hover a.teal {
   background: #009688;
 }
-.function_list .category a:hover.green {
+.function_list .category span:hover a.green {
   background: #4caf50;
 }
-.function_list .category a:hover.light_green {
+.function_list .category span:hover a.light_green {
   background: #8bc34a;
 }
-.function_list .category a:hover.blue_gray {
+.function_list .category span:hover a.blue_gray {
   background: #607d8b;
+}
+.function_list .category .manage_category_button {
+  display: none;
 }
 .function_list .search i::before {
   color: #3e00a4;
@@ -903,6 +906,99 @@ footer {
 }
 .manager .manage_ {
   display: block;
+}
+.manager .function_list .category span {
+  position: relative;
+}
+.manager .function_list .category span .manage_category_button {
+  top: 10px;
+  right: 5px;
+  width: 10px;
+  height: 10px;
+  display: inline;
+  position: absolute;
+}
+.manager .function_list .category span .manage_category_button::before {
+  left: 50%;
+  content: '\feff';
+  width: 2px;
+  height: 2px;
+  margin-left: -1px;
+  border: 1px solid white;
+  border-radius: 50%;
+  opacity: 0;
+  position: absolute;
+  transition: all 300ms;
+  visibility: hidden;
+  display: inline;
+}
+.manager .function_list .category span .manage_category_button span {
+  top: 15px;
+  left: 50%;
+  width: 75px;
+  height: 38px;
+  margin-left: -42px;
+  display: block;
+  z-index: 5;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 300ms;
+  position: absolute;
+}
+.manager .function_list .category span .manage_category_button span::before {
+  content: '\feff';
+  top: -10px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -2px;
+  border-color: transparent transparent white transparent;
+  border-width: 6px;
+  border-style: solid;
+  display: block;
+  position: absolute;
+}
+.manager .function_list .category span .manage_category_button span i {
+  margin: 7px;
+  display: block;
+  float: left;
+  color: #2c184f;
+  cursor: pointer;
+  transition: all 300ms;
+}
+.manager .function_list .category span .manage_category_button span i:hover {
+  color: #3e00a4;
+}
+.manager .function_list .category span .manage_category_button span .hide_category::before {
+  content: '\e81d';
+}
+.manager .function_list .category span .manage_category_button span .mute_category::before {
+  content: '\e822';
+}
+.manager .function_list .category span .manage_category_button:hover::before {
+  opacity: 1 !important;
+  background: white;
+  transform: scale(1.2);
+}
+.manager .function_list .category span .manage_category_button:hover span {
+  opacity: 1;
+  visibility: visible;
+}
+.manager .function_list .category span:hover a {
+  padding-right: 25px;
+}
+.manager .function_list .category span:hover .manage_category_button {
+  right: 12px;
+}
+.manager .function_list .category span:hover .manage_category_button::before {
+  width: 6px;
+  height: 6px;
+  left: 50%;
+  border-radius: 50%;
+  opacity: 0.6;
+  margin-left: -3px;
+  transition: all 300ms;
+  visibility: visible;
 }
 .manager .manage_menu {
   display: block;

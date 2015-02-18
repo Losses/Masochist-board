@@ -46,24 +46,24 @@ function postCtrl($http, $scope, $routeParams) {
         }
     });
 
-    if (!$routeParams.postId) {
-        $http.get("api/?category")
-            .success(function (response) {
-                var category = [];
-                category[0] = {name: '错误', theme: 'blue_gray'};
-                for (var i = 0; i <= response.length - 1; i++) {
-                    category[response[i].id] = {
-                        'name': response[i].name,
-                        'theme': response[i].theme
-                    }
-                }
-                losses.scope.categories = response;
-                losses.scope.postCtrl.category = category;
-                //losses.scope.postCtrl.$digest();
-                $scope.categories = response;
 
-            });
-    }
+    $http.get("api/?category")
+        .success(function (response) {
+            var category = [];
+            category[0] = {name: '错误', theme: 'blue_gray'};
+            for (var i = 0; i <= response.length - 1; i++) {
+                category[response[i].id] = {
+                    'name': response[i].name,
+                    'theme': response[i].theme
+                }
+            }
+            losses.data.categories = response;
+            losses.scope.postCtrl.category = category;
+            //losses.scope.postCtrl.$digest();
+            $scope.categories = response;
+
+        });
+
 
     pushContent();
 }
@@ -90,13 +90,15 @@ function dialogCtrl($http, $scope, $interval) {
         });
 
     var intervalItem = $interval(function () {
-        if (losses.scope.categories !== undefined) {
-            $scope.categories = losses.scope.categories;
+        if (losses.data.categories !== undefined) {
+            $scope.categories = losses.data.categories;
 
             setTimeout(sSelect, 500);
             $interval.cancel(intervalItem);
         }
     }, 500);
+}
 
-
+function manageCtrl($scope) {
+    losses.scope.manage = $scope;
 }

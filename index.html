@@ -102,7 +102,7 @@
         <i class="icon-cancel close_dialog"></i>
     </div>
 
-    <div class="float_icon" id="new_post">
+    <div class="float_icon" id="new_post" ng-controller="manageCtrl">
         <ul class="manage_menu manage_">
             <li class="delete_warp">
                 <button class="icon-trash delete"></button>
@@ -115,8 +115,15 @@
                     <button class="icon-cancel cancel"></button>
                 </div>
             </li>
-            <li>
+            <li class="transport_warp">
                 <button class="icon-transport move"></button>
+
+                <select class="select_transform" name="category">
+                    <option ng-repeat="category in categories" ls-class="{{category.theme}}" value="{{category.id}}">
+                        {{category.name}}
+                    </option>
+                </select>
+
             </li>
             <li>
                 <button class="icon-sage sage"></button>

@@ -33,6 +33,8 @@ mKnowledge.config(['$routeProvider',
 
 mKnowledge.controller('dialogCtrl', dialogCtrl);
 
+mKnowledge.controller('manageCtrl', manageCtrl);
+
 mKnowledge.filter('trustHtml', function ($sce) {
     return function (input) {
         return $sce.trustAsHtml(input);
@@ -80,11 +82,16 @@ function magicalLocation(path) {
         .remove();
 }
 
-function sSelect() {
-    var select = $('.select_rebuild');
-    select.wrap('<span class="s_select"></span>');
-    $('.s_select').append('<button class="s_choosen"></button><ul class="s_select_body"></ul>');
+function sSelect(selector) {
+    selector = selector ? selector : '.select_rebuild';
+
+    var select = $(selector);
     select.each(function () {
+
+        $(this).wrap('<span class="s_select"></span>');
+
+        $(this).parent('.s_select').append('<button class="s_choosen"></button><ul class="s_select_body"></ul>');
+
         var options = [],
             values = [],
             classes = [],
@@ -191,6 +198,14 @@ function publicWarning(text) {
     setTimeout(function () {
         losses.elements.warningElement.removeClass('show');
     }, 2000);
+}
+
+function manageLoginProcess() {
+    if (losses.logined) {
+        $('body').addClass('manager');
+
+        $.getScript('scripts/manage.js');
+    }
 }
 
 $(document).ready(function () {
@@ -319,14 +334,11 @@ $(document).ready(function () {
         })();
 
         $.post('api/?manage', {'check': ''}, function (data) {
-            console.log(data);
-
             var response = JSON.parse(data);
 
             losses.logined = (response.message);
 
-            if (losses.logined)
-                $('body').addClass('manager');
+            manageLoginProcess();
         });
 
 
@@ -610,8 +622,8 @@ $(document).ready(function () {
                     if (response.code === 200) {
                         losses.key = null;
                         losses.logined = true;
-                        $('body').click()
-                            .addClass('manager');
+                        $('body').click();
+                        manageLoginProcess();
                         publicWarning('Welcome, my master nyan~~');
                     }
                     else {

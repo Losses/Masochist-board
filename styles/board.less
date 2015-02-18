@@ -1105,6 +1105,13 @@ footer {
           opacity: 0;
           visibility: hidden;
           position: absolute;
+
+          button {
+            border: 0;
+            border-radius: 50%;
+            color: white;
+            .drop_shadow(3);
+          }
         }
 
         .cancel_warp {
@@ -1114,7 +1121,7 @@ footer {
           height: 124px;
 
           transform: rotate(-110deg);
-          transition: all 300ms;
+          transition: all 500ms;
 
           .cancel_delete {
             background: #4caf50;
@@ -1135,7 +1142,7 @@ footer {
           height: 30px;
           width: 135px;
 
-          transition: all 100ms;
+          transition: all 200ms;
           transform: rotate(-20deg);
 
           .confirm_delete {
@@ -1151,10 +1158,10 @@ footer {
           }
         }
 
-        .need_confirm, &.hover {
+        &.need_confirm {
           .cancel_warp, .confirm_warp {
             transform: rotate(0deg);
-            opacity: 0;
+            opacity: 1;
             visibility: visible;
           }
         }
@@ -1165,9 +1172,11 @@ footer {
 
         .transport_select_warp {
           top: 12px;
-          left: -85px;
+          left: -70px;
           width: 80px;
           height: 30px;
+          border-radius: 3px;
+          background: white;
           opacity: 0;
           visibility: hidden;
           position: absolute;
@@ -1208,7 +1217,7 @@ footer {
                 }
 
                 &:active {
-                  color: lighten(#4caf50, 5%);
+                  color: lighten(#4caf50, 10%);
                 }
               }
 
@@ -1220,7 +1229,7 @@ footer {
                 }
 
                 &:active {
-                  color: lighten(#f44336, 5%);
+                  color: lighten(#f44336, 10%);
                 }
               }
             }
@@ -1229,13 +1238,15 @@ footer {
 
         &:hover, &.need_confirm {
           .transport_select_warp {
-            left: -105px;
+            left: -95px;
             opacity: 1;
             visibility: visible;
             .bump();
           }
         }
         .s_select {
+          opacity: 1;
+          visibility: visible;
           height: 30px;
           padding-right: 30px;
           transition: all 300ms;

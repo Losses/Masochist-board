@@ -13,3 +13,31 @@ var intervalEvent = setInterval(function () {
         clearInterval(intervalEvent);
     }
 }, 500);
+
+$(document).ready(function () {
+    $('.delete').click(function () {
+        $('.delete_warp').addClass('need_confirm')
+            .one('mouseleave', function () {
+                $(this).removeClass('need_confirm');
+            });
+    });
+
+    $('.transport_select_warp').delegate('li', 'click', function () {
+        var warp = $('.transport_warp')
+            , menu = $('#new_post');
+
+        warp.addClass('need_confirm');
+
+        menu.addClass('extend');
+
+        $('.transport_confirm').click(function (event) {
+            if ($(event.target).hasClass('confirm_transport')) {
+                /*发送数据*/
+            }
+
+            warp.removeClass('need_confirm');
+            menu.removeClass('extend');
+        })
+    });
+
+});

@@ -86,6 +86,18 @@ function sSelect(selector) {
     selector = selector ? selector : '.select_rebuild';
 
     var select = $(selector);
+
+    function removeSelectBody() {
+        setTimeout(function () {
+            $("body").one("click.s_select_body", function () {
+                $('.s_select_body').each(function () {
+                    $(this).removeClass('selected');
+                    $(document).off('.s_select_keydown');
+                });
+            });
+        }, 1);
+    }
+
     select.each(function () {
 
         $(this).wrap('<span class="s_select"></span>');
@@ -119,14 +131,6 @@ function sSelect(selector) {
 
             selectBody.addClass("selected");
 
-            setTimeout(function () {
-                $("body").one("click.s_select_body", function () {
-                    $('.s_select_body').each(function () {
-                        $(this).removeClass('selected');
-                        $(document).off('.s_select_keydown');
-                    });
-                });
-            }, 1);
 
             var _S_ = {
                 select: {
@@ -185,9 +189,8 @@ function sSelect(selector) {
 
             event.preventDefault();
 
-        } else {
-            $(".dialog_head").click();
         }
+        removeSelectBody();
     });
 }
 

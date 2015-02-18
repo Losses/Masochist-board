@@ -444,12 +444,12 @@ $(document).ready(function () {
                 setTimeout(function () {
                     if (multiSelectElement.is(':checked')) {
                         $(that).removeClass('selected');
-                        losses.multiSelect.push(multiSelectElement.attr('data-post-id'));
-                        multiSelectElement.attr("checked", false);
+                        losses.multiSelect.splice($.inArray(multiSelectElement.attr('data-post-id'), losses.multiSelect), 1);
+                        multiSelectElement.prop("checked", false);
                     } else {
                         $(that).addClass('selected');
-                        losses.multiSelect.splice($.inArray(multiSelectElement.attr('data-post-id'), losses.multiSelect), losses.multiSelect);
-                        multiSelectElement.attr("checked", true);
+                        losses.multiSelect.push(multiSelectElement.attr('data-post-id'));
+                        multiSelectElement.prop("checked", true);
                     }
                 }, 100);
             });

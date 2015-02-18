@@ -672,8 +672,8 @@
   content: '\feff';
   top: 13px;
   right: -9px;
-  width: 0px;
-  height: 0px;
+  width: 0;
+  height: 0;
   border-width: 4px;
   border-style: solid;
   border-color: #2c184f transparent transparent transparent;
@@ -919,7 +919,7 @@ footer {
   height: 5px;
   transition: all 400ms;
 }
-.manager .manage_menu li button {
+.manager .manage_menu li > button {
   width: 42px;
   height: 42px;
   margin: 5px 0;
@@ -930,42 +930,42 @@ footer {
   color: white;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
-.manager .manage_menu li button.sage {
+.manager .manage_menu li > button.sage {
   background: #795548;
 }
-.manager .manage_menu li button.move {
+.manager .manage_menu li > button.move {
   background: #3f51b5;
 }
-.manager .manage_menu li button.delete {
+.manager .manage_menu li > button.delete {
   background: #ffc107;
   position: relative;
 }
-.manager .manage_menu li button:hover {
+.manager .manage_menu li > button:hover {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
-.manager .manage_menu li button:hover.sage {
+.manager .manage_menu li > button:hover.sage {
   background: #835c4e;
 }
-.manager .manage_menu li button:hover.move {
+.manager .manage_menu li > button:hover.move {
   background: #4558be;
 }
-.manager .manage_menu li button:hover.delete {
+.manager .manage_menu li > button:hover.delete {
   background: #ffc516;
 }
-.manager .manage_menu li button:active {
+.manager .manage_menu li > button:active {
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
-.manager .manage_menu li button:active.sage {
+.manager .manage_menu li > button:active.sage {
   background: #896052;
 }
-.manager .manage_menu li button:active.move {
+.manager .manage_menu li > button:active.move {
   background: #4d5ec1;
 }
-.manager .manage_menu li button:active.delete {
+.manager .manage_menu li > button:active.delete {
   background: #ffc721;
 }
-.manager .manage_menu li.delete_warp .cancel,
-.manager .manage_menu li.delete_warp .confirm {
+.manager .manage_menu li.delete_warp .cancel_delete,
+.manager .manage_menu li.delete_warp .confirm_delete {
   height: 30px;
   width: 30px;
   font-size: 16px;
@@ -986,13 +986,13 @@ footer {
   transform: rotate(-110deg);
   transition: all 300ms;
 }
-.manager .manage_menu li.delete_warp .cancel_warp .cancel {
+.manager .manage_menu li.delete_warp .cancel_warp .cancel_delete {
   background: #4caf50;
 }
-.manager .manage_menu li.delete_warp .cancel_warp .cancel:hover {
+.manager .manage_menu li.delete_warp .cancel_warp .cancel_delete:hover {
   background: #55b559;
 }
-.manager .manage_menu li.delete_warp .cancel_warp .cancel:active {
+.manager .manage_menu li.delete_warp .cancel_warp .cancel_delete:active {
   background: #5cb860;
 }
 .manager .manage_menu li.delete_warp .confirm_warp {
@@ -1003,13 +1003,13 @@ footer {
   transition: all 100ms;
   transform: rotate(-20deg);
 }
-.manager .manage_menu li.delete_warp .confirm_warp .confirm {
+.manager .manage_menu li.delete_warp .confirm_warp .confirm_delete {
   background: #f44336;
 }
-.manager .manage_menu li.delete_warp .confirm_warp .confirm:hover {
+.manager .manage_menu li.delete_warp .confirm_warp .confirm_delete:hover {
   background: #f55145;
 }
-.manager .manage_menu li.delete_warp .confirm_warp .confirm:active {
+.manager .manage_menu li.delete_warp .confirm_warp .confirm_delete:active {
   background: #f55a4e;
 }
 .manager .manage_menu li.delete_warp .need_confirm .cancel_warp,
@@ -1020,18 +1020,126 @@ footer {
   opacity: 0;
   visibility: visible;
 }
+.manager .manage_menu li.transport_warp {
+  position: relative;
+}
+.manager .manage_menu li.transport_warp .transport_select_warp {
+  top: 12px;
+  left: -85px;
+  width: 80px;
+  height: 30px;
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  transition: all 300ms;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+.manager .manage_menu li.transport_warp .transport_select_warp::after {
+  content: '\feff';
+  right: -8px;
+  top: 50%;
+  width: 0;
+  height: 0;
+  margin-top: -4px;
+  border-color: transparent transparent transparent white;
+  border-style: solid;
+  border-width: 4px;
+  position: absolute;
+}
+.manager .manage_menu li.transport_warp .transport_select_warp .transport_confirm {
+  top: 0;
+  left: 5px;
+  position: absolute;
+  transition: all 200ms;
+  opacity: 0;
+  visibility: hidden;
+}
+.manager .manage_menu li.transport_warp .transport_select_warp .transport_confirm button {
+  border: 0;
+  background: none;
+  font-size: 19px;
+}
+.manager .manage_menu li.transport_warp .transport_select_warp .transport_confirm button.cancel_transport {
+  color: #4caf50;
+}
+.manager .manage_menu li.transport_warp .transport_select_warp .transport_confirm button.cancel_transport:hover {
+  color: #55b559;
+}
+.manager .manage_menu li.transport_warp .transport_select_warp .transport_confirm button.cancel_transport:active {
+  color: #5cb860;
+}
+.manager .manage_menu li.transport_warp .transport_select_warp .transport_confirm button.confirm_transport {
+  color: #f44336;
+}
+.manager .manage_menu li.transport_warp .transport_select_warp .transport_confirm button.confirm_transport:hover {
+  color: #f55145;
+}
+.manager .manage_menu li.transport_warp .transport_select_warp .transport_confirm button.confirm_transport:active {
+  color: #f55a4e;
+}
+.manager .manage_menu li.transport_warp:hover .transport_select_warp,
+.manager .manage_menu li.transport_warp.need_confirm .transport_select_warp {
+  left: -105px;
+  opacity: 1;
+  visibility: visible;
+  transition-timing-function: cubic-bezier(0.45, 1.36, 0.97, 1.17);
+}
+.manager .manage_menu li.transport_warp .s_select {
+  height: 30px;
+  padding-right: 30px;
+  transition: all 300ms;
+}
+.manager .manage_menu li.transport_warp .s_select button {
+  width: 80px;
+  height: 30px;
+  padding: 0 5px;
+  border-radius: 3px;
+  color: gray;
+  font-size: 12px;
+}
+.manager .manage_menu li.transport_warp .s_select button::after {
+  right: 7px;
+}
+.manager .manage_menu li.transport_warp .s_select .s_select_body {
+  top: 5px;
+  position: relative;
+  background: white;
+  border: 0;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+.manager .manage_menu li.transport_warp .s_select .s_select_body li {
+  height: 20px;
+  font-size: 12px;
+}
+.manager .manage_menu li.transport_warp.need_confirm .transport_confirm {
+  opacity: 1;
+  visibility: visible;
+}
+.manager .manage_menu li.transport_warp.need_confirm .s_select {
+  opacity: 0;
+  visibility: hidden;
+}
+.manager .manage_menu.extend .transport_warp .s_select {
+  left: -105px;
+  opacity: 1;
+  visibility: visible;
+  transition-timing-function: cubic-bezier(0.45, 1.36, 0.97, 1.17);
+}
 .manager .float_icon i::before {
   content: '\e80d' !important;
 }
-.manager .float_icon:hover i::before {
+.manager .float_icon:hover i::before,
+.manager .float_icon.extend i::before {
   content: '\e800' !important;
 }
-.manager .float_icon:hover .manage_menu {
+.manager .float_icon:hover .manage_menu,
+.manager .float_icon.extend .manage_menu {
   bottom: 120px;
   opacity: 1;
   visibility: visible;
 }
-.manager .float_icon:hover .manage_menu li {
+.manager .float_icon:hover .manage_menu li,
+.manager .float_icon.extend .manage_menu li {
   height: 52px;
   transition-timing-function: cubic-bezier(0.45, 1.36, 0.97, 1.17);
 }

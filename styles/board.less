@@ -80,6 +80,10 @@
 
 }
 
+.bump() {
+  transition-timing-function: cubic-bezier(0.45, 1.36, 0.97, 1.17);
+}
+
 @keyframes upload_icon_error_gray {
   0% {
     background: #607d8b;
@@ -780,8 +784,8 @@
     content: '\feff';
     top: 13px;
     right: -9px;
-    width: 0px;
-    height: 0px;
+    width: 0;
+    height: 0;
     border-width: 4px;
     border-style: solid;
     border-color: #2c184f transparent transparent transparent;
@@ -854,7 +858,7 @@
   }
 
   &.show {
-    transition-timing-function: cubic-bezier(0.45, 1.36, 0.97, 1.17);
+    .bump();
   }
 
   &.hide {
@@ -1029,7 +1033,7 @@ footer {
     li {
       height: 5px;
       transition: all 400ms;
-      button {
+      > button {
         width: 42px;
         height: 42px;
         margin: 5px 0;
@@ -1089,7 +1093,7 @@ footer {
       }
 
       &.delete_warp {
-        .cancel, .confirm {
+        .cancel_delete, .confirm_delete {
           height: 30px;
           width: 30px;
           font-size: 16px;
@@ -1112,7 +1116,7 @@ footer {
           transform: rotate(-110deg);
           transition: all 300ms;
 
-          .cancel {
+          .cancel_delete {
             background: #4caf50;
 
             &:hover {
@@ -1134,7 +1138,7 @@ footer {
           transition: all 100ms;
           transform: rotate(-20deg);
 
-          .confirm {
+          .confirm_delete {
             background: #f44336;
 
             &:hover {
@@ -1156,7 +1160,135 @@ footer {
         }
       }
 
-      
+      &.transport_warp {
+        position: relative;
+
+        .transport_select_warp {
+          top: 12px;
+          left: -85px;
+          width: 80px;
+          height: 30px;
+          opacity: 0;
+          visibility: hidden;
+          position: absolute;
+          transition: all 300ms;
+          .drop_shadow(2);
+
+          &::after {
+            content: '\feff';
+            right: -8px;
+            top: 50%;
+            width: 0;
+            height: 0;
+            margin-top: -4px;
+            border-color: transparent transparent transparent white;
+            border-style: solid;
+            border-width: 4px;
+            position: absolute;
+          }
+
+          .transport_confirm {
+            top: 0;
+            left: 5px;
+            position: absolute;
+            transition: all 200ms;
+
+            opacity: 0;
+            visibility: hidden;
+            button {
+              border: 0;
+              background: none;
+              font-size: 19px;
+
+              &.cancel_transport {
+                color: #4caf50;
+
+                &:hover {
+                  color: lighten(#4caf50, 3%);
+                }
+
+                &:active {
+                  color: lighten(#4caf50, 5%);
+                }
+              }
+
+              &.confirm_transport {
+                color: #f44336;
+
+                &:hover {
+                  color: lighten(#f44336, 3%);
+                }
+
+                &:active {
+                  color: lighten(#f44336, 5%);
+                }
+              }
+            }
+          }
+        }
+
+        &:hover, &.need_confirm {
+          .transport_select_warp {
+            left: -105px;
+            opacity: 1;
+            visibility: visible;
+            .bump();
+          }
+        }
+        .s_select {
+          height: 30px;
+          padding-right: 30px;
+          transition: all 300ms;
+          button {
+            width: 80px;
+            height: 30px;
+            padding: 0 5px;
+            border-radius: 3px;
+            color: gray;
+            font-size: 12px;
+
+            &::after {
+              right: 7px;
+            }
+          }
+
+          .s_select_body {
+            top: 5px;
+            position: relative;
+            background: white;
+            border: 0;
+            .drop_shadow(3);
+
+            li {
+              height: 20px;
+              font-size: 12px;
+            }
+          }
+        }
+
+        &.need_confirm {
+          .transport_confirm {
+            opacity: 1;
+            visibility: visible;
+          }
+
+          .s_select {
+            opacity: 0;
+            visibility: hidden;
+          }
+        }
+      }
+    }
+
+    &.extend {
+      .transport_warp {
+        .s_select {
+          left: -105px;
+          opacity: 1;
+          visibility: visible;
+          .bump();
+        }
+      }
     }
   }
 
@@ -1166,7 +1298,7 @@ footer {
       content: '\e80d' !important;
     }
 
-    &:hover {
+    &:hover, &.extend {
       i::before {
         content: '\e800' !important;
       }
@@ -1177,8 +1309,7 @@ footer {
         visibility: visible;
         li {
           height: 52px;
-
-          transition-timing-function: cubic-bezier(0.45, 1.36, 0.97, 1.17);
+          .bump();
         }
       }
     }

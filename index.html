@@ -102,31 +102,41 @@
         <i class="icon-cancel close_dialog"></i>
     </div>
 
-    <div class="float_icon" id="new_post" ng-controller="manageCtrl">
+    <div class="float_icon extend" id="new_post" ng-controller="manageCtrl">
         <ul class="manage_menu manage_">
             <li class="delete_warp">
-                <button class="icon-trash delete"></button>
+                <button class="icon-trash delete" title="删除该PO"></button>
 
                 <div class="confirm_warp">
-                    <button class="icon-ok confirm"></button>
+                    <button class="icon-ok confirm_delete"></button>
                 </div>
 
                 <div class="cancel_warp">
-                    <button class="icon-cancel cancel"></button>
+                    <button class="icon-cancel cancel_delete"></button>
                 </div>
             </li>
-            <li class="transport_warp">
-                <button class="icon-transport move"></button>
 
-                <select class="select_transform" name="category">
-                    <option ng-repeat="category in categories" ls-class="{{category.theme}}" value="{{category.id}}">
-                        {{category.name}}
-                    </option>
-                </select>
+            <li class="transport_warp">
+                <button class="icon-transport move" title="将该PO转移到其他分类"></button>
+
+                <div class="transport_select_warp">
+                    <select class="select_transform" name="category">
+                        <option ng-repeat="category in categories" ls-class="{{category.theme}}"
+                                value="{{category.id}}">
+                            {{category.name}}
+                        </option>
+                    </select>
+
+                    <div class="transport_confirm">
+                        <button class="icon-cancel cancel_transport"></button>
+                        <button class="icon-ok confirm_transport"></button>
+                    </div>
+                </div>
+
 
             </li>
             <li>
-                <button class="icon-sage sage"></button>
+                <button class="icon-sage sage" title="sage该PO"></button>
             </li>
         </ul>
         <i class="icon-pencil"></i>

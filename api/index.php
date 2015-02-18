@@ -165,7 +165,7 @@ elseif (isset ($_GET['post'])) {
       'LIMIT'     =>  [($_GET['page'] - 1) * 10, $_GET['page'] * 10]
   ]);
 
-  if ($data[0]['upid'] != 0) {
+  if (isset ($data[0]['upid']) && $data[0]['upid'] != 0) {
     response_message(301, $data[0]['upid']);
   }
 

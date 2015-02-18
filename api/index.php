@@ -181,6 +181,8 @@ elseif (isset ($_GET['post'])) {
 }
 
 elseif (isset($_GET['manage'])) {
+  
+  //session check
   session_start();
 
   if (isset($_POST['key'])) {
@@ -205,7 +207,8 @@ elseif (isset($_GET['manage'])) {
       response_message(200, false);
     }
   }
-
+  
+  //function
   if (isset($_POST['action']) && ($_POST['action'] == 'delete')) {
     foreach ($_POST['target'] as $post_target) {
       $post_target_id = $database->select('content', [

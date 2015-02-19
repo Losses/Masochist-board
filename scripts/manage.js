@@ -49,4 +49,14 @@ $(document).ready(function () {
         }
     })
 
+    $('.category').delegate('.edit_category', 'click', function () {
+        var thisCate = $(this).attr('data-category')
+            , thisParent = $('.cate-' + thisCate);
+        thisParent.addClass('rename');
+
+        $('.cancel-' + thisCate).one('click', function () {
+            thisParent.removeClass('rename');
+        })
+    })
+
 });

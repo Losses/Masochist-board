@@ -1027,7 +1027,7 @@ footer {
   background: transparent;
   position: absolute;
 }
-.manager .function_list .category > div.rename {
+.manager .function_list .category > div.rename form {
   display: block;
 }
 .manager .function_list .category > div.rename > a {

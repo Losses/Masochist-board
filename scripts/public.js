@@ -580,8 +580,7 @@ $(document).ready(function () {
         });
 
         setTimeout(checkSumitable, 1000);
-    }
-);
+    });
 
 (function () {
     var pointer = 0;

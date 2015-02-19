@@ -182,6 +182,9 @@
 .function_list {
   margin: 0 10px 15px 10px;
 }
+.function_list .category > div {
+  position: relative;
+}
 .function_list .category > div a {
   color: #3e00a4;
   margin: 0 3px;
@@ -190,6 +193,7 @@
   border: #3e00a4 1px solid;
   border-radius: 14px;
   transition: all 200ms;
+  display: block;
 }
 .function_list .category > div a:link,
 .function_list .category > div a:visited {
@@ -243,7 +247,8 @@
 .function_list .category > div:hover a.blue_gray {
   background: #607d8b;
 }
-.function_list .category .manage_category_button {
+.function_list .category .manage_category_button,
+.function_list .category .category_rename {
   display: none;
 }
 .function_list .add_new {
@@ -914,7 +919,7 @@ footer {
   position: relative;
 }
 .manager .function_list .category > div .manage_category_button {
-  top: 10px;
+  top: 8px;
   right: 5px;
   width: 10px;
   height: 10px;
@@ -940,7 +945,7 @@ footer {
   left: 50%;
   width: 110px;
   height: 38px;
-  margin-left: -42px;
+  margin-left: -58px;
   display: block;
   z-index: 5;
   opacity: 0;
@@ -1003,10 +1008,104 @@ footer {
   transition: all 300ms;
   visibility: visible;
 }
+.manager .function_list .category > div .category_rename {
+  top: 0;
+  right: -120px;
+  width: 110px;
+  position: absolute;
+}
+.manager .function_list .category > div .category_rename input {
+  width: 85px;
+}
+.manager .function_list .category > div .category_rename button {
+  top: 0;
+  right: 0;
+  height: 23px;
+  margin-top: -2px;
+  line-height: 23px;
+  border: 0;
+  background: transparent;
+  position: absolute;
+}
+.manager .function_list .category > div.rename {
+  display: block;
+}
+.manager .function_list .category > div.rename > a {
+  border-color: transparent;
+  color: transparent;
+  width: 110px;
+  padding-right: 10px !important;
+}
+.manager .function_list .category > div.rename > a.orange {
+  background: #ff9800;
+}
+.manager .function_list .category > div.rename > a.deep_orange {
+  background: #ff5722;
+}
+.manager .function_list .category > div.rename > a.red {
+  background: #f44336;
+}
+.manager .function_list .category > div.rename > a.pink {
+  background: #e91e63;
+}
+.manager .function_list .category > div.rename > a.purple {
+  background: #9c27b0;
+}
+.manager .function_list .category > div.rename > a.deep_purple {
+  background: #673ab7;
+}
+.manager .function_list .category > div.rename > a.indigo {
+  background: #3f51b5;
+}
+.manager .function_list .category > div.rename > a.blue {
+  background: #2196f3;
+}
+.manager .function_list .category > div.rename > a.light_blue {
+  background: #03a9f4;
+}
+.manager .function_list .category > div.rename > a.cyan {
+  background: #00bcd4;
+}
+.manager .function_list .category > div.rename > a.teal {
+  background: #009688;
+}
+.manager .function_list .category > div.rename > a.green {
+  background: #4caf50;
+}
+.manager .function_list .category > div.rename > a.light_green {
+  background: #8bc34a;
+}
+.manager .function_list .category > div.rename > a.blue_gray {
+  background: #607d8b;
+}
+.manager .function_list .category > div.rename button {
+  color: white;
+  opacity: 1;
+  transition: all 300ms;
+}
+.manager .function_list .category > div.rename button:hover {
+  opacity: 0.7;
+}
+.manager .function_list .category > div.rename button:active {
+  opacity: 0.5;
+}
+.manager .function_list .category > div.rename input {
+  top: -2px;
+  font-size: 11px;
+  color: white;
+  border: 0;
+  background: transparent;
+  position: relative;
+}
+.manager .function_list .category > div.rename .category_rename {
+  right: 10px;
+}
+.manager .function_list .category > div.rename .manage_category_button {
+  display: none;
+}
 .manager .function_list .category .add_new {
   width: 21px;
   height: 21px;
-  margin-top: 2px;
   margin-left: 3px;
   color: #3e00a4;
   border: 1px solid #3e00a4;

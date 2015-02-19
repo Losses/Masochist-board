@@ -8,21 +8,14 @@
                 <span class="card">
                     <i class="hide_category icon-" data-category="{{category.id}}"></i>
                     <i class="mute_category icon-" data-category="{{category.id}}"></i>
-                </span>
-            </i>
-        </div>
-
-        <div class="left">
-            <a href="#" class="red">
-                category
-            </a>
-            <i class="manage_category_button">
-                <span class="card">
-                    <i class="hide_category icon-" data-category="{{category.id}}"></i>
-                    <i class="mute_category icon-" data-category="{{category.id}}"></i>
                     <i class="edit_category icon-pencil" data-category="{{category.id}}"></i>
                 </span>
             </i>
+
+            <form class="category_rename">
+                <input name="rename" data-category="{{category.id}}" value="{{category.name}}"/>
+                <button class="cancel_rename">×</button>
+            </form>
         </div>
 
         <form class="left add_new">

@@ -241,6 +241,7 @@
   margin: 0 10px 15px 10px;
   .category {
     > div {
+      position: relative;
       a {
         color: #3e00a4;
         margin: 0 3px;
@@ -249,6 +250,7 @@
         border: #3e00a4 1px solid;
         border-radius: 14px;
         transition: all 200ms;
+        display: block;
 
         &:link, &:visited {
           text-decoration: none;
@@ -266,7 +268,7 @@
       }
     }
 
-    .manage_category_button {
+    .manage_category_button, .category_rename {
       display: none;
     }
   }
@@ -1035,7 +1037,7 @@ footer {
         position: relative;
 
         .manage_category_button {
-          top: 10px;
+          top: 8px;
           right: 5px;
           width: 10px;
           height: 10px;
@@ -1062,7 +1064,7 @@ footer {
             left: 50%;
             width: 110px;
             height: 38px;
-            margin-left: -42px;
+            margin-left: -58px;
             display: block;
 
             z-index: 5;
@@ -1147,12 +1149,74 @@ footer {
             }
           }
         }
+
+        .category_rename {
+          top: 0;
+          right: -120px;
+          width: 110px;
+          position: absolute;
+
+          input {
+            width: 85px;
+          }
+
+          button {
+            top: 0;
+            right: 0;
+            height: 23px;
+            margin-top: -2px;
+            line-height: 23px;
+            border: 0;
+            background: transparent;
+            position: absolute;
+          }
+        }
+
+        &.rename {
+          display: block;
+          > a {
+            border-color: transparent;
+            color: transparent;
+            width: 110px;
+            padding-right: 10px !important;
+            .color_sheet();
+          }
+
+          button {
+            color: white;
+            opacity: 1;
+            transition: all 300ms;
+            &:hover {
+              opacity: 0.7;
+            }
+
+            &:active {
+              opacity: 0.5;
+            }
+          }
+
+          input {
+            top: -2px;
+            font-size: 11px;
+            color: white;
+            border: 0;
+            background: transparent;
+            position: relative;
+          }
+
+          .category_rename {
+            right: 10px;
+          }
+
+          .manage_category_button {
+            display: none;
+          }
+        }
       }
 
       .add_new {
         width: 21px;
         height: 21px;
-        margin-top: 2px;
         margin-left: 3px;
         color: #3e00a4;
         border: 1px solid #3e00a4;

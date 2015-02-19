@@ -15,6 +15,9 @@ var intervalEvent = setInterval(function () {
 }, 500);
 
 $(document).ready(function () {
+    var newCategloryElement = $('.add_new')
+        , newCategloryClasses = newCategloryElement.attr('class');
+
     $('.delete').click(function () {
         $('.delete_warp').addClass('need_confirm')
             .one('mouseleave', function () {
@@ -39,5 +42,11 @@ $(document).ready(function () {
             menu.removeClass('extend');
         })
     });
+
+    $('.color_picker').mouseover(function (event) {
+        if ($(event.target).attr('type') === 'submit') {
+            $('.add_new').attr('class', newCategloryClasses + ' ' + $(event.target).attr('class'));
+        }
+    })
 
 });

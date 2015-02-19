@@ -326,8 +326,7 @@ $(document).ready(function documentReady() {
                         .on('mouseup.lup', function () {
                             imageElement.css('cursor', 'default');
                             $(this).off('mousemove.lmove')
-                                .off('mouseup.lup')
-                                .unbind('mousewheel.lightboxwheel');
+                                .off('mouseup.lup');
                         });
                 });
 
@@ -343,6 +342,7 @@ $(document).ready(function documentReady() {
                                 'margin-left': 0,
                                 'transform': 'default'
                             });
+                        $(window).unbind('mousewheel.lightboxwheel');
                     }
                 });
             });

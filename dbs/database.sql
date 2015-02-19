@@ -50,7 +50,7 @@ INSERT INTO `category` (`id`, `name`, `theme`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `content` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `author` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `title` text COLLATE utf8_unicode_ci,
   `content` text COLLATE utf8_unicode_ci NOT NULL,

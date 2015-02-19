@@ -246,6 +246,9 @@
 .function_list .category .manage_category_button {
   display: none;
 }
+.function_list .add_new {
+  display: none;
+}
 .function_list .search i::before {
   color: #3e00a4;
 }
@@ -962,12 +965,12 @@ footer {
   margin: 7px;
   display: block;
   float: left;
-  color: #1c1626;
+  color: #342d40;
   cursor: pointer;
   transition: all 300ms;
 }
 .manager .function_list .category span .manage_category_button span i:hover {
-  color: #3e344f;
+  color: #6b598b;
 }
 .manager .function_list .category span .manage_category_button span .hide_category::before {
   content: '\e81d';
@@ -998,6 +1001,212 @@ footer {
   opacity: 0.6;
   margin-left: -3px;
   transition: all 300ms;
+  visibility: visible;
+}
+.manager .function_list .category .add_new {
+  width: 21px;
+  height: 21px;
+  margin-top: 2px;
+  margin-left: 3px;
+  color: #3e00a4;
+  border: 1px solid #3e00a4;
+  font-size: 12px;
+  border-radius: 12px;
+  display: block;
+  position: relative;
+  transition: all 300ms;
+}
+.manager .function_list .category .add_new span {
+  margin: 0 6px;
+  line-height: 18px;
+  opacity: 1;
+  visibility: visible;
+}
+.manager .function_list .category .add_new input {
+  top: 3px;
+  right: -100px;
+  width: 85px;
+  transition: all 300ms;
+  position: absolute;
+  color: white;
+  border: 0;
+  background: transparent;
+  font-size: 11px;
+  opacity: 0;
+  visibility: hidden;
+}
+.manager .function_list .category .add_new .color_picker_warp {
+  top: 7px;
+  right: 5px;
+  width: 8px;
+  height: 12px;
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+}
+.manager .function_list .category .add_new .color_picker_warp::before {
+  content: '\feff';
+  left: 2px;
+  width: 6px;
+  height: 6px;
+  border: 1px solid white;
+  border-radius: 50%;
+  opacity: 0.6;
+  margin-left: -3px;
+  transition: all 300ms;
+  visibility: visible;
+  display: block;
+  position: absolute;
+}
+.manager .function_list .category .add_new .color_picker_warp .color_picker {
+  top: 30px;
+  left: -45px;
+  padding: 3px;
+  width: 86px;
+  height: 63px;
+  position: absolute;
+  transition: all 300ms;
+  opacity: 0;
+  visibility: hidden;
+}
+.manager .function_list .category .add_new .color_picker_warp .color_picker button {
+  float: left;
+  width: 15px;
+  height: 15px;
+  margin: 3px;
+  border: 0;
+  border-radius: 50%;
+  opacity: 1;
+  transition: all 200ms;
+}
+.manager .function_list .category .add_new .color_picker_warp .color_picker button.orange {
+  background: #ff9800;
+}
+.manager .function_list .category .add_new .color_picker_warp .color_picker button.deep_orange {
+  background: #ff5722;
+}
+.manager .function_list .category .add_new .color_picker_warp .color_picker button.red {
+  background: #f44336;
+}
+.manager .function_list .category .add_new .color_picker_warp .color_picker button.pink {
+  background: #e91e63;
+}
+.manager .function_list .category .add_new .color_picker_warp .color_picker button.purple {
+  background: #9c27b0;
+}
+.manager .function_list .category .add_new .color_picker_warp .color_picker button.deep_purple {
+  background: #673ab7;
+}
+.manager .function_list .category .add_new .color_picker_warp .color_picker button.indigo {
+  background: #3f51b5;
+}
+.manager .function_list .category .add_new .color_picker_warp .color_picker button.blue {
+  background: #2196f3;
+}
+.manager .function_list .category .add_new .color_picker_warp .color_picker button.light_blue {
+  background: #03a9f4;
+}
+.manager .function_list .category .add_new .color_picker_warp .color_picker button.cyan {
+  background: #00bcd4;
+}
+.manager .function_list .category .add_new .color_picker_warp .color_picker button.teal {
+  background: #009688;
+}
+.manager .function_list .category .add_new .color_picker_warp .color_picker button.green {
+  background: #4caf50;
+}
+.manager .function_list .category .add_new .color_picker_warp .color_picker button.light_green {
+  background: #8bc34a;
+}
+.manager .function_list .category .add_new .color_picker_warp .color_picker button.blue_gray {
+  background: #607d8b;
+}
+.manager .function_list .category .add_new .color_picker_warp .color_picker button:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+.manager .function_list .category .add_new .color_picker_warp .color_picker::after {
+  content: '\feff';
+  top: -10px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -2px;
+  border-width: 5px;
+  border-color: transparent transparent white transparent;
+  border-style: solid;
+  position: absolute;
+}
+.manager .function_list .category .add_new .color_picker_warp:hover .color_picker {
+  top: 17px;
+  opacity: 1;
+  visibility: visible;
+}
+.manager .function_list .category .add_new .color_picker_warp:hover::before {
+  background: white;
+  opacity: 1;
+  transform: scale(1.2);
+}
+.manager .function_list .category .add_new:hover {
+  width: 120px;
+  background: #3e00a4;
+  border-color: transparent;
+}
+.manager .function_list .category .add_new:hover input {
+  opacity: 1;
+  visibility: visible;
+}
+.manager .function_list .category .add_new:hover.orange {
+  background: #ff9800;
+}
+.manager .function_list .category .add_new:hover.deep_orange {
+  background: #ff5722;
+}
+.manager .function_list .category .add_new:hover.red {
+  background: #f44336;
+}
+.manager .function_list .category .add_new:hover.pink {
+  background: #e91e63;
+}
+.manager .function_list .category .add_new:hover.purple {
+  background: #9c27b0;
+}
+.manager .function_list .category .add_new:hover.deep_purple {
+  background: #673ab7;
+}
+.manager .function_list .category .add_new:hover.indigo {
+  background: #3f51b5;
+}
+.manager .function_list .category .add_new:hover.blue {
+  background: #2196f3;
+}
+.manager .function_list .category .add_new:hover.light_blue {
+  background: #03a9f4;
+}
+.manager .function_list .category .add_new:hover.cyan {
+  background: #00bcd4;
+}
+.manager .function_list .category .add_new:hover.teal {
+  background: #009688;
+}
+.manager .function_list .category .add_new:hover.green {
+  background: #4caf50;
+}
+.manager .function_list .category .add_new:hover.light_green {
+  background: #8bc34a;
+}
+.manager .function_list .category .add_new:hover.blue_gray {
+  background: #607d8b;
+}
+.manager .function_list .category .add_new:hover span {
+  opacity: 0;
+  visibility: hidden;
+}
+.manager .function_list .category .add_new:hover input {
+  right: 25px;
+}
+.manager .function_list .category .add_new:hover .color_picker_warp {
+  opacity: 1;
   visibility: visible;
 }
 .manager .manage_menu {

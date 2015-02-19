@@ -274,11 +274,19 @@ $(document).ready(function documentReady() {
                 $(this).addClass('up');
                 $('.lightbox').addClass('up');
 
+                var wheelFrame = false;
+
                 $(window).bind('mousewheel.lightboxwheel', function (event, delta) {
-                    scale += delta * 0.06;
+                    if (!wheelFrame) {
+                        wheelFrame = true;
+                        scale += delta * 0.08;
 
-                    imageElement.css('transform', 'scale(' + scale + ')');
+                        imageElement.css('transform', 'scale(' + scale + ')');
 
+                        setTimeout(function () {
+                            wheelFrame = false;
+                        }, 30);
+                    }
                     event.preventDefault();
                 });
 
@@ -395,7 +403,7 @@ $(document).ready(function documentReady() {
         };
     DocumentObserver.observe(postArea, DocumentObserverConfig);
 
-    $('#post_form').submit(function(event){
+    $('#post_form').submit(function (event) {
         event.preventDefault();
     });
 

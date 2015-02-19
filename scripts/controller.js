@@ -49,6 +49,7 @@ function postCtrl($http, $scope, $routeParams) {
 
     $http.get("api/?category")
         .success(function (response) {
+            console.log(response);
             var category = [];
             category[0] = {name: '错误', theme: 'blue_gray'};
             for (var i = 0; i <= response.length - 1; i++) {

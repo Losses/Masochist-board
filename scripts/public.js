@@ -215,7 +215,7 @@ function manageLoginProcess() {
     }
 }
 
-$(document).ready(function () {
+$(document).ready(function documentReady() {
     losses.elements = {
         submitable: false,
         pause: false,
@@ -395,10 +395,11 @@ $(document).ready(function () {
         };
     DocumentObserver.observe(postArea, DocumentObserverConfig);
 
-
-    $('#post_form').submit(function (event) {
+    $('#post_form').submit(function(event){
         event.preventDefault();
+    });
 
+    $('.post_submit').click(function () {
         if (!losses.elements.submitable)
             return;
 
@@ -411,7 +412,7 @@ $(document).ready(function () {
             flying = false;
         }, 500);
 
-        $(this).ajaxSubmit(function (data) {
+        $('#post_form').ajaxSubmit(function (data) {
             data = JSON.parse(data);
             if (data.code != 200)
                 return;
@@ -420,9 +421,9 @@ $(document).ready(function () {
                 location.reload(true);
 
             function finishProcess() {
+                losses.elements.submitIcon.removeClass('fly');
                 magicalLocation('#/post/' + data.message);
                 removeImage();
-                losses.elements.submitIcon.removeClass('fly');
                 $('#post_form')[0].reset();
 
             }

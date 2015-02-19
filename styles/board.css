@@ -962,12 +962,12 @@ footer {
   margin: 7px;
   display: block;
   float: left;
-  color: #2c184f;
+  color: #1c1626;
   cursor: pointer;
   transition: all 300ms;
 }
 .manager .function_list .category span .manage_category_button span i:hover {
-  color: #3e00a4;
+  color: #3e344f;
 }
 .manager .function_list .category span .manage_category_button span .hide_category::before {
   content: '\e81d';

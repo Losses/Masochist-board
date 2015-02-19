@@ -26,7 +26,11 @@ mKnowledge.config(['$routeProvider',
             when('/post/:postId', {
                 templateUrl: 'partials/post.html',
                 controller: postCtrl
-            }).
+            })/*.
+         when('/manage', {
+         templateUrl: 'partials/manage.html',
+         controller: manageStarter
+         })*/.
             otherwise({redirectTo: '/'});
     }
 ]);
@@ -212,375 +216,446 @@ function manageLoginProcess() {
 }
 
 $(document).ready(function () {
-        losses.elements = {
-            submitable: false,
-            pause: false,
-            submited: false,
-            dialogElement: $('#post_dialog'),
-            titleElement: $('input[name="title"]'),
-            contentElement: $('textarea[name="content"]'),
-            upidElement: $('input[name="upid"]'),
-            submitIcon: $('button[type="submit"]'),
-            iconGroupElement: $('.icon_group'),
-            warningElement: $('.public_warning')
-        };
-        losses.event = {
-            menuTimeout: null
-        };
+    losses.elements = {
+        submitable: false,
+        pause: false,
+        submited: false,
+        dialogElement: $('#post_dialog'),
+        titleElement: $('input[name="title"]'),
+        contentElement: $('textarea[name="content"]'),
+        upidElement: $('input[name="upid"]'),
+        submitIcon: $('button[type="submit"]'),
+        iconGroupElement: $('.icon_group'),
+        warningElement: $('.public_warning')
+    };
+    losses.event = {
+        menuTimeout: null
+    };
 
-        function checkSumitable() {
-            setTimeout(function () {
-                if (!losses.router)
-                    return;
-                losses.elements.submitable = losses.router.postId ? (
-                (losses.elements.contentElement.val().length <= 35)
-                && (losses.elements.contentElement.val().length !== 0)
-                ) : (
-                (losses.elements.titleElement.val().length <= 35)
-                && (losses.elements.titleElement.val().length !== 0)
-                && (losses.elements.contentElement.val().length <= 10000)
-                && (losses.elements.contentElement.val().length !== 0)
-                );
+    function checkSumitable() {
+        setTimeout(function () {
+            if (!losses.router)
+                return;
+            losses.elements.submitable = losses.router.postId ? (
+            (losses.elements.contentElement.val().length <= 35)
+            && (losses.elements.contentElement.val().length !== 0)
+            ) : (
+            (losses.elements.titleElement.val().length <= 35)
+            && (losses.elements.titleElement.val().length !== 0)
+            && (losses.elements.contentElement.val().length <= 10000)
+            && (losses.elements.contentElement.val().length !== 0)
+            );
 
-                if (!losses.elements.submitable) {
-                    losses.elements.submitIcon.addClass('lock');
-                }
-                else {
-                    losses.elements.submitIcon.removeClass('lock');
-                }
-            }, 10);
-        }
+            if (!losses.elements.submitable) {
+                losses.elements.submitIcon.addClass('lock');
+            }
+            else {
+                losses.elements.submitIcon.removeClass('lock');
+            }
+        }, 10);
+    }
 
-        (function lightBox() {
-            /*lightbox*/
-            $('body').append('<section class="lightbox"><div class="darkness"><img src="" class="image" /></section>')
-                .delegate('.lbox', 'click', function () {
-                    var scale = 1;
+    (function lightBox() {
+        /*lightbox*/
+        $('body').append('<section class="lightbox"><div class="darkness"><img src="" class="image" /></section>')
+            .delegate('.lbox', 'click', function () {
+                var scale = 1;
 
-                    var that = this
-                        , imageElement = $('.lightbox .image');
+                var that = this
+                    , imageElement = $('.lightbox .image');
 
-                    imageElement.attr('src', $(this).attr('src'))
-                        .css({
-                            'margin-top': -(imageElement.height() / 2),
-                            'margin-left': -(imageElement.width() / 2)
+                imageElement.attr('src', $(this).attr('src'))
+                    .css({
+                        'margin-top': -(imageElement.height() / 2),
+                        'margin-left': -(imageElement.width() / 2)
+                    });
+
+
+                $(this).addClass('up');
+                $('.lightbox').addClass('up');
+
+                $(window).bind('mousewheel.lightboxwheel', function (event, delta) {
+                    scale += delta * 0.06;
+
+                    imageElement.css('transform', 'scale(' + scale + ')');
+
+                    event.preventDefault();
+                });
+
+                var moving = false;
+
+                imageElement.on('mousedown', function (event) {
+                    event.preventDefault();
+                    var x = event.pageX
+                        , y = event.pageY
+                        , imageX = parseInt(imageElement.css('margin-left'))
+                        , imageY = parseInt(imageElement.css('margin-top'))
+                        , frame = false
+                        , intervalEvent;
+
+                    imageElement.css('cursor', 'move');
+
+                    $(window).on('mousemove.lmove', function (event) {
+                        if (frame)
+                            return;
+
+                        var moveX = x - event.pageX
+                            , moveY = y - event.pageY;
+
+                        moving = true;
+
+                        imageElement.css({
+                            'margin-left': imageX - moveX,
+                            'margin-top': imageY - moveY
                         });
 
+                        frame = true;
 
-                    $(this).addClass('up');
-                    $('.lightbox').addClass('up');
-
-                    $(window).bind('mousewheel.lightboxwheel', function (event, delta) {
-                        scale += delta * 0.06;
-
-                        imageElement.css('transform', 'scale(' + scale + ')');
-
-                        event.preventDefault();
-                    });
-
-                    var moving = false;
-
-                    imageElement.on('mousedown', function (event) {
-                        event.preventDefault();
-                        var x = event.pageX
-                            , y = event.pageY
-                            , imageX = parseInt(imageElement.css('margin-left'))
-                            , imageY = parseInt(imageElement.css('margin-top'))
-                            , frame = false
-                            , intervalEvent;
-
-                        imageElement.css('cursor', 'move');
-
-                        $(window).on('mousemove.lmove', function (event) {
-                            if (frame)
-                                return;
-
-                            var moveX = x - event.pageX
-                                , moveY = y - event.pageY;
-
-                            moving = true;
-
-                            imageElement.css({
-                                'margin-left': imageX - moveX,
-                                'margin-top': imageY - moveY
-                            });
-
-                            frame = true;
-
-                            setTimeout(function () {
-                                frame = false
-                            }, 30);
-                        })
-                            .on('mouseup.lup', function () {
-                                imageElement.css('cursor', 'default');
-                                $(this).off('mousemove.lmove')
-                                    .off('mouseup.lup')
-                                    .unbind('mousewheel.lightboxwheel');
-                            });
-                    });
-
-                    $('.darkness').on('click.lclick', function () {
-                        if (moving) {
-                            moving = false;
-                        } else {
-                            $(that).removeClass('up');
-                            $('.lightbox').removeClass('up');
-                            imageElement.attr('src', '')
-                                .css({
-                                    'margin-top': 0,
-                                    'margin-left': 0,
-                                    'transform': 'default'
-                                });
-                        }
-                    });
+                        setTimeout(function () {
+                            frame = false
+                        }, 30);
+                    })
+                        .on('mouseup.lup', function () {
+                            imageElement.css('cursor', 'default');
+                            $(this).off('mousemove.lmove')
+                                .off('mouseup.lup')
+                                .unbind('mousewheel.lightboxwheel');
+                        });
                 });
-        })();
 
-        $.post('api/?manage', {'check': ''}, function (data) {
-            var response = JSON.parse(data);
-
-            losses.logined = (response.message);
-
-            manageLoginProcess();
-        });
-
-
-        $('#new_post>i').click(function () {
-
-            $('#post_dialog').addClass('flow_up');
-
-            $('#new_post').addClass('hide')
-                .removeClass('show');
-
-            setTimeout(function () {
-                $('body').on('click.activeBody', function (event) {
-                    if ($(event.target).parents('#post_dialog').length == 0) {
-                        $('#post_dialog').removeClass('flow_up');
-
-                        $(this).off('click.activeBody');
-
-                        $('#new_post').removeClass('hide')
-                            .addClass('show');
-
-                    }
-                });
-            }, 100);
-
-        });
-
-        $('.checkbox_rebuild>input').each(function () {
-            $(this).on("change", function () {
-                var that = $(this);
-                setTimeout(function () {
-                    if (that.is(":checked"))
-                        that.parent("label").addClass("selected");
-                    else
-                        that.parent("label").removeClass("selected");
-                }, 10);
-            });
-        });
-
-        var MutationObserver = window.MutationObserver
-            , postArea = losses.elements.dialogElement[0]
-            , DocumentObserver = new MutationObserver(checkSumitable)
-            , DocumentObserverConfig = {
-                attributes: true,
-                childList: true,
-                characterData: true,
-                subtree: true
-            };
-        DocumentObserver.observe(postArea, DocumentObserverConfig);
-
-
-        $('#post_form').submit(function (event) {
-            event.preventDefault();
-
-            if (!losses.elements.submitable)
-                return;
-
-            var flying = true;
-
-            losses.elements.submitIcon.blur()
-                .addClass('fly');
-
-            setTimeout(function () {
-                flying = false;
-            }, 500);
-
-            $(this).ajaxSubmit(function (data) {
-                data = JSON.parse(data);
-                if (data.code != 200)
-                    return;
-
-                if (losses.router.postId)
-                    location.reload(true);
-
-                function finishProcess() {
-                    magicalLocation('#/post/' + data.message);
-                    removeImage();
-                    losses.elements.submitIcon.removeClass('fly');
-                    $('#post_form')[0].reset();
-
-                }
-
-
-                if (!flying) {
-                    finishProcess();
-                } else {
-                    setTimeout(finishProcess, 500);
-                }
-
-            });
-        });
-
-        $('body').delegate('#search', 'submit', function (event) {
-            event.preventDefault();
-            magicalLocation('#/search/' + $('input[name="search"]').val());
-        })
-            .delegate('.post', 'click', function () {
-                var that = $(this);
-
-                if (!losses.logined)
-                    return;
-
-                var multiSelectElement = $(this).children('.multi_select');
-                setTimeout(function () {
-                    if (multiSelectElement.is(':checked')) {
-                        $(that).removeClass('selected');
-                        losses.multiSelect.splice($.inArray(multiSelectElement.attr('data-post-id'), losses.multiSelect), 1);
-                        multiSelectElement.prop("checked", false);
+                $('.darkness').on('click.lclick', function () {
+                    if (moving) {
+                        moving = false;
                     } else {
-                        $(that).addClass('selected');
-                        losses.multiSelect.push(multiSelectElement.attr('data-post-id'));
-                        multiSelectElement.prop("checked", true);
+                        $(that).removeClass('up');
+                        $('.lightbox').removeClass('up');
+                        imageElement.attr('src', '')
+                            .css({
+                                'margin-top': 0,
+                                'margin-left': 0,
+                                'transform': 'default'
+                            });
                     }
-                }, 100);
-            });
-
-        losses.elements.iconGroupElement.delegate('#upload_image_active', 'change', function (evt) {
-            var element = $('.hint')
-                , icon = $('.icon-picture')
-                , target = this
-                , f = evt.target.files[0]
-                , reader = new FileReader();
-
-            function warning(text) {
-                losses.elements.pause = true;
-
-                element.html(text)
-                    .addClass('bubbling');
-
-                var iconClass = icon.hasClass('selected') ? 'shine_green' : 'shine_gray';
-
-                icon.addClass(iconClass);
-                $('.upload_warp').removeClass('selected');
-
-                setTimeout(function () {
-                    element.removeClass('bubbling');
-                    icon.removeClass('shine_gray shine_green selected');
-                }, 2000);
-            }
-
-            if (!f.type.match('image.*')) {
-                warning('您选择的文件不是图片，请选择一张图片。');
-                target.outerHTML = target.outerHTML;
-
-                return false;
-            }
-
-            reader.onload = (function (theFile) {
-
-                return function (e) {
-                    // Render thumbnail.
-                    $('.image_preview')[0].innerHTML = ['<img class="thumb" src="', e.target.result,
-                        '" title="', escape(theFile.name), '"/>'].join('');
-
-                    $('.upload_warp').addClass('selected');
-                    icon.addClass('selected');
-                };
-            })(f);
-
-            reader.readAsDataURL(f);
-        });
-
-        function removeImage() {
-            var target = $('#upload_image_active')[0];
-            target.outerHTML = target.outerHTML;
-
-            $('.upload_image').removeClass('selected');
-            $('.upload_warp').removeClass('selected');
-        }
-
-        $('.upload_image').click(function () {
-            $('#upload_image_active').click();
-        });
-
-        $('.remove_image').click(removeImage);
-
-        $('.emoji_button').click(function () {
-            losses.elements.iconGroupElement.mouseleave();
-            $('.g-show').removeClass('g-show');
-            $('.g-face').addClass('g-show');
-
-            $('.icon-menu,.icon_group').each(function () {
-                $(this).toggleClass('up');
-            });
-            $('#post_dialog').toggleClass('fold');
-        });
-
-        $('#emoji_box').click(function (event) {
-            if (!$(event.target).hasClass('emoji'))
-                return;
-            var target = losses.elements.contentElement[0]
-                , faceCode = ':' + $(event.target).attr('data-value') + ':';
-
-            target.value = target.value.substring(0, target.selectionStart) + faceCode + target.value.substring(target.selectionEnd);
-        });
-
-        $('.group_select').click(function (event) {
-            var targetAttr = $(event.target).attr('data-group-name');
-            if (!targetAttr) {
-                $('#post_dialog').removeClass('fold');
-                $('.icon-menu,.icon_group').each(function () {
-                    $(this).removeClass('up');
                 });
+            });
+    })();
+
+    $.post('api/?manage', {'check': ''}, function (data) {
+        var response = JSON.parse(data);
+
+        losses.logined = (response.message);
+
+        manageLoginProcess();
+    });
+
+
+    $('#new_post>i').click(function () {
+
+        $('#post_dialog').addClass('flow_up');
+
+        $('#new_post').addClass('hide')
+            .removeClass('show');
+
+        setTimeout(function () {
+            $('body').on('click.activeBody', function (event) {
+                if ($(event.target).parents('#post_dialog').length == 0) {
+                    $('#post_dialog').removeClass('flow_up');
+
+                    $(this).off('click.activeBody');
+
+                    $('#new_post').removeClass('hide')
+                        .addClass('show');
+
+                }
+            });
+        }, 100);
+
+    });
+
+    $('.checkbox_rebuild>input').each(function () {
+        $(this).on("change", function () {
+            var that = $(this);
+            setTimeout(function () {
+                if (that.is(":checked"))
+                    that.parent("label").addClass("selected");
+                else
+                    that.parent("label").removeClass("selected");
+            }, 10);
+        });
+    });
+
+    var MutationObserver = window.MutationObserver
+        , postArea = losses.elements.dialogElement[0]
+        , DocumentObserver = new MutationObserver(checkSumitable)
+        , DocumentObserverConfig = {
+            attributes: true,
+            childList: true,
+            characterData: true,
+            subtree: true
+        };
+    DocumentObserver.observe(postArea, DocumentObserverConfig);
+
+
+    $('#post_form').submit(function (event) {
+        event.preventDefault();
+
+        if (!losses.elements.submitable)
+            return;
+
+        var flying = true;
+
+        losses.elements.submitIcon.blur()
+            .addClass('fly');
+
+        setTimeout(function () {
+            flying = false;
+        }, 500);
+
+        $(this).ajaxSubmit(function (data) {
+            data = JSON.parse(data);
+            if (data.code != 200)
                 return;
+
+            if (losses.router.postId)
+                location.reload(true);
+
+            function finishProcess() {
+                magicalLocation('#/post/' + data.message);
+                removeImage();
+                losses.elements.submitIcon.removeClass('fly');
+                $('#post_form')[0].reset();
+
             }
-            $('.g-show').removeClass('g-show');
-            $('.' + targetAttr).addClass('g-show');
-        });
 
-        $('.close_dialog').click(function () {
-            $('body').click();
-        });
 
-        $('.icon-menu').mouseenter(function () {
+            if (!flying) {
+                finishProcess();
+            } else {
+                setTimeout(finishProcess, 500);
+            }
+
+        });
+    });
+
+    $('body').delegate('#search', 'submit', function (event) {
+        event.preventDefault();
+        magicalLocation('#/search/' + $('input[name="search"]').val());
+    })
+        .delegate('.post', 'click', function () {
             var that = $(this);
 
-            if (losses.event.menuTimeout)
-                clearTimeout(losses.event.menuTimeout);
+            if (!losses.logined)
+                return;
 
-            that.addClass('hide');
-            losses.elements.iconGroupElement.addClass('extend bump')
-                .one('mouseleave', function () {
-                    var menu = $(this);
-
-                    function action() {
-                        losses.elements.pause = false;
-                        menu.removeClass('extend bump');
-
-                        that.removeClass('hide');
-                    }
-
-                    if (losses.elements.pause)
-                        losses.event.menuTimeout = setTimeout(action, 2000);
-                    else
-                        action();
-                });
+            var multiSelectElement = $(this).children('.multi_select');
+            setTimeout(function () {
+                if (multiSelectElement.is(':checked')) {
+                    $(that).removeClass('selected');
+                    losses.multiSelect.splice($.inArray(multiSelectElement.attr('data-post-id'), losses.multiSelect), 1);
+                    multiSelectElement.prop("checked", false);
+                } else {
+                    $(that).addClass('selected');
+                    losses.multiSelect.push(multiSelectElement.attr('data-post-id'));
+                    multiSelectElement.prop("checked", true);
+                }
+            }, 100);
         });
 
-        setTimeout(checkSumitable, 1000);
+    losses.elements.iconGroupElement.delegate('#upload_image_active', 'change', function (evt) {
+        var element = $('.hint')
+            , icon = $('.icon-picture')
+            , target = this
+            , f = evt.target.files[0]
+            , reader = new FileReader();
+
+        function warning(text) {
+            losses.elements.pause = true;
+
+            element.html(text)
+                .addClass('bubbling');
+
+            var iconClass = icon.hasClass('selected') ? 'shine_green' : 'shine_gray';
+
+            icon.addClass(iconClass);
+            $('.upload_warp').removeClass('selected');
+
+            setTimeout(function () {
+                element.removeClass('bubbling');
+                icon.removeClass('shine_gray shine_green selected');
+            }, 2000);
+        }
+
+        if (!f.type.match('image.*')) {
+            warning('您选择的文件不是图片，请选择一张图片。');
+            target.outerHTML = target.outerHTML;
+
+            return false;
+        }
+
+        reader.onload = (function (theFile) {
+
+            return function (e) {
+                // Render thumbnail.
+                $('.image_preview')[0].innerHTML = ['<img class="thumb" src="', e.target.result,
+                    '" title="', escape(theFile.name), '"/>'].join('');
+
+                $('.upload_warp').addClass('selected');
+                icon.addClass('selected');
+            };
+        })(f);
+
+        reader.readAsDataURL(f);
     });
+
+    function removeImage() {
+        var target = $('#upload_image_active')[0];
+        target.outerHTML = target.outerHTML;
+
+        $('.upload_image').removeClass('selected');
+        $('.upload_warp').removeClass('selected');
+    }
+
+    $('.upload_image').click(function () {
+        $('#upload_image_active').click();
+    });
+
+    $('.remove_image').click(removeImage);
+
+    $('.emoji_button').click(function () {
+        losses.elements.iconGroupElement.mouseleave();
+        $('.g-show').removeClass('g-show');
+        $('.g-face').addClass('g-show');
+
+        $('.icon-menu,.icon_group').each(function () {
+            $(this).toggleClass('up');
+        });
+        $('#post_dialog').toggleClass('fold');
+    });
+
+    $('#emoji_box').click(function (event) {
+        if (!$(event.target).hasClass('emoji'))
+            return;
+        var target = losses.elements.contentElement[0]
+            , faceCode = ':' + $(event.target).attr('data-value') + ':';
+
+        target.value = target.value.substring(0, target.selectionStart) + faceCode + target.value.substring(target.selectionEnd);
+    });
+
+    $('.group_select').click(function (event) {
+        var targetAttr = $(event.target).attr('data-group-name');
+        if (!targetAttr) {
+            $('#post_dialog').removeClass('fold');
+            $('.icon-menu,.icon_group').each(function () {
+                $(this).removeClass('up');
+            });
+            return;
+        }
+        $('.g-show').removeClass('g-show');
+        $('.' + targetAttr).addClass('g-show');
+    });
+
+    $('.close_dialog').click(function () {
+        $('body').click();
+    });
+
+    $('.icon-menu').mouseenter(function () {
+        var that = $(this);
+
+        if (losses.event.menuTimeout)
+            clearTimeout(losses.event.menuTimeout);
+
+        that.addClass('hide');
+        losses.elements.iconGroupElement.addClass('extend bump')
+            .one('mouseleave', function () {
+                var menu = $(this);
+
+                function action() {
+                    losses.elements.pause = false;
+                    menu.removeClass('extend bump');
+
+                    that.removeClass('hide');
+                }
+
+                if (losses.elements.pause)
+                    losses.event.menuTimeout = setTimeout(action, 2000);
+                else
+                    action();
+            });
+    });
+
+    setTimeout(checkSumitable, 1000);
+});
+
+function callManageDialog() {
+
+    function requireCode() {
+        $.post('api/?manage', {'key': ''}, function (data) {
+            var response = JSON.parse(data);
+            if (response.code === 200)
+                losses.key = response.message;
+            else {
+                losses.key = null;
+                publicWarning('无法与服务器正确沟通！');
+            }
+        });
+    }
+
+    function hideDialog() {
+        manageElement.removeClass('up');
+        inputElement.val('');
+        $(this).off('click.manage');
+        manageElement.off('submit.lsubmit');
+    }
+
+    var manageElement = $('.manage')
+        , inputElement = $('.manage>input');
+    manageElement.addClass('up');
+    inputElement.focus();
+
+    requireCode();
+
+    manageElement.on('submit.lsubmit', function () {
+        $.post('api/?manage', {'password': md5(md5(inputElement.val()) + losses.key)}, function (data) {
+            var response = JSON.parse(data);
+
+            if (response.code === 200) {
+                losses.key = null;
+                losses.logined = true;
+                hideDialog();
+                manageLoginProcess();
+                publicWarning('Welcome, my master nyan~~');
+
+                if (losses.router.manage) {
+                    magicalLocation('#/');
+                    location.refresh(true);
+                }
+            }
+            else {
+                requireCode();
+                manageElement.removeClass('shake');
+
+                setTimeout(function () {
+                    manageElement.addClass('shake');
+                }, 10);
+
+                losses.key = null;
+                publicWarning('密钥错误，请重新输入。');
+            }
+        });
+    });
+
+    $('body').on('click.manage', function (event) {
+        if (losses.router.manage)
+            return;
+
+        if ($(event.target).hasClass('password_acion')) {
+            return false;
+        } else {
+            hideDialog();
+        }
+    });
+    pointer = 0;
+}
 
 (function () {
     var pointer = 0;
@@ -598,62 +673,7 @@ $(document).ready(function () {
         }
 
         if (pointer >= callAction.length) {
-
-            function requireCode() {
-                $.post('api/?manage', {'key': ''}, function (data) {
-                    var response = JSON.parse(data);
-                    if (response.code === 200)
-                        losses.key = response.message;
-                    else {
-                        losses.key = null;
-                        publicWarning('无法与服务器正确沟通！');
-                    }
-                });
-            }
-
-            var manageElement = $('.manage')
-                , inputElement = $('.manage>input');
-            manageElement.addClass('up');
-            inputElement.click();
-
-            requireCode();
-
-            manageElement.on('submit.lsubmit', function () {
-                $.post('api/?manage', {'password': md5(md5(inputElement.val()) + losses.key)}, function (data) {
-                    var response = JSON.parse(data);
-
-                    if (response.code === 200) {
-                        losses.key = null;
-                        losses.logined = true;
-                        $('body').click();
-                        manageLoginProcess();
-                        publicWarning('Welcome, my master nyan~~');
-                    }
-                    else {
-                        requireCode();
-                        manageElement.removeClass('shake');
-
-                        setTimeout(function () {
-                            manageElement.addClass('shake');
-                        }, 10);
-
-                        losses.key = null;
-                        publicWarning('密钥错误，请重新输入。');
-                    }
-                });
-            });
-
-            $('body').on('click.manage', function (event) {
-                if ($(event.target).hasClass('password_acion')) {
-                    return false;
-                } else {
-                    manageElement.removeClass('up');
-                    inputElement.val('');
-                    $(this).off('click.manage');
-                    manageElement.off('submit.lsubmit');
-                }
-            });
-            pointer = 0;
+            callManageDialog();
         }
     });
 })();

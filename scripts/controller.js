@@ -102,3 +102,15 @@ function dialogCtrl($http, $scope, $interval) {
 function manageCtrl($scope) {
     losses.scope.manage = $scope;
 }
+
+function manageStarter() {
+    losses.router.manage = true;
+
+    if (!losses.logined) {
+        callManageDialog();
+    } else {
+        losses.router.manage = false;
+        location.href = '#/';
+        location.refresh(true);
+    }
+}

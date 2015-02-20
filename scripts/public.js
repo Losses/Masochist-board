@@ -215,6 +215,15 @@ function manageLoginProcess() {
     }
 }
 
+function switchLoading(status) {
+    var loading = $('.loading_spin');
+    if (status) {
+        loading.addClass('down');
+    } else {
+        loading.removeClass('down');
+    }
+}
+
 $(document).ready(function documentReady() {
     losses.elements = {
         submitable: false,
@@ -347,7 +356,9 @@ $(document).ready(function documentReady() {
             });
     })();
 
+    switchLoading(true);
     $.post('api/?manage', {'check': ''}, function (data) {
+        switchLoading(false);
         var response = JSON.parse(data);
 
         losses.logined = (response.message);
@@ -415,6 +426,8 @@ $(document).ready(function documentReady() {
         losses.elements.submitIcon.blur()
             .addClass('fly');
 
+        switchLoading(true);
+
         setTimeout(function () {
             flying = false;
         }, 500);
@@ -458,6 +471,8 @@ $(document).ready(function documentReady() {
             } else {
                 setTimeout(finishProcess, 500);
             }
+
+            switchLoading(false);
 
         });
     });
@@ -615,7 +630,9 @@ $(document).ready(function documentReady() {
 function callManageDialog() {
 
     function requireCode() {
+        switchLoading(true);
         $.post('api/?manage', {'key': ''}, function (data) {
+            switchLoading(false);
             var response = JSON.parse(data);
             if (response.code === 200)
                 losses.key = response.message;
@@ -641,7 +658,9 @@ function callManageDialog() {
     requireCode();
 
     manageElement.on('submit.lsubmit', function () {
+        switchLoading(true);
         $.post('api/?manage', {'password': md5(md5(inputElement.val()) + losses.key)}, function (data) {
+            switchLoading(false);
             var response = JSON.parse(data);
 
             if (response.code === 200) {

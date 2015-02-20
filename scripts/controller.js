@@ -14,6 +14,7 @@ function postCtrl($http, $scope, $routeParams) {
     $scope.posts = [];
 
     function pushContent() {
+        switchLoading(true);
         function getContent(apiRule) {
             if (!loading) {
                 loading = true;
@@ -24,6 +25,8 @@ function postCtrl($http, $scope, $routeParams) {
                             $scope.posts.push(response[i]);
                         }
                         loading = false;
+
+                        switchLoading(false);
                     });
             }
         }

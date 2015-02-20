@@ -1389,6 +1389,7 @@ footer {
   right: 63px;
   bottom: 110px;
   width: 42px;
+  padding-bottom: 30px;
   position: fixed;
   transition: all 300ms;
   visibility: hidden;
@@ -1623,7 +1624,7 @@ footer {
 }
 .manager .float_icon:hover .manage_menu,
 .manager .float_icon.extend .manage_menu {
-  bottom: 120px;
+  bottom: 100px;
   opacity: 1;
   visibility: visible;
 }

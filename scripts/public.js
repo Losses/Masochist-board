@@ -731,3 +731,5 @@ function callManageDialog() {
         }
     });
 })();
+
+console.log('%c','background-image:url("https://raw.githubusercontent.com/Losses/Masochist-board/1392eb7b16a95a832dee28dcbaa27b24e8ce7fbf/images/about.png");padding:77px 225px;line-height:154px;height:1px');

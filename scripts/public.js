@@ -298,8 +298,7 @@ $(document).ready(function documentReady() {
                         , y = event.pageY
                         , imageX = parseInt(imageElement.css('margin-left'))
                         , imageY = parseInt(imageElement.css('margin-top'))
-                        , frame = false
-                        , intervalEvent;
+                        , frame = false;
 
                     imageElement.css('cursor', 'move');
 

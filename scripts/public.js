@@ -220,7 +220,10 @@ function switchLoading(status) {
     if (status) {
         loading.addClass('down');
     } else {
-        loading.removeClass('down');
+        setTimeout(function () {
+            loading.removeClass('down');
+        }, 1000);
+
     }
 }
 

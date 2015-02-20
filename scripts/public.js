@@ -426,15 +426,28 @@ $(document).ready(function documentReady() {
             } catch (e) {
                 publicWarning(data);
             }
-            if (data.code != 200)
+            if (data.code != 200) {
+                losses.elements.submitIcon.removeClass('fly');
+                publicWarning(data.message);
                 return;
+            }
 
-            if (losses.router.postId)
-                location.reload(true);
+            if (losses.router.postId) {
+                var date = new Date()
+                    , time = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+                losses.scope.postCtrl.posts.push({
+                    author: 'a person', /*二次开发注意需要!*/
+                    time: time,
+                    content: $('textarea[name="content"]')[0].value
+                });
+                losses.scope.postCtrl.$digest();
+            }
 
             function finishProcess() {
                 losses.elements.submitIcon.removeClass('fly');
-                magicalLocation('#/post/' + data.message);
+                if (!losses.router.postId)
+                    magicalLocation('#/post/' + data.message);
+                $('body').click();
                 removeImage();
                 $('#post_form')[0].reset();
 
@@ -597,7 +610,8 @@ $(document).ready(function documentReady() {
     });
 
     setTimeout(checkSumitable, 1000);
-});
+})
+;
 
 function callManageDialog() {
 

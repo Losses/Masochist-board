@@ -1,94 +1,133 @@
 <?php
 
-require_once ('../config.php');
+  require_once ('../config.php');
 
-require_once ('../libs/medoo.php');
+  require_once ('../libs/medoo.php');
 
-require_once ('../libs/emotions.php');
+  require_once ('../libs/emotions.php');
 
-$emotion = new emotions();
+  $emotion  = new emotions();
 
-$database = new medoo([
-  'database_type' =>  'mysql',
-  'database_name' =>  DB_NAME,
-  'server'        =>  DB_HOST,
-  'username'      =>  DB_USER,
-  'password'      =>  DB_PASSWORD,
-  'charset'       =>  'utf8',
-  'port'          =>  DB_PORT,
-  'option'        =>  [
-                        PDO::ATTR_CASE => PDO::CASE_NATURAL
-]]);
+  $database = new medoo([
 
-if (isset ($_GET['new'])) {
-  $_POST['upid']      = isset($_POST['upid'])     ?   $_POST['upid']  : 0;
-  $_POST['category']  = isset($_POST['category']) &&  ($_POST['upid'] == 0)
-    ? $_POST['category']  : 0;
-  $_POST['title']     = isset($_POST['title'])    ?   $_POST['title'] : '';
+    'database_type' =>  'mysql',
+    'database_name' =>  DB_NAME,
+    'server'    =>  DB_HOST,
+    'username'    =>  DB_USER,
+    'password'    =>  DB_PASSWORD,
+    'port'      =>  DB_PORT,
+    'charest'   =>  'utf8',
+    'option'    =>  [PDO::ATTR_CASE =>  PDO::CASE_NATURAL]
+  
+  ]);
 
-  if (($_POST['upid'] ==  0)  &&  ($_POST['title']  ==  '')) {
-    response_message(403, 'You need a title!');
-    exit();
-  }
+  $columns_sql = [];
+  $where_sql   = [];
+  $data_sql  = [];
 
-  if (count($_FILES) > 0) {
-    if ((($_FILES['image']['type'] == 'image/gif')
-      || ($_FILES['image']['type'] == 'image/jpeg')
-      || ($_FILES['image']['type'] == 'image/pjpeg')
-      || ($_FILES['image']['type'] == 'image/png'))
-      && ($_FILES['image']['size'] < 50000000)) {
-      if ($_FILES['image']['error']) {
-        response_message(500, 'Internal Server Error!');
-      }else {
-        move_uploaded_file($_FILES['image']['tmp_name'],
-          '../upload/' . $_FILES['image']['name']);
-        $retype = explode('.', '../upload/' . $_FILES['image']['name']);
-        $name = md5(md5_file('../upload/' . $_FILES['image']['name']) .
-          date('Y-m-d H:i:s')) . '.' . $retype[count($retype) - 1];
-        rename('../upload/' . $_FILES['image']['name'], '../upload/' . $name);
+  $current_time = $database->query('SELECT NOW()')->fetchAll()[0][0];
+
+  if (isset($_GET['new'])) {
+    
+    $post_title   = isset($_POST['title'])    ? $_POST['title']   : '';
+    $post_content = isset($_POST['content'])  ? $_POST['content'] : '';
+    $post_upid    = isset($_POST['upid'])   ? $_POST['upid']    : 0;
+    $post_sage    = isset($_POST['sage'])   ? 1         : 0;
+    $post_cate    = isset($_POST['category']) ? $_POST['category']  : 0;
+
+    if ($post_upid == 0) {
+
+      if ($post_title == '') {
+
+        response_message(403, "You need a title!");
+        exit();
+      
       }
+      if ($post_content == '') {
+      
+        response_message(403, "You need some contents!");
+        exit();
+      
+      }
+
+      $data_sql = ['active_time'  =>  $current_time,];
+
+    }else {
+
+      if ($post_content == '') {
+      
+        response_message(403, "You need some contents!");
+        exit();
+      
+      }
+
+      $columns_sql = ['sage'];
+      $where_sql   = ['id[=]' =>  $post_upid];
+      $issage = $database->select('content',
+        $columns_sql, $where_sql)[0]['sage'] === '1';
+      if (!$issage) {
+
+        $data_sql = ['active_time'  =>  $current_time,];
+        $data = $database->update('content', $data_sql, $where_sql);
+      
+      }
+
     }
-  }else {
-    $name = null;
-  }
 
-  $insert_sql = [
-    'author'  =>  $_POST['author'],
-    'title'   =>  $_POST['title'],
-    'content' =>  htmlspecialchars($_POST['content']),
-    'upid'    =>  $_POST['upid'],
-    'img'     =>  $name,
-  ];
+    if ($_FILES > 0) {
 
-  if ($_POST['upid'] == 0) {
-    $insert_sql +=  ['category' =>  $_POST['category']];
-  }
+        if ((($_FILES['image']['type'] == 'image/gif')
+          || ($_FILES['image']['type'] == 'image/jpeg')
+              || ($_FILES['image']['type'] == 'image/svg')
+              || ($_FILES['image']['type'] == 'image/bmp')
+              || ($_FILES['image']['type'] == 'image/wbmp')
+              || ($_FILES['image']['type'] == 'image/png'))
+              && ($_FILES['image']['size'] < 50000000)) {
 
-  if (isset($_POST['sage'])) {
-    $insert_sql +=  ['sage' =>  $_POST['sage']];
-  }
+              if ($_FILES['image']['error']) {
 
-  $result = $database->insert('content', $insert_sql);
+                response_message(500, 'Internal Server Error!');
+              
+              }else {
 
-  if (isset($_POST['upid']) && $_POST['upid'] != 0) {
-    $issage = $database->select('content',[
-      'sage'
-    ],[
-      'id[=]' =>  $_POST['upid']
-    ])[0]['sage'] === '1';
+                move_uploaded_file($_FILES['image']['tmp_name'],
+                  '../upload/' . $_FILES['image']['name']);
+                
+                $type_img   = explode('.', '../upload/'
+                  .$_FILES['image']['name']);
+                $rename_img = md5(md5_file('../upload/'
+                  .$_FILES['image']['name'])
+                  .date('Y-m-d H:i:s')).'.'
+                  .$type_img[count ($type_img) - 1];
+                rename('../upload/' . $_FILES['image']['name'],
+                  '../upload/'  . $rename_img);
+                
+                }
+            
+          }
+    }else {
 
-    if ($issage) {
-      $current_time = $database->query('SELECT NOW()')->fetchAll()[0][0];
-      $database->update('content',[
-        'active_time' =>  $current_time
-      ],[
-        'id'          =>  $_POST['upid']
-      ]);
+        $rename_img = null;
+        
     }
-  }
 
-  response_message(200,$result);
-}
+    $data_sql += [
+
+        'title'     =>  $post_title,
+        'content'   =>  htmlspecialchars($post_content),
+        'time'      =>  $current_time,
+      'active_time' =>  $current_time,
+      'img'     =>  $rename_img,
+        'upid'      =>  $post_upid,
+        'sage'      =>  $post_sage,
+        'category'    =>  $post_cate
+    ];
+
+    $result = $database->insert('content', $data_sql);
+
+    response_message(200, $result);
+
+  }
 
 elseif (isset ($_GET['list'])) {
   $_GET['page'] = isset($_GET['page']) ? $_GET['page'] : 1;

@@ -143,6 +143,18 @@
   }
 }
 
+@keyframes shake_submit {
+  0% {
+    right: 4px;
+  }
+  50% {
+    right: 0;
+  }
+  100% {
+    right: -4px;
+  }
+}
+
 @keyframes rotate {
   100% {
     transform: rotate(360deg);
@@ -458,7 +470,7 @@
       }
 
       &.shake {
-        animation: shake 20ms 14 alternate;
+        animation: shake_submit 40ms 14 alternate;
       }
     }
 

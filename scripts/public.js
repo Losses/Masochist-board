@@ -421,8 +421,14 @@ $(document).ready(function documentReady() {
     });
 
     $('.post_submit').click(function () {
-        if (!losses.elements.submitable)
+        if (!losses.elements.submitable) {
+            losses.elements.submitIcon.removeClass('shake');
+            setTimeout(function () {
+                losses.elements.submitIcon.addClass('shake');
+            }, 100);
+
             return;
+        }
 
         var flying = true;
 

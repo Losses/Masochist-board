@@ -54,6 +54,17 @@
     left: 51%;
   }
 }
+@keyframes shake_submit {
+  0% {
+    right: 4px;
+  }
+  50% {
+    right: 0;
+  }
+  100% {
+    right: -4px;
+  }
+}
 @keyframes rotate {
   100% {
     transform: rotate(360deg);
@@ -410,7 +421,7 @@
   opacity: 0;
 }
 #post_dialog form button[type=submit].shake {
-  animation: shake 20ms 14 alternate;
+  animation: shake_submit 40ms 14 alternate;
 }
 #post_dialog form .icon-menu {
   right: 10px;

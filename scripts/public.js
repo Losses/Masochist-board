@@ -421,7 +421,11 @@ $(document).ready(function documentReady() {
         }, 500);
 
         $('#post_form').ajaxSubmit(function (data) {
-            data = JSON.parse(data);
+            try {
+                data = JSON.parse(data);
+            } catch (e) {
+                publicWarning(data);
+            }
             if (data.code != 200)
                 return;
 

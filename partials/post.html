@@ -13,6 +13,7 @@
 
         <div class="left article_group">
             <p ng-if="post.title != ''">
+                <span class="category {{category[post.category].theme}}">{{category[post.category].name}}</span>
                 <a class='title' href='#/post/{{post.id}}'>{{post.title}}</a>
             </p>
             <span class="author">{{post.author}}</span>

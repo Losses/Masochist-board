@@ -113,6 +113,7 @@
 
     $data_sql += [
 
+      'author'    =>  $_POST['author'],
         'title'     =>  $post_title,
         'content'   =>  htmlspecialchars($post_content),
         'time'      =>  $current_time,
@@ -129,51 +130,61 @@
 
   }
 
-elseif (isset ($_GET['list'])) {
-  $_GET['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
+  elseif (isset($_GET['list'])) {
+    
+    $_GET['page'] = isset($_GET['page'])  ? $_GET['page'] : 1;
 
-  if (isset($_GET['search'])) {
-    $search_text = explode(" ", $_GET['search']);
-    foreach ($search_text as $word) {
-      $result_condition   .=  '*' . $word . '* ';
+    if (isset($_GET['search'])) {
+      
+      $search_key = explode(' ', $_GET['search']);
+      foreach ($search_key as $key) {
+        
+        $result_key .= '*' . $key . '* ';
+
+      }
+      $search_key = $database->quote($result_key);
+      $data = $database->query('SELECT * FROM content
+                   WHERE MATCH (title, content)
+                   AGAINST ($search_key IN BOOLEAN MODE)')
+                   ->fetchAll();
+      echo json_encode($data);
+      exit();
+
     }
-    $search_text = $database->quote($result_condition);
-    $data  = $database->query("SELECT * FROM content 
-                              WHERE MATCH (title,content)
-                              AGAINST ($search_text IN BOOLEAN MODE)")
-                            ->fetchAll();
+
+    $columns_sql = [
+
+      'id',
+      'title',
+      'author',
+      'time',
+      'category',
+      'sage'
+
+    ];
+    $where_sql = [
+
+      'AND' =>  ['upid[=]'  =>  0],
+      'ORDER' =>  ['active_time DESC', 'time DESC'],
+      'LIMIT' =>  [($_GET['page'] - 1) * 10, $_GET['page'] * 10],
+
+    ];
+    if (isset($_GET['category'])) {
+      
+      $where_sql += [
+
+        'AND'  =>  ['category[=]'  =>  $_GET['category']]
+
+      ];
+
+    }
+    $data = $database->select('content', $columns_sql, $where_sql);
+
     echo json_encode($data);
+
     exit();
+
   }
-
-  $condition_sql = [];
-
-  if (isset($_GET['category'])) {
-    $condition_sql['AND']['category[=]'] = (int)$_GET['category'];
-  }
-
-  $condition_sql +=
-  [
-        'AND'     =>    ['upid[=]' =>  0],
-        
-        'ORDER'   =>    ['active_time DESC','time DESC'],
-        
-        'LIMIT'   =>    [($_GET['page']-1)*10, $_GET['page']*10]
-  ];
-
-  $data = $database->select('content',[
-    'id',
-    'title',
-    'author',
-    'time',
-    'category',
-    'sage'
-  ], $condition_sql);
-
-  echo json_encode($data);
-
-  exit();
-}
 
 elseif (isset($_GET['category'])) {
   $data = $database->select('category', '*');

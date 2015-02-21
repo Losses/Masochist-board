@@ -10,6 +10,9 @@ select,
 textarea {
   outline: none;
 }
+textarea {
+  resize: none;
+}
 html,
 body {
   width: 100%;

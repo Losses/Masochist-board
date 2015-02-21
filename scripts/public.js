@@ -461,13 +461,13 @@ $(document).ready(function documentReady() {
             }
 
             function finishProcess() {
-                losses.elements.submitIcon.removeClass('fly');
-                if (!losses.router.postId)
-                    magicalLocation('#/post/' + data.message);
                 $('body').click();
+                losses.elements.submitIcon.removeClass('fly');
                 removeImage();
                 $('#post_form')[0].reset();
-
+                $('#post_dialog .checkbox_rebuild').removeClass('selected');
+                if (!losses.router.postId)
+                    magicalLocation('#/post/' + data.message);
             }
 
 

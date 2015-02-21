@@ -12,29 +12,29 @@
 
     'database_type' =>  'mysql',
     'database_name' =>  DB_NAME,
-    'server'    =>  DB_HOST,
-    'username'    =>  DB_USER,
-    'password'    =>  DB_PASSWORD,
-    'port'      =>  DB_PORT,
-    'charset'   =>  'utf8',
-    'option'    =>  [PDO::ATTR_CASE =>  PDO::CASE_NATURAL]
+    'server'        =>  DB_HOST,
+    'username'      =>  DB_USER,
+    'password'      =>  DB_PASSWORD,
+    'port'          =>  DB_PORT,
+    'charset'       =>  'utf8',
+    'option'        =>  [PDO::ATTR_CASE =>  PDO::CASE_NATURAL]
   
   ]);
 
   $columns_sql = [];
   $where_sql   = [];
-  $data_sql  = [];
+  $data_sql    = [];
 
   $current_time = $database->query('SELECT NOW()')->fetchAll()[0][0];
 
   if (isset($_GET['new'])) {
     
-    $post_title   = isset($_POST['title'])        ? $_POST['title']   : '';
-    $post_content = isset($_POST['content'])      ? $_POST['content'] : '';
-    $post_upid    = isset($_POST['upid'])       ? $_POST['upid']    : 0;
-    $post_sage    = isset($_POST['sage'])       ? 1         : 0;
-    $post_cate    = isset($_POST['category'])     ? $_POST['category']  : 0;
-    $post_author  = isset($_SESSIOM['logined'] == true) ? '猴子'  : $_POST['author'];
+    $post_title   = isset($_POST['title'])          ? $_POST['title']     : '';
+    $post_content = isset($_POST['content'])        ? $_POST['content']   : '';
+    $post_upid    = isset($_POST['upid'])           ? $_POST['upid']      : 0;
+    $post_sage    = isset($_POST['sage'])           ? 1                   : 0;
+    $post_cate    = isset($_POST['category'])       ? $_POST['category']  : 0;
+    $post_author  = ($_SESSIOM['logined'] == true)  ? 'Admin'             : $_POST['author'];
 
     if ($post_upid == 0) {
 
@@ -64,65 +64,65 @@
 
       $columns_sql = ['sage'];
       $where_sql   = ['id[=]' =>  $post_upid];
-      $issage = $database->select('content',
+      $issage      = $database->select('content',
         $columns_sql, $where_sql)[0]['sage'] === '1';
       if (!$issage) {
 
         $data_sql = ['active_time'  =>  $current_time,];
-        $data = $database->update('content', $data_sql, $where_sql);
+        $data     = $database->update('content', $data_sql, $where_sql);
       
       }
 
     }
 
     if ($_FILES > 0) {
+      if ((($_FILES['image']['type']  ==  'image/gif')
+      || ($_FILES['image']['type']    ==  'image/jpeg')
+      || ($_FILES['image']['type']    ==  'image/svg')
+      || ($_FILES['image']['type']    ==  'image/bmp')
+      || ($_FILES['image']['type']    ==  'image/wbmp')
+      || ($_FILES['image']['type']    ==  'image/png'))
+      && ($_FILES['image']['size']    <   50000000)) {
 
-        if ((($_FILES['image']['type'] == 'image/gif')
-        || ($_FILES['image']['type'] == 'image/jpeg')
-          || ($_FILES['image']['type'] == 'image/svg')
-          || ($_FILES['image']['type'] == 'image/bmp')
-          || ($_FILES['image']['type'] == 'image/wbmp')
-          || ($_FILES['image']['type'] == 'image/png'))
-          && ($_FILES['image']['size'] < 50000000)) {
+        if ($_FILES['image']['error']) {
 
-              if ($_FILES['image']['error']) {
+          response_message(500, 'Internal Server Error!');
 
-                response_message(500, 'Internal Server Error!');
-              
-              }else {
+        }else {
 
-                move_uploaded_file($_FILES['image']['tmp_name'],
-                  '../upload/' . $_FILES['image']['name']);
-                
-                $type_img   = explode('.', '../upload/'
-                  .$_FILES['image']['name']);
-                $post_img = md5(md5_file('../upload/'
-                  .$_FILES['image']['name'])
-                  .date('Y-m-d H:i:s')).'.'
-                  .$type_img[count ($type_img) - 1];
-                rename('../upload/' . $_FILES['image']['name'],
-                     '../upload/' . $post_img);
-                
-                }
-            
-          }
+          move_uploaded_file($_FILES['image']['tmp_name'],
+            '../upload/' . $_FILES['image']['name']);
+          
+          $type_img   = explode('.', '../upload/' 
+            . $_FILES['image']['name']);
+          $post_img   = md5(md5_file('../upload/' 
+            . $_FILES['image']['name'])
+            . date('Y-m-d H:i:s')) . '.' 
+            . $type_img[count ($type_img) - 1];
+          rename('../upload/' . $_FILES['image']['name'],
+            '../upload/' . $post_img);
+
+        }
+
+      }
     }else {
 
-        $post_img = NULL;
+      $post_img = NULL;
         
     }
 
     $data_sql += [
 
-      'author'    =>  $post_author,
-        'title'     =>  $post_title,
-        'content'   =>  htmlspecialchars($post_content),
-        'time'      =>  $current_time,
+      'author'      =>  $post_author,
+      'title'       =>  $post_title,
+      'content'     =>  htmlspecialchars($post_content),
+      'time'        =>  $current_time,
       'active_time' =>  $current_time,
-      'img'     =>  $post_img,
-        'upid'      =>  $post_upid,
-        'sage'      =>  $post_sage,
-        'category'    =>  $post_cate
+      'img'         =>  $post_img,
+      'upid'        =>  $post_upid,
+      'sage'        =>  $post_sage,
+      'category'    =>  $post_cate
+    
     ];
 
     $result = $database->insert('content', $data_sql);
@@ -145,10 +145,12 @@
       }
       $search_key = $database->quote($result_key);
       $data = $database->query('SELECT * FROM content
-                   WHERE MATCH (title, content)
-                   AGAINST ($search_key IN BOOLEAN MODE)')
-                   ->fetchAll();
+                                WHERE MATCH (title, content)
+                                AGAINST ($search_key IN BOOLEAN MODE)')
+                                ->fetchAll();
+      
       echo json_encode($data);
+      
       exit();
 
     }
@@ -160,7 +162,8 @@
       'author',
       'time',
       'category',
-      'sage'
+      'sage',
+      'img'
 
     ];
     $where_sql = [
@@ -172,11 +175,7 @@
     ];
     if (isset($_GET['category'])) {
       
-      $where_sql += [
-
-        'AND'  =>  ['category[=]'  =>  $_GET['category']]
-
-      ];
+      $where_sql['AND']['category[=]'] = (int)$_GET['category'];
 
     }
     $data = $database->select('content', $columns_sql, $where_sql);
@@ -187,7 +186,7 @@
 
   }
 
-  elseif (isset($_GET('category'))) {
+  elseif (isset($_GET['category'])) {
     
     $data = $database->select('category', '*');
 
@@ -216,8 +215,8 @@
 
       'OR'  =>  [
 
-        'upid[=]' =>$_GET['id'],
-        'id[=]'   =>$_GET['id']
+        'upid[=]' =>  $_GET['id'],
+        'id[=]'   =>  $_GET['id']
 
       ],
       'ORDER' =>  ['upid','id'],
@@ -233,7 +232,7 @@
     }
 
     $data_length = count($data);
-    for ($i=0; $i < $data_length; $i++) { 
+    for ($i = 0; $i < $data_length; $i++) { 
       
       $data[$i]['content'] =
         $emotion->phrase($Parsedown->text($data[$i]['content']));
@@ -377,7 +376,7 @@
       foreach ($_POST['target'] as $post_target_id) {
       
         $data_sql  = ['category'  =>  $post_target_id];
-        $where_sql = ['id[=]'   =>  $post_target_id]
+        $where_sql = ['id[=]'   =>  $post_target_id];
         $data = $database->update('content', $data_sql, $where_sql);
 
         if ($date == false) {

@@ -815,11 +815,12 @@
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26), 0 8px 17px 0 rgba(0, 0, 0, 0.2);
 }
 .float_icon.show {
+  transition: bottom 200ms;
   transition-timing-function: cubic-bezier(0.45, 1.36, 0.97, 1.17);
 }
 .float_icon.hide {
   bottom: -70px;
-  transition: bottom 100ms;
+  transition: bottom 200ms;
 }
 .manage {
   top: 50%;

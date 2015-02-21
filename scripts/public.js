@@ -375,7 +375,7 @@ $(document).ready(function documentReady() {
 
         $('#post_dialog').addClass('flow_up');
 
-        $('#new_post').addClass('hide')
+        $('.float_icon').addClass('hide')
             .removeClass('show');
 
         setTimeout(function () {

@@ -447,11 +447,15 @@ $(document).ready(function documentReady() {
 
             if (losses.router.postId) {
                 var date = new Date()
-                    , time = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+                    , month = ((date.getMonth() + 1) > 9) ? (date.getMonth() + 1) : '0' + date.getMonth()
+                    , day = (date.getDate() > 9) ? date.getDate() : '0' + date.getDate()
+                    , time = date.getFullYear() + '-' + month + '-' + day + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
                 losses.scope.postCtrl.posts.push({
+                    title: '',
                     author: 'a person', /*二次开发注意需要!*/
                     time: time,
-                    content: $('textarea[name="content"]')[0].value
+                    content: $('textarea[name="content"]')[0].value,
+                    img: losses.data.lastImg
                 });
                 losses.scope.postCtrl.$digest();
             }
@@ -542,6 +546,8 @@ $(document).ready(function documentReady() {
 
                 $('.upload_warp').addClass('selected');
                 icon.addClass('selected');
+
+                losses.data.lastImg = e.target.result;
             };
         })(f);
 

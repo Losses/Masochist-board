@@ -412,9 +412,6 @@
   position: relative;
   transition: all 400ms linear;
 }
-#post_dialog form button[type=submit].lock {
-  opacity: 0.5;
-}
 #post_dialog form button[type=submit].fly {
   right: -30px;
   bottom: 28px;
@@ -578,12 +575,21 @@
 #post_dialog form .icon_group .hint.bubbling {
   animation: hint_bubble 2s ease-in-out forwards;
 }
+#post_dialog form .icon_group .post_submit::before {
+  content: '\e80d';
+}
 #post_dialog form .icon_group:hover .extend {
   opacity: 1;
   visibility: visible;
 }
 #post_dialog form .icon_group:hover .extend > div {
   height: 45px;
+}
+#post_dialog form .icon_group:hover .post_submit.lock {
+  opacity: 0.5;
+}
+#post_dialog form .icon_group:hover .post_submit::before {
+  content: '\e80b';
 }
 #post_dialog form .icon_group.up {
   bottom: 195px;

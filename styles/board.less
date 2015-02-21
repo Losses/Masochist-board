@@ -459,10 +459,6 @@
       position: relative;
       transition: all 400ms linear;
 
-      &.lock {
-        opacity: 0.5;
-      }
-
       &.fly {
         right: -30px;
         bottom: 28px;
@@ -668,6 +664,10 @@
         }
       }
 
+      .post_submit::before {
+        content: '\e80d';
+      }
+
       &:hover {
         .extend {
           opacity: 1;
@@ -677,13 +677,23 @@
             height: 45px;
           }
         }
+
+        .post_submit {
+          &.lock {
+            opacity: 0.5;
+          }
+          
+          &::before {
+            content: '\e80b';
+          }
+        }
       }
 
       &.up {
         bottom: 195px;
       }
     }
-    
+
     textarea {
       width: calc(100% - 7px);
       height: 392px;

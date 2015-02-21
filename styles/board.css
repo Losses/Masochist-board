@@ -423,42 +423,12 @@
 #post_dialog form button[type=submit].shake {
   animation: shake_submit 40ms 14 alternate;
 }
-#post_dialog form .icon-menu {
-  right: 10px;
-  bottom: 10px;
-  width: 3em;
-  height: 3em;
-  padding: 5px;
-  margin: 0;
-  background: white;
-  border-radius: 100%;
-  border: 0;
-  color: #3c324d;
-  font-size: 18px;
-  display: block;
-  position: absolute;
-  opacity: 1;
-  visibility: visible;
-  transition: all 300ms linear;
-}
-#post_dialog form .icon-menu.hide {
-  opacity: 0;
-  visibility: hidden;
-}
-#post_dialog form .icon-menu.up {
-  bottom: 195px;
-}
 #post_dialog form .icon_group {
   right: 15px;
-  height: 45px;
+  width: 45px;
   bottom: 10px;
-  opacity: 0;
   transition: all 500ms;
   position: absolute;
-  visibility: hidden;
-}
-#post_dialog form .icon_group.up {
-  bottom: 195px;
 }
 #post_dialog form .icon_group button {
   width: 3em;
@@ -468,13 +438,18 @@
   border-radius: 100%;
   font-size: 15px;
 }
-#post_dialog form .icon_group > div {
+#post_dialog form .icon_group .extend {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 300ms;
+}
+#post_dialog form .icon_group .extend > div {
   height: 0;
   padding: 5px 0;
-  transition: all 300ms;
+  transition: all 300ms, height 300ms cubic-bezier(0.45, 1.36, 0.97, 1.17);
   position: relative;
 }
-#post_dialog form .icon_group > div input[type='file'] {
+#post_dialog form .icon_group .extend > div input[type='file'] {
   top: 4px;
   left: 0;
   width: 45px;
@@ -483,32 +458,32 @@
   opacity: 0;
   position: absolute;
 }
-#post_dialog form .icon_group > div .icon-smile {
+#post_dialog form .icon_group .extend > div .icon-smile {
   background: #ff5722;
 }
-#post_dialog form .icon_group > div .icon-picture {
+#post_dialog form .icon_group .extend > div .icon-picture {
   background: #607d8b;
 }
-#post_dialog form .icon_group > div .icon-picture.selected {
+#post_dialog form .icon_group .extend > div .icon-picture.selected {
   background: #4caf50;
 }
-#post_dialog form .icon_group > div .icon-picture.shine_gray {
+#post_dialog form .icon_group .extend > div .icon-picture.shine_gray {
   animation: upload_icon_error_gray 1s 2 ease-in-out forwards;
 }
-#post_dialog form .icon_group > div .icon-picture.shine_green {
+#post_dialog form .icon_group .extend > div .icon-picture.shine_green {
   animation: upload_icon_error_green 1s 2 ease-in-out forwards;
 }
-#post_dialog form .icon_group > div .colorful_icon {
+#post_dialog form .icon_group .extend > div .colorful_icon {
   color: white;
   transition: all 300ms;
 }
-#post_dialog form .icon_group > div:hover .icon-smile {
+#post_dialog form .icon_group .extend > div:hover .icon-smile {
   background: #ff7e55;
 }
-#post_dialog form .icon_group > div:hover .icon-picture {
+#post_dialog form .icon_group .extend > div:hover .icon-picture {
   background: #7b96a3;
 }
-#post_dialog form .icon_group > div:hover .icon-picture.selected {
+#post_dialog form .icon_group .extend > div:hover .icon-picture.selected {
   background: #6ec071;
 }
 #post_dialog form .icon_group .icon_cotainer .colorful_icon {
@@ -603,16 +578,15 @@
 #post_dialog form .icon_group .hint.bubbling {
   animation: hint_bubble 2s ease-in-out forwards;
 }
-#post_dialog form .icon_group.extend {
-  height: 168px;
+#post_dialog form .icon_group:hover .extend {
   opacity: 1;
   visibility: visible;
 }
-#post_dialog form .icon_group.extend > div {
+#post_dialog form .icon_group:hover .extend > div {
   height: 45px;
 }
-#post_dialog form .icon_group.bump {
-  transition: height 400ms cubic-bezier(0.45, 1.36, 0.97, 1.17);
+#post_dialog form .icon_group.up {
+  bottom: 195px;
 }
 #post_dialog form textarea {
   width: calc(93%);

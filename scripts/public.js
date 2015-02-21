@@ -236,7 +236,7 @@ $(document).ready(function documentReady() {
         titleElement: $('input[name="title"]'),
         contentElement: $('textarea[name="content"]'),
         upidElement: $('input[name="upid"]'),
-        submitIcon: $('button[type="submit"]'),
+        submitIcon: $('.post_submit'),
         iconGroupElement: $('.icon_group'),
         warningElement: $('.public_warning')
     };
@@ -245,6 +245,7 @@ $(document).ready(function documentReady() {
     };
 
     function checkSumitable() {
+        console.log('!');
         setTimeout(function () {
             if (!losses.router)
                 return;
@@ -405,22 +406,13 @@ $(document).ready(function documentReady() {
         });
     });
 
-    var MutationObserver = window.MutationObserver
-        , postArea = losses.elements.dialogElement[0]
-        , DocumentObserver = new MutationObserver(checkSumitable)
-        , DocumentObserverConfig = {
-            attributes: true,
-            childList: true,
-            characterData: true,
-            subtree: true
-        };
-    DocumentObserver.observe(postArea, DocumentObserverConfig);
-
     $('#post_form').submit(function (event) {
         event.preventDefault();
     });
 
-    $('.post_submit').click(function () {
+    $(losses.elements.dialogElement).delegate('input,textarea', 'input change propertychange', checkSumitable);
+
+    losses.elements.submitIcon.click(function () {
         if (!losses.elements.submitable) {
             losses.elements.submitIcon.removeClass('shake');
             setTimeout(function () {
@@ -575,9 +567,7 @@ $(document).ready(function documentReady() {
         $('.g-show').removeClass('g-show');
         $('.g-face').addClass('g-show');
 
-        $('.icon-menu,.icon_group').each(function () {
-            $(this).toggleClass('up');
-        });
+        $('.icon_group').toggleClass('up');
         $('#post_dialog').toggleClass('fold');
     });
 
@@ -594,9 +584,7 @@ $(document).ready(function documentReady() {
         var targetAttr = $(event.target).attr('data-group-name');
         if (!targetAttr) {
             $('#post_dialog').removeClass('fold');
-            $('.icon-menu,.icon_group').each(function () {
-                $(this).removeClass('up');
-            });
+            $('.icon_group').removeClass('up');
             return;
         }
         $('.g-show').removeClass('g-show');
@@ -606,32 +594,33 @@ $(document).ready(function documentReady() {
     $('.close_dialog').click(function () {
         $('body').click();
     });
+    /*
+     $('.icon-menu').mouseenter(function () {
+     var that = $(this);
 
-    $('.icon-menu').mouseenter(function () {
-        var that = $(this);
+     if (losses.event.menuTimeout)
+     clearTimeout(losses.event.menuTimeout);
 
-        if (losses.event.menuTimeout)
-            clearTimeout(losses.event.menuTimeout);
+     that.addClass('hide');
+     losses.elements.iconGroupElement.addClass('extend bump')
+     .one('mouseleave', function () {
+     var menu = $(this);
 
-        that.addClass('hide');
-        losses.elements.iconGroupElement.addClass('extend bump')
-            .one('mouseleave', function () {
-                var menu = $(this);
+     function action() {
+     losses.elements.pause = false;
+     menu.removeClass('extend bump');
 
-                function action() {
-                    losses.elements.pause = false;
-                    menu.removeClass('extend bump');
+     that.removeClass('hide');
+     }
 
-                    that.removeClass('hide');
-                }
+     if (losses.elements.pause)
+     losses.event.menuTimeout = setTimeout(action, 2000);
+     else
+     action();
+     });
+     });
 
-                if (losses.elements.pause)
-                    losses.event.menuTimeout = setTimeout(action, 2000);
-                else
-                    action();
-            });
-    });
-
+     */
     setTimeout(checkSumitable, 1000);
 })
 ;
@@ -732,4 +721,4 @@ function callManageDialog() {
     });
 })();
 
-console.log('%c','background-image:url("https://raw.githubusercontent.com/Losses/Masochist-board/1392eb7b16a95a832dee28dcbaa27b24e8ce7fbf/images/about.png");padding:77px 225px;line-height:154px;height:1px');
+console.log('%c', 'background-image:url("https://raw.githubusercontent.com/Losses/Masochist-board/1392eb7b16a95a832dee28dcbaa27b24e8ce7fbf/images/about.png");padding:77px 225px;line-height:154px;height:1px');

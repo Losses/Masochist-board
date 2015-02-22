@@ -38,8 +38,7 @@ if (isset($_GET['check_connection'])) {
 $reinstall_mode = is_file('../config.php');
 
 if ($reinstall_mode
-    && !isset($_SESSION['logined'])
-    && ($_SESSION['logined'] == 1)
+    && ((isset($_SESSION['logined']) && ($_SESSION['logined'] == 1)) || !isset($_SESSION['logined']))
     && isset($_GET['install'])
 ) {
     header("Location: ?info");

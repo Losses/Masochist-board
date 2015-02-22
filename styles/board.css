@@ -1462,7 +1462,7 @@ footer {
 .manager .manage_menu li.delete_warp .cancel_warp {
   top: -42px;
   left: 5px;
-  width: 30px;
+  width: 50px;
   height: 124px;
   transform: rotate(-110deg);
   transition: all 500ms;
@@ -1479,7 +1479,7 @@ footer {
 .manager .manage_menu li.delete_warp .confirm_warp {
   top: 10px;
   left: -48px;
-  height: 30px;
+  height: 50px;
   width: 135px;
   transition: all 200ms;
   transform: rotate(-20deg);

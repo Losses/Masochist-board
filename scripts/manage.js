@@ -26,11 +26,15 @@ $(document).ready(function () {
         });
 
         function manageAction(event) {
-            var action = $(event.target).attr('data-manage-action');
-            $.post('api/?manage', {
+            var action = $(event.target).attr('data-manage-action')
+                , actionContent = {
                     action: action,
                     target: losses.multiSelect
-                }, function (data) {
+                };
+            if (action === 'trans')
+                actionContent.category = $('select[name="manage_transform"]').val();
+
+            $.post('api/?manage', actionContent, function (data) {
                     var response;
                     try {
                         response = JSON.parse(data);
@@ -50,6 +54,8 @@ $(document).ready(function () {
                                     $('#post-' + losses.multiSelect[i]).slideUp(300);
                                 }
                             }
+                        } else {
+                            location.refresh(true);
                         }
                     } else {
                         publicWarning(response.message);
@@ -60,6 +66,7 @@ $(document).ready(function () {
         }
 
         $('.confirm_delete').click(manageAction);
+        $('.confirm_transport').click(manageAction);
 
         $('.transport_select_warp').delegate('li', 'click', function () {
             var warp = $('.transport_warp')

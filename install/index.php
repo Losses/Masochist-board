@@ -24,6 +24,8 @@ if (isset($_GET['check_connection'])) {
     print_r(json_encode('200'));
     exit();
 }
+
+$reinstall_mode = is_file('../config.php');
 ?>
 <!DOCTYPE html>
 <html ng-app='mKnowledge'>
@@ -121,6 +123,11 @@ if (isset($_GET['check_connection'])) {
             border-radius: 3px;
             padding: 15px;
             background: #f1eef5;
+            margin-top: 20px;
+        }
+
+        fieldset:nth-of-type(0) {
+            margin-top: 0;
         }
 
         input {
@@ -335,10 +342,6 @@ if (isset($_GET['check_connection'])) {
             display: none;
         }
 
-        #admin_information {
-            margin-top: 20px;
-        }
-
         #install_body.install {
             min-height: 250px;
             position: relative;
@@ -349,6 +352,10 @@ if (isset($_GET['check_connection'])) {
             opacity: 1;
             visibility: visible;
             position: absolute;
+        }
+
+        #database_login {
+            display: none;
         }
 
         .central_content {
@@ -413,12 +420,31 @@ if (isset($_GET['check_connection'])) {
                     ?>
 
                     <article>
+                        <?php if ($reinstall_mode): ?>
+                            检测到您之前安装过 Masochist-board 请确认您需要重新安装，该操作将清空所有已经存在的数据，原来的数据将被保存至 backup 目录 <br>
+                        <?php endif; ?>
                         接下来请填写必要的数据，我们将会把这些数据存储在 Masochist-board 的根目录下，如需要转移数据库或更换密码，请修改 config.php
                     </article>
 
                     <form method="post" action="?install">
 
-                        <section id="database_information">
+                        <section id="database_login"
+                            <?php if ($reinstall_mode): ?>
+                                style="display:block;"
+                            <?php endif;?> >
+                            <fieldset>
+                                <legend>管理人员身份确认</legend>
+                                <input placeholder="管理员密码" name="password"/>
+                            </fieldset>
+                            <div class="icon_collection clear">
+                                <button class="check_admin install_button">检查管理员密码</button>
+                            </div>
+                        </section>
+
+                        <section id="database_information"
+                            <?php if ($reinstall_mode): ?>
+                                style="display:none;"
+                            <?php endif;?> >
                             <fieldset>
                                 <legend>数据库信息</legend>
                                 <input placeholder="数据库地址" name="DB_HOST"/>
@@ -501,6 +527,10 @@ if (isset($_GET['check_connection'])) {
 
 
         $(document).ready(function () {
+            $(window).submit(function (event) {
+                event.preventDefault();
+            });
+
             $('.check_form').click(function (event) {
                 var that = this
                     , response;
@@ -544,6 +574,55 @@ if (isset($_GET['check_connection'])) {
             });
         });
     </script>
+
+    <?php if ($reinstall_mode && isset($_GET['info'])): ?>
+        <script src="../scripts/md5.min.js"></script>
+        <script>
+            var key;
+
+            function requireCode() {
+                $.post('../api/?manage', {key: ''}, function (data) {
+                    var response = JSON.parse(data);
+                    key = response.message;
+                });
+            }
+
+            requireCode();
+
+            $('.check_admin').click(function () {
+                var inputElement = $('input[name="password"]')
+                    , that = this;
+                switchLoading(true);
+
+                $.post('../api/?manage', {'password': md5(md5(inputElement.val()) + key)}, function (data) {
+                    switchLoading(false);
+                    var response = JSON.parse(data);
+
+                    if (response.code === 200) {
+                        key = null;
+
+                        inputElement.addClass('locked')
+                            .attr('readonly', '1');
+
+                        $('#database_information').slideDown(300);
+
+                        $(that).slideUp(300);
+                    }
+                    else {
+                        requireCode();
+                        $(that).removeClass('shake');
+
+                        setTimeout(function () {
+                            $(that).addClass('shake');
+                        }, 10);
+
+                        losses.key = null;
+                        $(that).html('重新检查管理员密码');
+                    }
+                });
+            })
+        </script>
+    <?php endif; ?>
 </footer>
 </body>
 </html>

@@ -15,6 +15,7 @@
             <p ng-if="post.title != ''">
                 <span class="category {{category[post.category].theme}}">{{category[post.category].name}}</span>
                 <a class='title' href='#/post/{{post.id}}'>{{post.title}}</a>
+                <span class="sage" ng-show="post.sage == 1">SAGE</span>
             </p>
             <span class="author">{{post.author}}</span>
             <article ng-bind-html="post.content | trustHtml">

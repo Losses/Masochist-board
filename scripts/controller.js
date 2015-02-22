@@ -6,6 +6,7 @@ function postCtrl($http, $scope, $routeParams) {
 
     losses.router = $routeParams;
     losses.scope.postCtrl = $scope;
+    losses.multiSelect = [];
     processPageElement(losses.router);
 
     var page = 1

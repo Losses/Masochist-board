@@ -25,6 +25,27 @@ $(document).ready(function () {
             });
     });
 
+    $('.confirm_delete').click(function () {
+        $.post('api/?manage', {
+            action: 'delete',
+            target: losses.multiSelect
+        }, function (data) {
+            var response;
+            try {
+                response = JSON.parse(data);
+            } catch (e) {
+                publicWarning(data);
+                return;
+            }
+
+            if (response.code == 200) {
+                console.log('success');
+            } else {
+                publicWarning(response.message);
+            }
+        });
+    });
+
     $('.transport_select_warp').delegate('li', 'click', function () {
         var warp = $('.transport_warp')
             , menu = $('#new_post');

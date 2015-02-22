@@ -38,7 +38,7 @@ if (isset($_GET['check_connection'])) {
 $reinstall_mode = is_file('../config.php');
 
 if ($reinstall_mode
-    && ((isset($_SESSION['logined']) && ($_SESSION['logined'] == 1)) || !isset($_SESSION['logined']))
+    && ((isset($_SESSION['logined']) && ($_SESSION['logined'] != 1)) || !isset($_SESSION['logined']))
     && isset($_GET['install'])
 ) {
     header("Location: ?info");
@@ -50,6 +50,8 @@ if (isset($_SESSION['info_catched'])
     && isset($_GET['ajax_install'])
 ) {
     install_mb();
+    print_r(200);
+    exit();
 }
 ?>
     <!DOCTYPE html>
@@ -663,16 +665,13 @@ if (isset($_SESSION['info_catched'])
         <?php endif; ?>
 
         <?php if (isset($_GET['install'])): ?>
-
             <script>
-                $.post('?ajax_install', {
-                    'DB_HOST': <?= $_POST['DB_HOST'] ?>,
-                    'DB_NAME':<?= $_POST['DB_NAME'] ?>,
-                    'DB_USER':<?= $_POST['DB_USER'] ?>,
-                    'DB_PASSWORD':<?= $_POST['DB_PASSWORD'] ?>,
-                    'DB_PORT':<?= $_POST['DB_PORT'] ?>
-                }, function (data) {
-                    location.href = '?finished';
+                $.post('?ajax_install', JSON.parse(<?php echo (json_encode($_POST)) ?>, function (data) {
+                    if (data == 200) {
+                        location.href = '?finished';
+                    } else {
+                        alert(data);
+                    }
                 })
             </script>
 
@@ -683,8 +682,7 @@ if (isset($_SESSION['info_catched'])
 
 <?php
 
-function install_mb()
-{
+function install_mb(){
     require_once('../libs/mysql_backup.php');
 
     $time = time();
@@ -694,57 +692,71 @@ function install_mb()
 
     //rename('../config.php', "$dir/config.php");
 
+    $config_content = "
+        <?php
+
+        define('DB_HOST', '" . $_POST['DB_HOST'] . "');
+        define('DB_USER', '" . $_POST['DB_PASSWORD'] . "');
+        define('DB_PASSWORD', '" . $_POST['DB_USER'] . "');
+        define('DB_NAME', '" . $_POST['DB_NAME'] . "');
+        define('DB_PORT', '" . $_POST['DB_PORT'] . "');
+        define('UR_PASSWORD', '" . $_POST['UR_PASSWORD'] . "');
+        define('UR_SALT', '" . $_POST['UR_SALT'] . "');
+
+    ";
+
+    file_put_contents('../config.txt', $config_content, 'LOCK_EX');
+
     if (check_connection()) {
         backup_tables($_POST['DB_HOST'], $_POST['DB_PORT'], $_POST['DB_USER'],
             $_POST['DB_PASSWORD'], $_POST['DB_NAME'], '*', "$dir/database.sql");
     }
 
     check_connection()->query("
-                                                SET SQL_MODE = 'NO_AUTO_VALUE_ON_ZERO';
-                                                SET time_zone = '+00:00';
+    SET SQL_MODE = 'NO_AUTO_VALUE_ON_ZERO';
+    SET time_zone = '+00:00';
 
-                                                DROP TABLE IF EXISTS category,content;
+    DROP TABLE IF EXISTS category,content;
 
-                                                CREATE TABLE IF NOT EXISTS `category` (
-                                                `id` int(11) NOT NULL,
-                                                  `name` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
-                                                  `mute` tinyint(4) NOT NULL DEFAULT '0',
-                                                  `hide` tinyint(4) NOT NULL DEFAULT '0',
-                                                  `theme` varchar(8) COLLATE utf8_unicode_ci NOT NULL
-                                                ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+    CREATE TABLE IF NOT EXISTS `category` (
+    `id` int(11) NOT NULL,
+      `name` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+      `mute` tinyint(4) NOT NULL DEFAULT '0',
+      `hide` tinyint(4) NOT NULL DEFAULT '0',
+      `theme` varchar(8) COLLATE utf8_unicode_ci NOT NULL
+    ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-                                                INSERT INTO `category` (`id`, `name`, `mute`, `hide`, `theme`) VALUES
-                                                (1, '兄贵', 0, 0, 'red'),
-                                                (2, '卖萌', 0, 0, 'orange'),
-                                                (3, '搞基', 0, 0, 'pink'),
-                                                (4, '百合', 0, 0, 'green'),
-                                                (5, '天空', 0, 0, 'blue'),
-                                                (6, '种子', 1, 1, 'teal');
+    INSERT INTO `category` (`id`, `name`, `mute`, `hide`, `theme`) VALUES
+    (1, '兄贵', 0, 0, 'red'),
+    (2, '搞基', 0, 0, 'orange'),
+    (3, '卖萌', 0, 0, 'pink'),
+    (4, '百合', 0, 0, 'green'),
+    (5, '天空', 0, 0, 'blue'),
+    (6, '种子', 1, 1, 'teal');
 
-                                                CREATE TABLE IF NOT EXISTS `content` (
-                                                `id` int(11) NOT NULL,
-                                                  `author` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-                                                  `title` text COLLATE utf8_unicode_ci,
-                                                  `content` text COLLATE utf8_unicode_ci NOT NULL,
-                                                  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                                                  `active_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                                                  `img` tinytext COLLATE utf8_unicode_ci,
-                                                  `upid` int(11) NOT NULL,
-                                                  `sage` tinyint(4) NOT NULL DEFAULT '0',
-                                                  `category` int(11) NOT NULL
-                                                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+    CREATE TABLE IF NOT EXISTS `content` (
+    `id` int(11) NOT NULL,
+      `author` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+      `title` text COLLATE utf8_unicode_ci,
+      `content` text COLLATE utf8_unicode_ci NOT NULL,
+      `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      `active_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      `img` tinytext COLLATE utf8_unicode_ci,
+      `upid` int(11) NOT NULL,
+      `sage` tinyint(4) NOT NULL DEFAULT '0',
+      `category` int(11) NOT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-                                                ALTER TABLE `category`
-                                                 ADD PRIMARY KEY (`id`);
+    ALTER TABLE `category`
+     ADD PRIMARY KEY (`id`);
 
-                                                ALTER TABLE `content`
-                                                 ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `id_UNIQUE` (`id`), ADD FULLTEXT KEY `index_content` (`title`,`content`);
+    ALTER TABLE `content`
+     ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `id_UNIQUE` (`id`), ADD FULLTEXT KEY `index_content` (`title`,`content`);
 
-                                                ALTER TABLE `category`
-                                                MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+    ALTER TABLE `category`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 
-                                                ALTER TABLE `content`
-                                                MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-                                                ")->fetchAll();
-
+    ALTER TABLE `content`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+                                ")->fetchAll();
 }

@@ -212,6 +212,15 @@ function manageLoginProcess() {
         $('body').addClass('manager');
 
         $.getScript('scripts/manage.js');
+
+        var intervalItem = setInterval(function () {
+            if (losses.scope.postCtrl) {
+                losses.scope.postCtrl.logined = true;
+                losses.scope.postCtrl.$digest();
+                clearInterval(intervalItem);
+            }
+        }, 500);
+
     }
 }
 
@@ -671,6 +680,8 @@ function callManageDialog() {
             if (response.code === 200) {
                 losses.key = null;
                 losses.logined = true;
+                losses.scope.postCtrl.logined = true;
+                losses.scope.postCtrl.$digest();
                 hideDialog();
                 manageLoginProcess();
                 publicWarning('Welcome, my master nyan~~');

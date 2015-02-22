@@ -664,7 +664,7 @@ if (isset($_SESSION['info_catched'])
             </script>
         <?php endif; ?>
 
-        <?php if (isset($_GET['install']) && isset($s)): ?>
+        <?php if (isset($_GET['install'])): ?>
             <script>
                 $.post('?ajax_install', <?php echo (json_encode($_POST)) ?>, function (data) {
                     if (data == 200) {

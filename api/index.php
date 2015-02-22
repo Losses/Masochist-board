@@ -253,31 +253,49 @@
 
   elseif (isset($_GET['manage'])) {
 
-  if (isset($_POST['key'])) {
+    if (isset($_POST['key'])) {
       
       $_SESSION['key'] = md5(md5(date('Y-m-d H:i:s')) . UR_SALT);
 
       response_message(200, $_SESSION['key']);
 
-  }elseif (isset($_POST['password'])) {
-    if (!isset($_SESSION['key'])) {
-      response_message(403,'You need a key!');
-    }else {
-      if(md5(md5(UR_PASSWORD) . $_SESSION['key'])  ==  $_POST['password']) {
-        $_SESSION['logined'] = true;
-        response_message(200, 'Login success!');
+    }elseif (isset($_POST['password'])) { 
+
+      if (!isset($_SESSION['key'])) {
+        
+        response_message(403, 'You need a key!');
+
       }else {
-        $_SESSION['logined'] = false;
-        response_message(403, 'Wrong password!');
+
+        if (md5(md5(UR_PASSWORD) . $_SESSION['key']) == $_POST['password']) {
+          
+          $_SESSION['logined'] = true;
+
+          response_message(200, '兽人永不为奴!');
+
+        }else {
+
+          $_SESSION['logined'] = false;
+
+          response_message(403, 'UCCU输错密码的样子，真是丑陋!');
+
+        }
+
       }
+
+    }elseif (isset($_POST['check'])) {
+      
+      if (isset($_SESSION['logined']) && ($_SESSION['logined'] == true)) {
+        
+        response_message(200, true);
+
+      }else {
+
+        response_message(403, false);
+      
+      }
+
     }
-  }elseif (isset($_POST['check'])) {
-    if (isset($_SESSION['logined']) && $_SESSION['logined'] == true) {
-      response_message(200, true);
-    }else {
-      response_message(200, false);
-    }
-  }
 
     if (isset($_POST['action']) && ($_POST['action'] == 'delete')) {
 

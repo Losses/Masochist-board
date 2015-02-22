@@ -27,10 +27,16 @@ $(document).ready(function () {
 
         function manageAction(event) {
             var action = $(event.target).attr('data-manage-action')
-                , actionContent = {
-                    action: action,
-                    target: losses.multiSelect
-                };
+                , actionContent = {};
+
+            actionContent.action = action;
+            if ((losses.router.postId && losses.multiSelect.length === 0)
+                || (losses.router.postId && $.inArray(action, ['sage', 'trans']))) {
+                actionContent.target = [losses.router.postId];
+            } else
+                actionContent.target = losses.multiSelect;
+
+
             if (action === 'trans')
                 actionContent.category = $('select[name="manage_transform"]').val();
 
@@ -67,6 +73,7 @@ $(document).ready(function () {
 
         $('.confirm_delete').click(manageAction);
         $('.confirm_transport').click(manageAction);
+        $('.confirm_sage').click(manageAction);
 
         $('.transport_select_warp').delegate('li', 'click', function () {
             var warp = $('.transport_warp')

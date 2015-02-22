@@ -245,7 +245,6 @@ $(document).ready(function documentReady() {
     };
 
     function checkSumitable() {
-        console.log('!');
         setTimeout(function () {
             if (!losses.router)
                 return;
@@ -644,6 +643,8 @@ function callManageDialog() {
                 losses.key = null;
                 publicWarning('无法与服务器正确沟通！');
             }
+
+            console.log(response);
         });
     }
 

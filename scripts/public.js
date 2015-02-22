@@ -47,7 +47,7 @@ mKnowledge.filter('trustHtml', function ($sce) {
     }
 });
 
-var losses = {router: {}, scope: {}, data: {}, multiSelect: []};
+var losses = {router: {}, scope: {}, data: {}, global: {}, multiSelect: []};
 
 function processPageElement(routerResult) {
     losses.multiSelect = [];
@@ -376,7 +376,7 @@ $(document).ready(function documentReady() {
         var response = JSON.parse(data);
 
         losses.global.logined = (response.message);
-        losses.global.digest();
+        losses.global.$digest();
 
         manageLoginProcess();
     });

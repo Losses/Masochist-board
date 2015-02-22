@@ -1,5 +1,7 @@
 <?php
 
+  session_start();
+
   require_once ('../config.php');
 
   require_once ('../libs/medoo.php');
@@ -29,12 +31,12 @@
 
   if (isset($_GET['new'])) {
     
-    $post_title   = isset($_POST['title'])          ? $_POST['title']     : '';
-    $post_content = isset($_POST['content'])        ? $_POST['content']   : '';
-    $post_upid    = isset($_POST['upid'])           ? $_POST['upid']      : 0;
-    $post_sage    = isset($_POST['sage'])           ? 1                   : 0;
-    $post_cate    = isset($_POST['category'])       ? $_POST['category']  : 0;
-    $post_author  = ($_SESSIOM['logined'] == true)  ? 'Admin'             : $_POST['author'];
+    $post_title   =  isset($_POST['title'])                                        ? $_POST['title']     : '';
+    $post_content =  isset($_POST['content'])                                      ? $_POST['content']   : '';
+    $post_upid    =  isset($_POST['upid'])                                         ? $_POST['upid']      : 0;
+    $post_sage    =  isset($_POST['sage'])                                         ? 1                   : 0;
+    $post_cate    =  isset($_POST['category'])                                     ? $_POST['category']  : 0;
+    $post_author  = (isset($_SESSIOM['logined']) && $_SESSIOM['logined'] == true)  ? 'Admin'             : $_POST['author'];
 
     if ($post_upid == 0) {
 
@@ -75,14 +77,11 @@
 
     }
 
-    if ($_FILES > 0) {
-      if ((($_FILES['image']['type']  ==  'image/gif')
-      || ($_FILES['image']['type']    ==  'image/jpeg')
-      || ($_FILES['image']['type']    ==  'image/svg')
-      || ($_FILES['image']['type']    ==  'image/bmp')
-      || ($_FILES['image']['type']    ==  'image/wbmp')
-      || ($_FILES['image']['type']    ==  'image/png'))
-      && ($_FILES['image']['size']    <   50000000)) {
+    if (count($_FILES) > 0) {
+	  $acceptable_type = ['image/gif', 'image/jpeg', 'image/svg', 'image/bmp', 'image/wbmp', 'image/png'];
+	
+      if ((in_array($_FILES['image']['type'], $acceptable_type))
+         && ($_FILES['image']['size']    <   50000000)) {
 
         if ($_FILES['image']['error']) {
 
@@ -246,8 +245,6 @@
   }
 
   elseif (isset($_GET['manage'])) {
-    
-    session_start();
 
     if (isset($_POST['key'])) {
       

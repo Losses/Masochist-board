@@ -298,9 +298,9 @@ if (isset($_SESSION['info_catched'])
             .status.info li:nth-of-type(2)::after,
             .status.install li:nth-of-type(1)::after,
             .status.install li:nth-of-type(2)::after,
-            .status.finish li:nth-of-type(1)::after,
-            .status.finish li:nth-of-type(2)::after,
-            .status.finish li:nth-of-type(3)::after {
+            .status.finished li:nth-of-type(1)::after,
+            .status.finished li:nth-of-type(2)::after,
+            .status.finished li:nth-of-type(3)::after {
                 background: #2c184f;
                 opacity: 1;
             }
@@ -366,14 +366,31 @@ if (isset($_SESSION['info_catched'])
                 display: none;
             }
 
-            .central_content {
-                top: 50%;
-                width: calc(100% - 60px);
+            .push {
+                height: 300px;
+                overflow: hidden;
+                position: relative;
+            }
+
+            .install .central_content {
+                height: 200px;
                 color: #16092D;
                 font-size: 14px;
+                line-height: 300px;
                 text-align: center;
-                margin-top: 10px;
-                position: absolute;
+                margin-top: 40px;
+            }
+
+            .install .push .loading_spin {
+                margin-top: -80px;
+            }
+
+            .finished .central_content {
+                top: 0;
+                line-height: 300px;
+                font-size: 14px;
+                color: #16092D;
+                text-align: center;
             }
         </style>
     </head>
@@ -488,23 +505,25 @@ if (isset($_SESSION['info_catched'])
                     case 'install' :
                         ?>
                         <?php $_SESSION['info_catched'] = true ?>
-                        <div class="loading_spin">
-                            <div class="background"></div>
-                            <svg class="circular">
-                                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5"
-                                        stroke-miterlimit="10"/>
-                            </svg>
+                        <div class="push">
+                            <div class="loading_spin">
+                                <div class="background"></div>
+                                <svg class="circular">
+                                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5"
+                                            stroke-miterlimit="10"/>
+                                </svg>
+                            </div>
+                            <div class="working central_content">请稍候，正在安装Masochist-board</div>
                         </div>
-                        <div class="working central_content">请稍候，正在安装Masochist-board</div>
+
                         <?php break;
                     case 'finished' :
                         ?>
-
-                        <div class="working central_content">安装完成，为确保安全请删除install文件夹。</div>
+                        <div class="push">
+                            <div class="working central_content">安装完成，为确保安全请删除install文件夹。</div>
+                        </div>
                     <?php endswitch; ?>
-
             </div>
-            <div class="push"></div>
         </section>
 
         <section id="common">
@@ -645,7 +664,7 @@ if (isset($_SESSION['info_catched'])
             </script>
         <?php endif; ?>
 
-        <?php if (isset($_GET['install'])): ?>
+        <?php if (isset($_GET['install']) && isset($s)): ?>
             <script>
                 $.post('?ajax_install', <?php echo (json_encode($_POST)) ?>, function (data) {
                     if (data == 200) {

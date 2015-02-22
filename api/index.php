@@ -392,6 +392,93 @@
 					response_message(200, '炸鸡馒头');
 				}
 			}
+			
+			if (isset($_POST['action']) && ($_POST['action'] == 'hidden_cate'))
+			{	
+				$columns_sql = ['hide'];
+				$where_sql   = ['id[=]' =>  $_POST['target']];
+				$ishide = $database->select('hide',
+					$columns_sql, $where_sql)[0]['hide'] === '1';
+				if ($ishide)
+				{
+					$data_sql  = ['hide'	=>	0];
+				}
+				else
+				{
+					$data_sql  = ['hide'	=>	1];
+				}
+				$data_sql  = ['hide'		=>	1];
+				$where_sql = ['id[=]'		=>	$_POST['target']];
+				$data	   = $database->update('category', $data_sql, $where_sql);
+				
+				if ($data == true)
+				{
+					response_message(200, 'Hidden success!');
+				}
+				else
+				{
+					response_message(403, 'Hidden failed OAQ ' . implode(' ', $data));
+				}
+			}
+			
+			if (isset($_POST['action']) && ($_POST['action'] == 'mute_cate'))
+			{
+				$columns_sql = ['mute'];
+				$where_sql   = ['id[=]' =>  $_POST['target']];
+				$ishide = $database->select('mute',
+					$columns_sql, $where_sql)[0]['mute'] === '1';
+				if ($ishide)
+				{
+					$data_sql  = ['mute'	=>	0];
+				}
+				else
+				{
+					$data_sql  = ['mute'	=>	1];
+				}
+				$data_sql  = ['mute'		=>	1];
+				$where_sql = ['id[=]'		=>	$_POST['target']];
+				$data	   = $database->update('category', $data_sql, $where_sql);
+				
+				if ($data == true)
+				{
+					response_message(200, 'Mute success!');
+				}
+				else
+				{
+					response_message(403, 'Mute failed OAQ ' . implode(' ', $data));
+				}
+			}
+			
+			if (isset($_POST['action']) && ($_POST['action'] == 'rename_cate'))
+			{	
+				$data_sql  = ['name'	=>	$_POST['name']];
+				$where_sql = ['id[=]'	=>	$_POST['target']];
+				$data = $database->update(['category'], $data_sql, $where_sql);
+				
+				if ($data == true)
+				{
+					response_message(200, 'Rename success!');
+				}
+				else
+				{
+					response_message(403, 'Rename failed OAQ ' . implode(' ', $data));
+				}
+			}
+			
+			if (isset($_POST['action']) && ($_POST['action'] == 'add_cate'))
+			{	
+				$data_sql  = ['name'	=>	$_POST['name']];
+				$data = $database->insert('category', $data_sql);
+				
+				if ($data == true)
+				{
+					response_message(200, 'Add category success!');
+				}
+				else
+				{
+					response_message(403, 'Add category failed OAQ ' . implode(' ', $data));
+				}
+			}
 		}
 	}
 

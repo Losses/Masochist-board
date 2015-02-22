@@ -235,6 +235,10 @@
       
       $data[$i]['content'] =
         $emotion->phrase($Parsedown->text($data[$i]['content']));
+		
+	  if (isset($data[$i]['img']) && ($data[$i]['img'] != '')){
+	    $data[$i]['img'] = 'upload/' . $data[$i]['img'];
+	  }
 
     }
 

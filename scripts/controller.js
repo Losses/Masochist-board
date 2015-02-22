@@ -2,6 +2,10 @@
  * Created by Don on 2/15/2015.
  */
 
+function globalCtrl($scope) {
+    losses.global = $scope;
+}
+
 function postCtrl($http, $scope, $routeParams) {
 
     losses.router = $routeParams;

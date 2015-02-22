@@ -20,7 +20,7 @@
     <script src="scripts/prefixfree.min.js"></script>
     <title>轨道炮 piu——</title>
 </head>
-<body>
+<body ng-contoller="globalCtrl">
 <header class="clear">
     <nav>
         <i class="highlight"></i>
@@ -47,7 +47,9 @@
 
             <div class="dialog_head">
                 <select class="select_rebuild" name="category">
-                    <option ng-repeat="category in categories" ls-class="{{category.theme}}" value="{{category.id}}">
+                    <option ng-repeat="category in categories" ls-class="{{category.theme}}"
+                            ng-if="(category.hide == 0) || logined"
+                            value="{{category.id}}">
                         {{category.name}}
                     </option>
                 </select>
@@ -118,7 +120,6 @@
 
             <li class="transport_warp">
                 <button class="icon-transport move" title="将该PO转移到其他分类"></button>
-
                 <div class="transport_select_warp">
                     <select class="select_transform" name="manage_transform">
                         <option ng-repeat="category in categories" ls-class="{{category.theme}}"

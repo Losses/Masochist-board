@@ -35,6 +35,8 @@ mKnowledge.config(['$routeProvider',
     }
 ]);
 
+mKnowledge.controller('globalCtrl', globalCtrl);
+
 mKnowledge.controller('dialogCtrl', dialogCtrl);
 
 mKnowledge.controller('manageCtrl', manageCtrl);
@@ -208,15 +210,15 @@ function publicWarning(text) {
 }
 
 function manageLoginProcess() {
-    if (losses.logined) {
+    if (losses.global.logined) {
         $('body').addClass('manager');
 
         $.getScript('scripts/manage.js');
 
         var intervalItem = setInterval(function () {
             if (losses.scope.postCtrl) {
-                losses.scope.postCtrl.logined = true;
-                losses.scope.postCtrl.$digest();
+                losses.global.logined = true;
+                losses.global.$digest();
                 clearInterval(intervalItem);
             }
         }, 500);
@@ -373,7 +375,8 @@ $(document).ready(function documentReady() {
         switchLoading(false);
         var response = JSON.parse(data);
 
-        losses.logined = (response.message);
+        losses.global.logined = (response.message);
+        losses.global.digest();
 
         manageLoginProcess();
     });
@@ -497,7 +500,7 @@ $(document).ready(function documentReady() {
         .delegate('.post', 'click', function () {
             var that = $(this);
 
-            if (!losses.logined)
+            if (!losses.global.logined)
                 return;
 
             var multiSelectElement = $(this).children('.multi_select');
@@ -679,9 +682,8 @@ function callManageDialog() {
 
             if (response.code === 200) {
                 losses.key = null;
-                losses.logined = true;
-                losses.scope.postCtrl.logined = true;
-                losses.scope.postCtrl.$digest();
+                losses.global.logined = true;
+                losses.global.$digest();
                 hideDialog();
                 manageLoginProcess();
                 publicWarning('Welcome, my master nyan~~');
@@ -721,7 +723,7 @@ function callManageDialog() {
 (function () {
     var pointer = 0;
     $(document).on('keydown.passwordCheck', function (event) {
-        if (losses.logined)
+        if (losses.global.logined)
             return;
 
         var callAction = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];

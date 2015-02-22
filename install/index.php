@@ -497,7 +497,7 @@ if (isset($_SESSION['info_catched'])
                         </div>
                         <div class="working central_content">请稍候，正在安装Masochist-board</div>
                         <?php break;
-                    case 'finish' :
+                    case 'finished' :
                         ?>
 
                         <div class="working central_content">安装完成，为确保安全请删除install文件夹。</div>

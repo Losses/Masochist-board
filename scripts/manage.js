@@ -56,7 +56,7 @@ $(document).ready(function () {
                                 publicWarning('操作成功');
                                 magicalLocation('#/');
                             } else {
-                                for (var i = 0; i > losses.multiSelect.length; i++) {
+                                for (var i = 0; i < losses.multiSelect.length; i++) {
                                     $('#post-' + losses.multiSelect[i]).slideUp(300);
                                 }
                             }

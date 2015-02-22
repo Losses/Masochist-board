@@ -15,69 +15,93 @@ var intervalEvent = setInterval(function () {
 }, 500);
 
 $(document).ready(function () {
-    var newCategloryElement = $('.add_new')
-        , newCategloryClasses = newCategloryElement.attr('class');
+        var newCategloryElement = $('.add_new')
+            , newCategloryClasses = newCategloryElement.attr('class');
 
-    $('.delete').click(function () {
-        $('.delete_warp').addClass('need_confirm')
-            .one('mouseleave', function () {
-                $(this).removeClass('need_confirm');
-            });
-    });
-
-    $('.confirm_delete').click(function () {
-        $.post('api/?manage', {
-            action: 'delete',
-            target: losses.multiSelect
-        }, function (data) {
-            var response;
-            try {
-                response = JSON.parse(data);
-            } catch (e) {
-                publicWarning(data);
-                return;
-            }
-
-            if (response.code == 200) {
-                console.log('success');
-            } else {
-                publicWarning(response.message);
-            }
+        $('.delete').click(function () {
+            $('.delete_warp').addClass('need_confirm')
+                .one('mouseleave', function () {
+                    $(this).removeClass('need_confirm');
+                });
         });
-    });
 
-    $('.transport_select_warp').delegate('li', 'click', function () {
-        var warp = $('.transport_warp')
-            , menu = $('#new_post');
+        function manageAction(event) {
+            var action = $(event.target).attr('data-manage-action')
+                , actionContent = {
+                    action: action,
+                    target: losses.multiSelect
+                };
+            if (action === 'trans')
+                actionContent.category = $('select[name="manage_transform"]').val();
 
-        warp.addClass('need_confirm');
+            $.post('api/?manage', actionContent, function (data) {
+                    var response;
+                    try {
+                        response = JSON.parse(data);
+                    } catch (e) {
+                        publicWarning(data);
+                        return;
+                    }
 
-        menu.addClass('extend');
-
-        $('.transport_confirm').click(function (event) {
-            if ($(event.target).hasClass('confirm_transport')) {
-                /*发送数据*/
-            }
-
-            warp.removeClass('need_confirm');
-            menu.removeClass('extend');
-        })
-    });
-
-    $('.color_picker').mouseover(function (event) {
-        if ($(event.target).attr('type') === 'submit') {
-            $('.add_new').attr('class', newCategloryClasses + ' ' + $(event.target).attr('class'));
+                    if (response.code == 200) {
+                        if (action == 'delete') {
+                            if (losses.router.postId
+                                && $.inArray(losses.router.postId, losses.multiSelect)) {
+                                publicWarning('操作成功');
+                                magicalLocation('#/');
+                            } else {
+                                for (var i = 0; i > losses.multiSelect.length; i++) {
+                                    $('#post-' + losses.multiSelect[i]).slideUp(300);
+                                }
+                            }
+                        } else {
+                            location.refresh(true);
+                        }
+                    } else {
+                        publicWarning(response.message);
+                    }
+                }
+            )
+            ;
         }
-    })
 
-    $('.category').delegate('.edit_category', 'click', function () {
-        var thisCate = $(this).attr('data-category')
-            , thisParent = $('.cate-' + thisCate);
-        thisParent.addClass('rename');
+        $('.confirm_delete').click(manageAction);
+        $('.confirm_transport').click(manageAction);
 
-        $('.cancel-' + thisCate).one('click', function () {
-            thisParent.removeClass('rename');
+        $('.transport_select_warp').delegate('li', 'click', function () {
+            var warp = $('.transport_warp')
+                , menu = $('#new_post');
+
+            warp.addClass('need_confirm');
+
+            menu.addClass('extend');
+
+            $('.transport_confirm').click(function (event) {
+                if ($(event.target).hasClass('confirm_transport')) {
+                    /*发送数据*/
+                }
+
+                warp.removeClass('need_confirm');
+                menu.removeClass('extend');
+            })
+        });
+
+        $('.color_picker').mouseover(function (event) {
+            if ($(event.target).attr('type') === 'submit') {
+                $('.add_new').attr('class', newCategloryClasses + ' ' + $(event.target).attr('class'));
+            }
         })
-    })
 
-});
+        $('.category').delegate('.edit_category', 'click', function () {
+            var thisCate = $(this).attr('data-category')
+                , thisParent = $('.cate-' + thisCate);
+            thisParent.addClass('rename');
+
+            $('.cancel-' + thisCate).one('click', function () {
+                thisParent.removeClass('rename');
+            })
+        })
+
+    }
+)
+;

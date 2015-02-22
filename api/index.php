@@ -322,11 +322,11 @@
 
       if (count($data_false) == 0) {
 
-        response_message(403, 'Delete failed OAQ ');
+        response_message(200, 'rm -rf /');
 
       }else {
 
-        response_message(200, 'rm -rf /');
+        response_message(403, 'Sage failed OAQ ');
 
       }
 
@@ -350,13 +350,13 @@
     
       }
 
-      if (count($data_false) > 0) {
+      if (count($data_false) == 0) {
         
-        response_message(403, 'Sage failed OAQ ');
+        response_message(200, '基本法!');
 
       }else {
 
-        response_message(200, '基本法!');
+        response_message(403, 'Sage failed OAQ ');
 
       }
     

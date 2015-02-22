@@ -6,25 +6,6 @@ if (count($_GET) == 0) {
     exit();
 }
 
-function check_connection()
-{
-    try {
-        $database = new medoo([
-            'database_type' => 'mysql',
-            'database_name' => $_POST['DB_NAME'],
-            'server' => $_POST['DB_HOST'],
-            'username' => $_POST['DB_USER'],
-            'password' => $_POST['DB_PASSWORD'],
-            'charset' => 'utf8',
-            'port' => $_POST['DB_PORT'],
-        ]);
-    } catch (Exception $e) {
-        return false;
-    }
-
-    return $database;
-}
-
 if (isset($_GET['check_connection'])) {
     if (check_connection()) {
         print_r(json_encode('200'));
@@ -666,7 +647,7 @@ if (isset($_SESSION['info_catched'])
 
         <?php if (isset($_GET['install'])): ?>
             <script>
-                $.post('?ajax_install', JSON.parse(<?php echo (json_encode($_POST)) ?>, function (data) {
+                $.post('?ajax_install', <?php echo (json_encode($_POST)) ?>, function (data) {
                     if (data == 200) {
                         location.href = '?finished';
                     } else {
@@ -682,7 +663,28 @@ if (isset($_SESSION['info_catched'])
 
 <?php
 
-function install_mb(){
+
+function check_connection()
+{
+    try {
+        $database = new medoo([
+            'database_type' => 'mysql',
+            'database_name' => $_POST['DB_NAME'],
+            'server' => $_POST['DB_HOST'],
+            'username' => $_POST['DB_USER'],
+            'password' => $_POST['DB_PASSWORD'],
+            'charset' => 'utf8',
+            'port' => $_POST['DB_PORT'],
+        ]);
+    } catch (Exception $e) {
+        return false;
+    }
+
+    return $database;
+}
+
+function install_mb()
+{
     require_once('../libs/mysql_backup.php');
 
     $time = time();
@@ -690,7 +692,7 @@ function install_mb(){
     if (!is_dir($dir))
         mkdir($dir);
 
-    //rename('../config.php', "$dir/config.php");
+    rename('../config.php', "$dir/config.php");
 
     $config_content = "
         <?php
@@ -705,7 +707,7 @@ function install_mb(){
 
     ";
 
-    file_put_contents('../config.txt', $config_content, 'LOCK_EX');
+    file_put_contents('../config.php', $config_content, LOCK_EX);
 
     if (check_connection()) {
         backup_tables($_POST['DB_HOST'], $_POST['DB_PORT'], $_POST['DB_USER'],

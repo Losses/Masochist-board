@@ -36,7 +36,7 @@
     $post_upid    =  isset($_POST['upid'])                                         ? $_POST['upid']      : 0;
     $post_sage    =  isset($_POST['sage'])                                         ? 1                   : 0;
     $post_cate    =  isset($_POST['category'])                                     ? $_POST['category']  : 0;
-    $post_author  = (isset($_SESSIOM['logined']) && $_SESSIOM['logined'] == true)  ? 'Admin'             : $_POST['author'];
+    $post_author  = (isset($_SESSION['logined']) && $_SESSION['logined'] == true)  ? 'Admin'             : $_POST['author'];
 
     if ($post_upid == 0) {
 
@@ -78,10 +78,11 @@
     }
 
     if (count($_FILES) > 0) {
-	  $acceptable_type = ['image/gif', 'image/jpeg', 'image/svg', 'image/bmp', 'image/wbmp', 'image/png'];
+      $type_img = ['image/gif', 'image/jpeg', 'image/svg',
+        'image/bmp', 'image/wbmp', 'image/png'];
 	
-      if ((in_array($_FILES['image']['type'], $acceptable_type))
-         && ($_FILES['image']['size']    <   50000000)) {
+      if ((in_array($_FILES['image']['type'], $type_img))
+        && ($_FILES['image']['size']    <   50000000)) {
 
         if ($_FILES['image']['error']) {
 
@@ -236,9 +237,11 @@
       $data[$i]['content'] =
         $emotion->phrase($Parsedown->text($data[$i]['content']));
 		
-	  if (isset($data[$i]['img']) && ($data[$i]['img'] != '')){
-	    $data[$i]['img'] = 'upload/' . $data[$i]['img'];
-	  }
+      if (isset($data[$i]['img']) && ($data[$i]['img'] != '')){
+
+        $data[$i]['img'] = 'upload/' . $data[$i]['img'];
+
+      }
 
     }
 
@@ -250,49 +253,31 @@
 
   elseif (isset($_GET['manage'])) {
 
-    if (isset($_POST['key'])) {
+  if (isset($_POST['key'])) {
       
-      $_SESSIOM['key'] = md5(md5(date('Y-m-d H:i:s')) . UR_SALT);
+      $_SESSION['key'] = md5(md5(date('Y-m-d H:i:s')) . UR_SALT);
 
-      response_message(200, $_SESSIOM['key']);
+      response_message(200, $_SESSION['key']);
 
-    }elseif (isset($_POST['password'])) { 
-
-      if (!isset($_SESSIOM['key'])) {
-        
-        response_message(403, 'You need a key!');
-
+  }elseif (isset($_POST['password'])) {
+    if (!isset($_SESSION['key'])) {
+      response_message(403,'You need a key!');
+    }else {
+      if(md5(md5(UR_PASSWORD) . $_SESSION['key'])  ==  $_POST['password']) {
+        $_SESSION['logined'] = true;
+        response_message(200, 'Login success!');
       }else {
-
-        if (md5(md5(UR_PASSWORD) . $_SESSIOM['key']) == $_POST['password']) {
-          
-          $_SESSIOM['logined'] = true;
-
-          response_message(200, '兽人永不为奴!');
-
-        }else {
-
-          $_SESSIOM['logined'] = false;
-
-          response_message(403, 'UCCU输错密码的样子，真是丑陋!');
-
-        }
-
+        $_SESSION['logined'] = false;
+        response_message(403, 'Wrong password!');
       }
-
-    }elseif (isset($_POST['check'])) {
-      
-      if (isset($_SESSIOM['logined']) && ($_SESSIOM['logined'] == true)) {
-        
-        response_message(200, true);
-
-      }else {
-
-        response_message(403, false);
-      
-      }
-
     }
+  }elseif (isset($_POST['check'])) {
+    if (isset($_SESSION['logined']) && $_SESSION['logined'] == true) {
+      response_message(200, true);
+    }else {
+      response_message(200, false);
+    }
+  }
 
     if (isset($_POST['action']) && ($_POST['action'] == 'delete')) {
 

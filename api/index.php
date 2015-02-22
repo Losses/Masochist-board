@@ -301,43 +301,32 @@
 
       $data_false = [];
 
-      foreach ($_POST['target'] as $post_target) {
+      foreach ($_POST['target'] as $post_target_id) {
 
-        $columns_sql = ['upid'];
-        $where_sql   = ['id[=]' =>  $post_target];
-        $post_target_id = $database->select('content', $columns_sql, $where_sql);
+        $data_sql = [
+          'OR' =>  [
 
-        if (isset($post_target_id) && ($post_target_id != 0)) {
+          'id[=]'   =>  $post_target_id,
+          'upid[=]' =>  $post_target_id
 
-            $data_sql = ['upid[=]'  =>  $post_target_id];
-            $data = $database->delete('content', $data_sql);
-
-        }else {
-
-            $data_sql = ['AND'  =>  [
-
-              'upid'  =>  $post_target_id,
-              'id'  =>  $post_target_id
-
-            ]];
-          $data = $database->delete('content', $data_sql);
-
-        }
+        ]];
+        $data = $database->delete('content', $data_sql);
 
         if ($data == false) {
 
-            $data_false += $post_target_id;
-
+          $data_false += [$post_target_id];
+        
         }
+
       }
 
       if (count($data_false) == 0) {
-        
-        response_message(200, 'rm -rf /');
+
+        response_message(403, 'Delete failed OAQ ');
 
       }else {
 
-        response_message(403, 'Delete failed OAQ ' . implode(' ', $data_false));
+        response_message(200, 'rm -rf /');
 
       }
 
@@ -361,13 +350,13 @@
     
       }
 
-      if (count($data_false) == 0) {
+      if (count($data_false) > 0) {
         
-        response_message(200, '基本法!');
+        response_message(403, 'Sage failed OAQ ');
 
       }else {
 
-        response_message(403, 'Sage failed OAQ ' . implode(' ', $data_false));
+        response_message(200, '基本法!');
 
       }
     

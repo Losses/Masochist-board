@@ -173,8 +173,15 @@
 
 	elseif (isset($_GET['category']))
 	{
-		$data = $database->select('category', '*');
-
+		if (isset($_SESSION['logined']) && ($_SESSION('logined') == true))
+		{
+			$data = $database->select('category', '*');
+		}
+		else
+		{
+			$where_sql = ['hide[=]'	=>	0];
+			$data = $database->select('category', '*', $where_sql);
+		}
 		echo json_encode($data);
 	}
 

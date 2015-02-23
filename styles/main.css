@@ -1,4 +1,4 @@
-@import "webfonts/webfont.css";
+@import url("webfonts/webfont.css");
 * {
   margin: 0;
   padding: 0;

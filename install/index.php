@@ -7,7 +7,12 @@ if (count($_GET) == 0) {
 }
 
 if (isset($_GET['check_connection'])) {
-    if (check_connection()) {
+    $con_result = check_connection();
+    if ($con_result) {
+        if ($con_result == 'low_sql_version') {
+            print_r(json_encode('low_sql_version'));
+            exit();
+        }
         print_r(json_encode('200'));
         exit();
     } else {
@@ -600,11 +605,10 @@ if (isset($_SESSION['info_catched'])
                             errorProcess();
                         }
 
-                        if (response != 200)
-                            errorProcess();
-                        if (response == 'low_sql_version') {
+                        if (response == 'low_sql_version')
                             errorProcess('需要MySQL 5.6.10以上版本的MySQL');
-                        }
+                        else if (response != 200)
+                            errorProcess();
                         else {
                             $('#database_information input').each(function () {
                                 $(this).attr('readonly', 'true')
@@ -705,11 +709,10 @@ function check_connection()
     }
 
     $sql_version = explode('.', $database->info()['version']);
-    $sql_version_enough = ($sql_version[0] > 5) || (($sql_version[0] == 5) && ($sql_version[1] >= 6));
+    $sql_version_enough = ((int)$sql_version[0] > 5) || (((int)$sql_version[0] == 5) && ((int)$sql_version[1] >= 6));
 
     if (!$sql_version_enough) {
-        print_r('low_sql_version');
-        exit();
+        return 'low_sql_version';
     }
 
     return $database;

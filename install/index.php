@@ -425,7 +425,7 @@ if (isset($_SESSION['info_catched'])
                     case 'check':
                         ?>
                         <article>
-                            为了保证 Masochist-board 在今后能正常运行，我们将检查目录的可读性。请将对应的目录权限设为可写入。
+                            为了保证 Masochist-board 在今后能正常运行，我们将检查目录的可读性和各类库的版本。请将对应的目录权限设为可写入。
                         </article>
 
                         <p class="c<?= is_writable('../') ?>">./</p>
@@ -576,9 +576,10 @@ if (isset($_SESSION['info_catched'])
                         , response;
                     switchLoading(true);
 
-                    function errorProcess() {
+                    function errorProcess(warning) {
+                        warning = warning ? warning : '重新检查数据库设置';
                         $(that).removeClass('shake')
-                            .html('重新检查数据库设置');
+                            .html(warning);
 
                         setTimeout(function () {
                             $(that).addClass('shake');
@@ -601,11 +602,14 @@ if (isset($_SESSION['info_catched'])
 
                         if (response != 200)
                             errorProcess();
+                        if (response == 'low_sql_version') {
+                            errorProcess('需要MySQL 5.6.10以上版本的MySQL');
+                        }
                         else {
                             $('#database_information input').each(function () {
                                 $(this).attr('readonly', 'true')
                                     .addClass('locked');
-                            })
+                            });
                             $(that).slideUp();
                             $('#admin_information').slideDown();
                         }
@@ -685,6 +689,7 @@ if (isset($_SESSION['info_catched'])
 
 function check_connection()
 {
+    $database = '';
     try {
         $database = new medoo([
             'database_type' => 'mysql',
@@ -697,6 +702,14 @@ function check_connection()
         ]);
     } catch (Exception $e) {
         return false;
+    }
+
+    $sql_version = explode('.', $database->info()['version']);
+    $sql_version_enough = ($sql_version[0] > 5) || (($sql_version[0] == 5) && ($sql_version[1] >= 6));
+
+    if (!$sql_version) {
+        print_r('low_sql_version');
+        exit();
     }
 
     return $database;

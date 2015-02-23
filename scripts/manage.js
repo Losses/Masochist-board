@@ -100,13 +100,44 @@ $(document).ready(function () {
             if ($(event.target).attr('type') === 'submit') {
                 $('.add_new').attr('class', newCategloryClasses + ' ' + $(event.target).attr('class'));
             }
-        });
+        })
+            .delegate('button', 'click', function () {
+                var inputElement = $('input[name="new_category_name"]');
 
-        function manageCate() {
+                $.post('api/?manage', {
+                    'action': 'add_cate',
+                    'theme': $(this).attr('class'),
+                    'name': inputElement.val()
+                }, function (data) {
+                    var response = {};
+                    try {
+                        response = JSON.parse(data);
+                    } catch (e) {
+                        publicWarning(data);
+                    }
+
+                    if (response && (response.code == 200)) {
+                        inputElement.val('');
+                        publicWarning('添加成功');
+                    } else {
+                        publicWarning(response.message);
+                    }
+                })
+            });
+
+        function manageCate(event) {
             var condition = {};
 
             condition.target = $(this).attr('data-category');
             condition.action = $(this).attr('data-manage-action');
+
+            if (condition.action == 'rename_cate') {
+                event.preventDefault();
+
+                condition.name = $(this).children('input').val();
+            }
+
+            console.log(condition);
 
             $.post('api/?manage', condition, function (data) {
                 var response;
@@ -116,7 +147,7 @@ $(document).ready(function () {
                     publicWarning(data);
                 }
 
-                if (response.code == 200) {
+                if (response && response.code == 200) {
                     var actionClass;
                     if (condition.action == 'mute_cate') {
                         actionClass = 'mute';
@@ -125,7 +156,10 @@ $(document).ready(function () {
                     }
                     $(this).parents('.category_warp').toggleClass(actionClass);
                 } else {
-                    publicWarning(response.message);
+                    if (response)
+                        publicWarning(response.message);
+                    else
+                        publicWarning('操作失败，原因未知');
                 }
             });
         }
@@ -140,7 +174,8 @@ $(document).ready(function () {
             })
         })
             .delegate('.mute_category', 'click', manageCate)
-            .delegate('.hide_category', 'click', manageCate);
-
+            .delegate('.hide_category', 'click', manageCate)
+            .delegate('.category_rename', 'submit', manageCate);
     }
-);
+)
+;

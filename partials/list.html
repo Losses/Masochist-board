@@ -18,7 +18,8 @@
                 </span>
             </i>
 
-            <form class="category_rename" ng-if="logined">
+            <form class="category_rename" ng-if="logined"
+                  data-manage-action="rename_cate" data-category="{{category.id}}">
                 <input name="rename" data-category="{{category.id}}" value="{{category.name}}"/>
                 <button class="cancel_rename cancel-{{category.id}}">×</button>
             </form>
@@ -30,18 +31,18 @@
 
             <div class="color_picker_warp">
                 <div class="color_picker card clear">
-                    <button type="submit" class="orange"></button>
-                    <button type="submit" class="deep_orange"></button>
-                    <button type="submit" class="red"></button>
-                    <button type="submit" class="pink"></button>
-                    <button type="submit" class="purple"></button>
-                    <button type="submit" class="deep_purple"></button>
-                    <button type="submit" class="indigo"></button>
-                    <button type="submit" class="blue"></button>
-                    <button type="submit" class="cyan"></button>
-                    <button type="submit" class="teal"></button>
-                    <button type="submit" class="green"></button>
-                    <button type="submit" class="light_green"></button>
+                    <button class="orange"></button>
+                    <button class="deep_orange"></button>
+                    <button class="red"></button>
+                    <button class="pink"></button>
+                    <button class="purple"></button>
+                    <button class="deep_purple"></button>
+                    <button class="indigo"></button>
+                    <button class="blue"></button>
+                    <button class="cyan"></button>
+                    <button class="teal"></button>
+                    <button class="green"></button>
+                    <button class="light_green"></button>
                 </div>
             </div>
         </form>

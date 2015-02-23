@@ -707,7 +707,7 @@ function check_connection()
     $sql_version = explode('.', $database->info()['version']);
     $sql_version_enough = ($sql_version[0] > 5) || (($sql_version[0] == 5) && ($sql_version[1] >= 6));
 
-    if (!$sql_version) {
+    if (!$sql_version_enough) {
         print_r('low_sql_version');
         exit();
     }

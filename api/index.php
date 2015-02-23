@@ -106,7 +106,14 @@
 			$post_img = NULL;
 		}
 		
-		if (isset($_SESSION['logined']) && $_SESSION)
+		$columns_sql = ['mute'];
+		$where_sql   = ['id[=]' =>  $post_cate];
+		$ismute      = $database->select('category',
+			$columns_sql, $where_sql)[0]['mute'] === '1';
+		if (!isset($_SESSION['logined']) || $_SESSION['logined'] == false)
+		{
+			response_message(403, "You can't post at mute category!");
+		}
 		
 		$data_sql +=
 		[

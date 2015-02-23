@@ -2,9 +2,10 @@
  * Created by Don on 2/15/2015.
  */
 
-function globalCtrl($scope, $http) {
+function globalCtrl($scope, $http, $routeParams) {
     losses.global = $scope;
     losses.scope.reloadCate = loadCate;
+    $scope.router = $routeParams;
     $scope.categories = [];
 
     function loadCate() {
@@ -33,10 +34,9 @@ function globalCtrl($scope, $http) {
 
 function postCtrl($http, $scope, $routeParams) {
 
-    losses.router = $routeParams;
     losses.scope.postCtrl = $scope;
     losses.multiSelect = [];
-    processPageElement(losses.router);
+    processPageElement($scope.router);
 
     var page = 1
         , loading = false;
@@ -112,12 +112,12 @@ function manageCtrl($scope) {
 }
 
 function manageStarter() {
-    losses.router.manage = true;
+    losses.global.router.manage = true;
 
     if (!losses.logined) {
         callManageDialog();
     } else {
-        losses.router.manage = false;
+        losses.global.router.manage = false;
         location.href = '#/';
         location.refresh(true);
     }

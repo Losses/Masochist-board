@@ -264,9 +264,9 @@ $(document).ready(function documentReady() {
 
     function checkSumitable() {
         setTimeout(function () {
-            if (!losses.router)
+            if (!losses.global.router)
                 return;
-            losses.elements.submitable = losses.router.postId ? (
+            losses.elements.submitable = losses.global.router.postId ? (
             (losses.elements.contentElement.val().length <= 35)
             && (losses.elements.contentElement.val().length !== 0)
             ) : (
@@ -463,7 +463,7 @@ $(document).ready(function documentReady() {
                 return;
             }
 
-            if (losses.router.postId) {
+            if (losses.global.router.postId) {
                 var date = new Date()
                     , month = ((date.getMonth() + 1) > 9) ? (date.getMonth() + 1) : '0' + date.getMonth()
                     , day = (date.getDate() > 9) ? date.getDate() : '0' + date.getDate()
@@ -484,7 +484,7 @@ $(document).ready(function documentReady() {
                 removeImage();
                 $('#post_form')[0].reset();
                 $('#post_dialog .checkbox_rebuild').removeClass('selected');
-                if (!losses.router.postId)
+                if (!losses.global.router.postId)
                     magicalLocation('#/post/' + data.message);
             }
 
@@ -695,7 +695,7 @@ function callManageDialog() {
                 manageLoginProcess();
                 publicWarning('Welcome, my master nyan~~');
 
-                if (losses.router.manage) {
+                if (losses.global.router.manage) {
                     magicalLocation('#/');
                     location.refresh(true);
                 }
@@ -715,7 +715,7 @@ function callManageDialog() {
     });
 
     $('body').on('click.manage', function (event) {
-        if (losses.router.manage)
+        if (losses.global.router.manage)
             return;
 
         if ($(event.target).hasClass('password_acion')) {

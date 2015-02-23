@@ -30,10 +30,10 @@ $(document).ready(function () {
                 , actionContent = {};
 
             actionContent.action = action;
-            if ((losses.router.postId && (losses.multiSelect.length === 0))
-                || ($.inArray(losses.router.postId, losses.multiSelect) !== -1)
-                || (losses.router.postId && ($.inArray(action, ['sage', 'trans']) !== -1))) {
-                actionContent.target = [losses.router.postId];
+            if ((losses.global.router.postId && (losses.multiSelect.length === 0))
+                || ($.inArray(losses.global.router.postId, losses.multiSelect) !== -1)
+                || (losses.global.router.postId && ($.inArray(action, ['sage', 'trans']) !== -1))) {
+                actionContent.target = [losses.global.router.postId];
             } else
                 actionContent.target = losses.multiSelect;
 
@@ -53,8 +53,8 @@ $(document).ready(function () {
 
                     if (response.code == 200) {
                         if (action == 'delete') {
-                            if (losses.router.postId
-                                && $.inArray(losses.router.postId, losses.multiSelect) !== -1) {
+                            if (losses.global.router.postId
+                                && $.inArray(losses.global.router.postId, losses.multiSelect) !== -1) {
                                 publicWarning('操作成功');
                                 magicalLocation('#/');
                             } else {

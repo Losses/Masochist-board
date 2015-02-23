@@ -128,7 +128,6 @@ $(document).ready(function () {
                     publicWarning(response.message);
                 }
             });
-            console.log(condition);
         }
 
         $('.category').delegate('.edit_category', 'click', function () {

@@ -14,7 +14,7 @@
 	(
 		[
 			'database_type'	=>	'mysql',
-			'database_name' =>	DB_NAME,
+			'database_name'	=>	DB_NAME,
 			'server'		=> 	DB_HOST,
 			'username'		=>	DB_USER,
 			'password'		=>	DB_PASSWORD,
@@ -32,13 +32,13 @@
 
 	if (isset($_GET['new']))
 	{
-		$post_title   =  isset($_POST['title'])		?	$_POST['title']		:	'';
-		$post_content =  isset($_POST['content'])	?	$_POST['content']	:	'';
-		$post_upid    =  isset($_POST['upid'])		?	$_POST['upid']		:	0;
-		$post_sage    =  isset($_POST['sage'])		?	1					:	0;
-		$post_cate    =  isset($_POST['category'])	?	$_POST['category']	:	0;
+		$post_title   =  isset($_POST['title'])    ? $_POST['title']    : '';
+		$post_content =  isset($_POST['content'])  ? $_POST['content']  : '';
+		$post_upid    =  isset($_POST['upid'])     ? $_POST['upid']     : 0;
+		$post_sage    =  isset($_POST['sage'])     ? 1                  : 0;
+		$post_cate    =  isset($_POST['category']) ? $_POST['category'] : 0;
 		$post_author  = (isset($_SESSION['logined'])
-			&& $_SESSION['logined'] == true)		?	'Admin'				:	$_POST['author'];
+			&& $_SESSION['logined'] == true)       ? 'Admin'            : $_POST['author'];
 
 		if ($post_upid == 0)
 		{
@@ -72,6 +72,7 @@
 				$data     = $database->update('content', $data_sql, $where_sql);
 			}
 		}
+
 		if (count($_FILES) > 0)
 		{
 			$type_img = ['image/gif', 'image/jpeg', 'image/svg',
@@ -104,6 +105,9 @@
 		{
 			$post_img = NULL;
 		}
+		
+		if (isset($_SESSION['logined']) && $_SESSION)
+		
 		$data_sql +=
 		[
 			'author'		=>	$post_author,
@@ -120,7 +124,6 @@
 		$result = $database->insert('content', $data_sql);
 
 		response_message(200, $result);
-
 	}
 
 	elseif (isset($_GET['list']))
@@ -136,9 +139,9 @@
 			}
 			$search_key = $database->quote($result_key);
 			$data = $database->query('SELECT * FROM content
-									WHERE MATCH (title, content)
-									AGAINST ($search_key IN BOOLEAN MODE)')
-									->fetchAll();
+						WHERE MATCH (title, content)
+						AGAINST ($search_key IN BOOLEAN MODE)')
+						->fetchAll();
       
 			echo json_encode($data);
 			exit();
@@ -173,7 +176,7 @@
 
 	elseif (isset($_GET['category']))
 	{
-		if (isset($_SESSION['logined']) && ($_SESSION['logined'] == true))
+		if (isset($_SESSION['logined']) && $_SESSION['logined'] == true)
 		{
 			$data = $database->select('category', '*');
 		}
@@ -354,7 +357,8 @@
 				}
 				else
 				{
-					response_message(403, 'Sage failed OAQ '. implode(' ', $data_false));
+					response_message(403, 'Sage failed OAQ '
+						. implode(' ', $data_false));
 				}
 			}
 			
@@ -380,7 +384,8 @@
 				}
 				else
 				{
-					response_message(403, 'Trans failed OAQ ' . implode(' ', $data_false));
+					response_message(403, 'Trans failed OAQ '
+						. implode(' ', $data_false));
 				}
 			}
 
@@ -424,7 +429,8 @@
 				}
 				else
 				{
-					response_message(403, 'Hidden failed OAQ ' . implode(' ', $data));
+					response_message(403, 'Hidden failed OAQ '
+						. implode(' ', $data));
 				}
 			}
 			
@@ -452,7 +458,8 @@
 				}
 				else
 				{
-					response_message(403, 'Mute failed OAQ ' . implode(' ', $data));
+					response_message(403, 'Mute failed OAQ '
+						. implode(' ', $data));
 				}
 			}
 			
@@ -468,7 +475,8 @@
 				}
 				else
 				{
-					response_message(403, 'Rename failed OAQ ' . implode(' ', $data));
+					response_message(403, 'Rename failed OAQ '
+						. implode(' ', $data));
 				}
 			}
 			
@@ -483,7 +491,18 @@
 				}
 				else
 				{
-					response_message(403, 'Add category failed OAQ ' . implode(' ', $data));
+					response_message(403, 'Add category failed OAQ '
+						. implode(' ', $data));
+				}
+				
+				if ($data == true)
+				{
+					response_message(200, 'Add category success!');
+				}
+				else
+				{
+					response_message(403, 'Add category failed OAQ '
+						. implode(' ', $data));
 				}
 			}
 		}

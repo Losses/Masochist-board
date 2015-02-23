@@ -104,32 +104,38 @@ function sSelect(selector) {
         }, 1);
     }
 
-    select.each(function () {
+    /*
+     select.each(function () {
 
-        $(this).wrap('<span class="s_select"></span>');
+     $(this).wrap('<span class="s_select"></span>');
 
-        $(this).parent('.s_select').append('<button class="s_choosen"></button><ul class="s_select_body"></ul>');
+     $(this).parent('.s_select').append('<button class="s_choosen"></button><ul class="s_select_body"></ul>');
 
-        var options = [],
-            values = [],
-            classes = [],
-            x;
-        $(this).children('option').each(function () {
-            var className = $(this).attr('ls-class') ? $(this).attr('ls-class') : '';
-            options.push($(this).html());
-            values.push($(this).attr('value'));
-            classes.push(className);
-        });
-        $(this).next('.s_choosen').html(options[0]);
-        var selectBody = $(this).nextAll('.s_select_body');
-        for (x in options) {
-            selectBody.append('<li val="' + values[x] + '" class="' + classes[x] + '">' + options[x] + '</li>');
-        }
-    });
+     var options = [],
+     values = [],
+     classes = [],
+     x;
+     $(this).children('option').each(function () {
+     var className = $(this).attr('ls-class') ? $(this).attr('ls-class') : '';
+     options.push($(this).html());
+     values.push($(this).attr('value'));
+     classes.push(className);
+     });
+     $(this).next('.s_choosen').html(options[0]);
+     var selectBody = $(this).nextAll('.s_select_body');
+     for (x in options) {
+     selectBody.append('<li val="' + values[x] + '" class="' + classes[x] + '">' + options[x] + '</li>');
+     }
+     });
+     */
+    var selectBody = $(selector).children('.s_select_body')
+        ,choosenElement = $(selector).children('.s_choosen');
 
-    $('.s_choosen').click(function (event) {
+    console.log(selectBody);
+
+
+    choosenElement.click(function (event) {
         var that = this;
-        var selectBody = $(this).next('.s_select_body');
         var selectList = selectBody.children('li');
 
         if (!selectBody.hasClass("selected")) {
@@ -184,10 +190,11 @@ function sSelect(selector) {
 
             });
 
-            $('.s_select_body>li').click(function () {
-                var selectObject = $(this).parents('.s_select').children('select');
-                selectObject.val($(this).attr('val'));
-                selectObject.next('.s_choosen').html($(this).html());
+            selectBody.delegate('li', 'click', function () {
+                console.log('!');
+                var selectObject = $(this).parents('.s_select').children('input');
+                selectObject.val($(this).attr('val'))
+                    .next('.s_choosen').html($(this).html());
                 $(document).off(".s_select");
 
                 selectObject.nextAll('.s_select_body').removeClass('selected');

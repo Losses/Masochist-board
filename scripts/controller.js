@@ -4,26 +4,31 @@
 
 function globalCtrl($scope, $http) {
     losses.global = $scope;
+    losses.scope.reloadCate = loadCate;
     $scope.categories = [];
 
-    $http.get("api/?category")
-        .success(function (response) {
-            var category = [];
-            category[0] = {name: '错误', theme: 'blue_gray'};
-            for (var i = 0; i <= response.length - 1; i++) {
-                category[response[i].id] = {
-                    'name': response[i].name,
-                    'theme': response[i].theme
+    function loadCate() {
+        $http.get("api/?category")
+            .success(function (response) {
+                var category = [];
+                category[0] = {name: '错误', theme: 'blue_gray'};
+                for (var i = 0; i <= response.length - 1; i++) {
+                    category[response[i].id] = {
+                        'name': response[i].name,
+                        'theme': response[i].theme
+                    }
                 }
-            }
-            $scope.categories = response;
-            $scope.category = category;
+                $scope.categories = response;
+                $scope.category = category;
 
-            setTimeout(function () {
-                sSelect();
-                sSelect('.select_transform');
-            }, 1000);
-        });
+                setTimeout(function () {
+                    sSelect('.post_category');
+                    sSelect('.transport_category');
+                }, 1000);
+            });
+    }
+
+    loadCate();
 }
 
 function postCtrl($http, $scope, $routeParams) {

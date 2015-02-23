@@ -4,7 +4,7 @@
 
 function globalCtrl($scope, $http, $routeParams) {
     losses.global = $scope;
-    losses.scope.reloadCate = loadCate;
+    $scope.reloadCate = loadCate;
     $scope.router = $routeParams;
     $scope.categories = [];
 
@@ -27,7 +27,7 @@ function globalCtrl($scope, $http, $routeParams) {
                     sSelect('.transport_category');
                 }, 1000);
             });
-    }
+    };
 
     loadCate();
 }

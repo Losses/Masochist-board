@@ -129,7 +129,7 @@ function sSelect(selector) {
      });
      */
     var selectBody = $(selector).children('.s_select_body')
-        ,choosenElement = $(selector).children('.s_choosen');
+        , choosenElement = $(selector).children('.s_choosen');
 
     console.log(selectBody);
 
@@ -221,6 +221,8 @@ function manageLoginProcess() {
         $('body').addClass('manager');
 
         $.getScript('scripts/manage.js');
+
+        losses.global.reloadCate();
 
         var intervalItem = setInterval(function () {
             if (losses.scope.postCtrl) {

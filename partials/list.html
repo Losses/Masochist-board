@@ -1,7 +1,7 @@
 <div class="function_list clear">
     <div class="category left">
         <div ng-repeat="category in categories"
-             ng-if="(category.mute == 0)||logined"
+             ng-if="category.hide == 0 || logined"
              ng-class="{'mute': (category.mute == 1), 'hide': (category.hide == 1)}"
              class="left category_warp cate-{{category.id}}">
             <a href="#/category/{{category.id}}" class="{{category.theme}}">
@@ -21,7 +21,7 @@
             <form class="category_rename" ng-if="logined"
                   data-manage-action="rename_cate" data-category="{{category.id}}">
                 <input name="rename" data-category="{{category.id}}" value="{{category.name}}"/>
-                <button class="cancel_rename cancel-{{category.id}}">×</button>
+                <button class="cancel_rename cancel-{{category.id}}" type="button">×</button>
             </form>
         </div>
 

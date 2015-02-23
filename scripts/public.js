@@ -20,7 +20,7 @@ mKnowledge.config(['$routeProvider',
                 controller: postCtrl
             }).
             when('/search/:searchKey', {
-                templateUrl: 'partials/list.html',
+                templateUrl: 'partials/search.html',
                 controller: postCtrl
             }).
             when('/post/:postId', {

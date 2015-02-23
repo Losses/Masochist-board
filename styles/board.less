@@ -1184,7 +1184,7 @@ footer {
 
             .hide_category {
               &::before {
-                content: '\e81d';
+                content: '\e81e';
               }
             }
 
@@ -1292,6 +1292,18 @@ footer {
 
           .manage_category_button {
             display: none;
+          }
+        }
+
+        &.hide{
+          .hide_category::before{
+            content:'\e81d' !important;
+          }
+        }
+
+        &.mute{
+          .mute_category::before{
+            content:'\e823' !important;
           }
         }
       }

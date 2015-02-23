@@ -100,7 +100,20 @@ $(document).ready(function () {
             if ($(event.target).attr('type') === 'submit') {
                 $('.add_new').attr('class', newCategloryClasses + ' ' + $(event.target).attr('class'));
             }
-        })
+        });
+
+        function manageCate() {
+            var target = $(this).attr('data-category')
+                , condition = {};
+            if ($(this).hasClass('mute_category')) {
+                condition.action = 'mute_cate';
+            } else if ($(this).hasClass('hide_category')) {
+                condition.action = 'hide_cate';
+            }
+            condition.target = target;
+
+            console.log(condition);
+        }
 
         $('.category').delegate('.edit_category', 'click', function () {
             var thisCate = $(this).attr('data-category')
@@ -111,6 +124,8 @@ $(document).ready(function () {
                 thisParent.removeClass('rename');
             })
         })
+            .delegate('.mute_category', 'click', manageCate)
+            .delegate('.hide_category', 'click', manageCate);
 
     }
 );

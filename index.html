@@ -44,13 +44,18 @@
             <input type='text' name='upid' value="0" style='display:none'/>
 
             <div class="dialog_head">
-                <select class="select_rebuild" name="category">
-                    <option ng-repeat="category in categories" ls-class="{{category.theme}}"
-                            ng-if="(category.hide == 0) || logined"
-                            value="{{category.id}}">
-                        {{category.name}}
-                    </option>
-                </select>
+
+                <div class="s_select post_category">
+                    <input class="select_rebuild" name="category" readonly value="1"/>
+                    <button class="s_choosen">兄贵</button>
+                    <ul class="s_select_body">
+                        <li ng-repeat="category in categories" ng-if="(category.hide == 0) || logined"
+                            val="{{category.id}}" class="{{category.theme}}">
+                            {{category.name}}
+                        </li>
+                    </ul>
+                </div>
+
                 <input class='right' type='text' name='title' placeholder="标题"/>
                 <label class="checkbox_rebuild">SAGE<input type="checkbox" name="sage" class="checkbox_rebuild"
                                                            value="1"></label>
@@ -119,12 +124,16 @@
             <li class="transport_warp">
                 <button class="icon-transport move" title="将该PO转移到其他分类"></button>
                 <div class="transport_select_warp">
-                    <select class="select_transform" name="manage_transform">
-                        <option ng-repeat="category in categories" ls-class="{{category.theme}}"
-                                value="{{category.id}}">
-                            {{category.name}}
-                        </option>
-                    </select>
+                    <div class="s_select transport_category">
+                        <input class="select_rebuild" name="category" readonly value="1"/>
+                        <button class="s_choosen">兄贵</button>
+                        <ul class="s_select_body">
+                            <li ng-repeat="category in categories" ng-if="(category.hide == 0) || logined"
+                                val="{{category.id}}" class="{{category.theme}}">
+                                {{category.name}}
+                            </li>
+                        </ul>
+                    </div>
 
                     <div class="transport_confirm">
                         <button class="icon-cancel cancel_transport"></button>

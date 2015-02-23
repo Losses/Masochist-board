@@ -86,7 +86,7 @@ function postCtrl($http, $scope, $routeParams) {
     pushContent();
 }
 
-function dialogCtrl($http, $scope, $interval) {
+function dialogCtrl($http, $scope) {
     $scope.groups = [];
 
     $http.get('dbs/emotions.json')

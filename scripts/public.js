@@ -104,30 +104,6 @@ function sSelect(selector) {
         }, 1);
     }
 
-    /*
-     select.each(function () {
-
-     $(this).wrap('<span class="s_select"></span>');
-
-     $(this).parent('.s_select').append('<button class="s_choosen"></button><ul class="s_select_body"></ul>');
-
-     var options = [],
-     values = [],
-     classes = [],
-     x;
-     $(this).children('option').each(function () {
-     var className = $(this).attr('ls-class') ? $(this).attr('ls-class') : '';
-     options.push($(this).html());
-     values.push($(this).attr('value'));
-     classes.push(className);
-     });
-     $(this).next('.s_choosen').html(options[0]);
-     var selectBody = $(this).nextAll('.s_select_body');
-     for (x in options) {
-     selectBody.append('<li val="' + values[x] + '" class="' + classes[x] + '">' + options[x] + '</li>');
-     }
-     });
-     */
     var selectBody = $(selector).children('.s_select_body')
         , choosenElement = $(selector).children('.s_choosen');
 
@@ -620,33 +596,7 @@ $(document).ready(function documentReady() {
     $('.close_dialog').click(function () {
         $('body').click();
     });
-    /*
-     $('.icon-menu').mouseenter(function () {
-     var that = $(this);
 
-     if (losses.event.menuTimeout)
-     clearTimeout(losses.event.menuTimeout);
-
-     that.addClass('hide');
-     losses.elements.iconGroupElement.addClass('extend bump')
-     .one('mouseleave', function () {
-     var menu = $(this);
-
-     function action() {
-     losses.elements.pause = false;
-     menu.removeClass('extend bump');
-
-     that.removeClass('hide');
-     }
-
-     if (losses.elements.pause)
-     losses.event.menuTimeout = setTimeout(action, 2000);
-     else
-     action();
-     });
-     });
-
-     */
     setTimeout(checkSumitable, 1000);
 })
 ;

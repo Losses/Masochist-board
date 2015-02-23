@@ -19,112 +19,35 @@
     <title>轨道炮 piu——</title>
 </head>
 <body ng-controller="globalCtrl">
-<header class="clear">
-    <nav>
-        <i class="highlight"></i>
-        <li class="nav_item a"><a href="#">首页</a></li>
-        <li class="nav_item b"><a href="#">手册</a></li>
-        <li class="nav_item c"><a href="#">动态</a></li>
-        <li class="nav_item d"><a href="#">关于</a></li>
-    </nav>
+<div class="wrap">
 
-    <div id="intro">
-        <h1>知识库</h1>
+    <header class="clear">
+        <nav>
+            <i class="highlight"></i>
+            <li class="nav_item a"><a href="#">首页</a></li>
+            <li class="nav_item b"><a href="#">手册</a></li>
+            <li class="nav_item c"><a href="#">动态</a></li>
+            <li class="nav_item d"><a href="#">关于</a></li>
+        </nav>
 
-        <p class="subtitle">了解如何使用你的私人炮姐。</p>
-    </div>
-</header>
+        <div id="intro">
+            <h1>知识库</h1>
 
-<section id="main" ng-view></section>
+            <p class="subtitle">了解如何使用你的私人炮姐。</p>
+        </div>
+    </header>
 
-<section id="common">
-    <div class="card dialog" id="post_dialog" ng-controller="dialogCtrl">
-        <form action='api/?new' method='post' id="post_form">
-            <input type='text' name='author' value="a person" style='display:none'/>
-            <input type='text' name='upid' value="0" style='display:none'/>
+    <section id="main" ng-view></section>
 
-            <div class="dialog_head">
+    <section id="common">
+        <div class="card dialog" id="post_dialog" ng-controller="dialogCtrl">
+            <form action='api/?new' method='post' id="post_form">
+                <input type='text' name='author' value="a person" style='display:none'/>
+                <input type='text' name='upid' value="0" style='display:none'/>
 
-                <div class="s_select post_category">
-                    <input class="select_rebuild" name="category" readonly value="1"/>
-                    <button class="s_choosen">兄贵</button>
-                    <ul class="s_select_body">
-                        <li ng-repeat="category in categories" ng-if="(category.hide == 0) || logined"
-                            val="{{category.id}}" class="{{category.theme}}">
-                            {{category.name}}
-                        </li>
-                    </ul>
-                </div>
+                <div class="dialog_head">
 
-                <input class='right' type='text' name='title' placeholder="标题"/>
-                <label class="checkbox_rebuild">SAGE<input type="checkbox" name="sage" class="checkbox_rebuild"
-                                                           value="1"></label>
-            </div>
-
-            <textarea name='content'></textarea>
-
-            <div id="emoji_box">
-                <ul ng-repeat="group in groups" class="clear g-{{group.name}}">
-                    <li ng-repeat="emoji in group.emoji">
-                        <button class="emoji {{emoji.value}}" data-value="{{emoji.name}}"></button>
-                    </li>
-                </ul>
-                <nav class="group_select clear">
-                    <li ng-repeat="group in groups">
-                        <i class="emotion_name icon-{{group.name}}" data-group-name="g-{{group.name}}"></i>
-                    </li>
-                    <li class="cancel">
-                        <i class="icon-cancel"></i>
-                    </li>
-                </nav>
-            </div>
-
-            <!button class='icon-menu'><!/button>
-            <div class="icon_group">
-                <div class="extend">
-                    <div class="upload_warp">
-                        <div class="image_preview"></div>
-                        <div class="upload_cancel icon_cotainer">
-                            <button class="icon-cancel remove_image colorful_icon"></button>
-                        </div>
-                        <div class="hint"></div>
-                        <div class="icon_cotainer">
-                            <button class="icon-picture upload_image colorful_icon"></button>
-                            <input type='file' name='image' id='upload_image_active'/>
-                        </div>
-                    </div>
-
-                    <div class="icon_cotainer">
-                        <button class="icon-smile emoji_button colorful_icon"></button>
-                    </div>
-                </div>
-                <div>
-                    <button type='submit' class="post_submit icon-"></button>
-                </div>
-            </div>
-        </form>
-
-        <i class="icon-cancel close_dialog"></i>
-    </div>
-
-    <div class="float_icon" id="new_post" ng-controller="manageCtrl">
-        <ul class="manage_menu manage_">
-            <li class="delete_warp">
-                <button class="icon-trash delete" title="删除该PO"></button>
-
-                <div class="confirm_warp">
-                    <button class="icon-ok confirm_delete" data-manage-action="delete"></button>
-                </div>
-
-                <div class="cancel_warp">
-                    <button class="icon-cancel cancel_delete"></button>
-                </div>
-            </li>
-
-            <li class="transport_warp">
-                <button class="icon-transport move" title="将该PO转移到其他分类"></button>
-                <div class="transport_select_warp">
-                    <div class="s_select transport_category">
+                    <div class="s_select post_category">
                         <input class="select_rebuild" name="category" readonly value="1"/>
                         <button class="s_choosen">兄贵</button>
                         <ul class="s_select_body">
@@ -135,36 +58,116 @@
                         </ul>
                     </div>
 
-                    <div class="transport_confirm">
-                        <button class="icon-cancel cancel_transport"></button>
-                        <button class="icon-ok confirm_transport" data-manage-action="trans"></button>
-                    </div>
+                    <input class='right' type='text' name='title' placeholder="标题"/>
+                    <label class="checkbox_rebuild">SAGE<input type="checkbox" name="sage" class="checkbox_rebuild"
+                                                               value="1"></label>
                 </div>
 
+                <textarea name='content'></textarea>
 
-            </li>
-            <li>
-                <button class="icon-sage sage confirm_sage" title="sage该PO" data-manage-action="sage"></button>
-            </li>
-        </ul>
-        <i class="icon-pencil"></i>
-    </div>
+                <div id="emoji_box">
+                    <ul ng-repeat="group in groups" class="clear g-{{group.name}}">
+                        <li ng-repeat="emoji in group.emoji">
+                            <button class="emoji {{emoji.value}}" data-value="{{emoji.name}}"></button>
+                        </li>
+                    </ul>
+                    <nav class="group_select clear">
+                        <li ng-repeat="group in groups">
+                            <i class="emotion_name icon-{{group.name}}" data-group-name="g-{{group.name}}"></i>
+                        </li>
+                        <li class="cancel">
+                            <i class="icon-cancel"></i>
+                        </li>
+                    </nav>
+                </div>
 
-    <div class="loading_spin">
-        <div class="background"></div>
-        <svg class="circular">
-            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
-        </svg>
-    </div>
+                <!button class='icon-menu'><!/button>
+                <div class="icon_group">
+                    <div class="extend">
+                        <div class="upload_warp">
+                            <div class="image_preview"></div>
+                            <div class="upload_cancel icon_cotainer">
+                                <button class="icon-cancel remove_image colorful_icon"></button>
+                            </div>
+                            <div class="hint"></div>
+                            <div class="icon_cotainer">
+                                <button class="icon-picture upload_image colorful_icon"></button>
+                                <input type='file' name='image' id='upload_image_active'/>
+                            </div>
+                        </div>
 
-    <form class="card manage">
-        <input type="text" id="password" placeholder="管理员密码" class="password_acion"/>
-    </form>
+                        <div class="icon_cotainer">
+                            <button class="icon-smile emoji_button colorful_icon"></button>
+                        </div>
+                    </div>
+                    <div>
+                        <button type='submit' class="post_submit icon-"></button>
+                    </div>
+                </div>
+            </form>
 
-    <span class="public_warning">密码错误！</span>
+            <i class="icon-cancel close_dialog"></i>
+        </div>
 
-</section>
+        <div class="float_icon" id="new_post" ng-controller="manageCtrl">
+            <ul class="manage_menu manage_">
+                <li class="delete_warp">
+                    <button class="icon-trash delete" title="删除该PO"></button>
 
+                    <div class="confirm_warp">
+                        <button class="icon-ok confirm_delete" data-manage-action="delete"></button>
+                    </div>
+
+                    <div class="cancel_warp">
+                        <button class="icon-cancel cancel_delete"></button>
+                    </div>
+                </li>
+
+                <li class="transport_warp">
+                    <button class="icon-transport move" title="将该PO转移到其他分类"></button>
+                    <div class="transport_select_warp">
+                        <div class="s_select transport_category">
+                            <input class="select_rebuild" name="category" readonly value="1"/>
+                            <button class="s_choosen">兄贵</button>
+                            <ul class="s_select_body">
+                                <li ng-repeat="category in categories" ng-if="(category.hide == 0) || logined"
+                                    val="{{category.id}}" class="{{category.theme}}">
+                                    {{category.name}}
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="transport_confirm">
+                            <button class="icon-cancel cancel_transport"></button>
+                            <button class="icon-ok confirm_transport" data-manage-action="trans"></button>
+                        </div>
+                    </div>
+
+
+                </li>
+                <li>
+                    <button class="icon-sage sage confirm_sage" title="sage该PO" data-manage-action="sage"></button>
+                </li>
+            </ul>
+            <i class="icon-pencil"></i>
+        </div>
+
+        <div class="loading_spin">
+            <div class="background"></div>
+            <svg class="circular">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+            </svg>
+        </div>
+
+        <form class="card manage">
+            <input type="text" id="password" placeholder="管理员密码" class="password_acion"/>
+        </form>
+
+        <span class="public_warning">密码错误！</span>
+
+    </section>
+    <div class="push"></div>
+</div>
 <footer>
     <p>&copy; 2015 somebody</p>
 

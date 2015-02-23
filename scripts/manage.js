@@ -103,15 +103,31 @@ $(document).ready(function () {
         });
 
         function manageCate() {
-            var target = $(this).attr('data-category')
-                , condition = {};
-            if ($(this).hasClass('mute_category')) {
-                condition.action = 'mute_cate';
-            } else if ($(this).hasClass('hide_category')) {
-                condition.action = 'hide_cate';
-            }
-            condition.target = target;
+            var condition = {};
 
+            condition.target = $(this).attr('data-category');
+            condition.action = $(this).attr('data-manage-action');
+
+            $.post('api/?manage', condition, function (data) {
+                var response;
+                try {
+                    response = JSON.parse(data);
+                } catch (e) {
+                    publicWarning(data);
+                }
+
+                if (response.code == 200) {
+                    var actionClass;
+                    if (condition.action == 'mute_cate') {
+                        actionClass = 'mute';
+                    } else if (condition.action == 'hide_cate') {
+                        actionClass = 'hide';
+                    }
+                    $(this).parents('.category_warp').toggleClass(actionClass);
+                } else {
+                    publicWarning(response.message);
+                }
+            });
             console.log(condition);
         }
 

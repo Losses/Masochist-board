@@ -1,3 +1,22 @@
+/////////////////////////////////////////////////////////////////////////////////
+//                    Masochist-board Style Control Center                     //
+//                                                                             //
+//                                                   Designed By Losses Don    //
+/////////////////////////////////////////////////////////////////////////////////
+// @COLOR CONTROL                                                              //
+/////////////////////////////////////////////////////////////////////////////////
+@mainThemeColor: #3e00a4;
+@darkerThemeColor: #342d40;
+@darkestThemeColor: #2c184f;
+
+@darkFontColor: #20113c;
+@darkFontHoverColor: @mainThemeColor;
+@mainFontColor: #3c324d;
+
+@lightColor: #c0b5d3;
+@lighterColor: #d7cceb;
+@lightestColor: #ece8f5;
+
 @import url('webfonts/board.css');
 
 .drop_shadow(@level: 1) {
@@ -209,8 +228,8 @@
 
   .post {
     padding: 10px;
-    border-bottom: 1px dashed #c0b5d3;
-    color: #3c324d;
+    border-bottom: 1px dashed @lightColor;
+    color: @mainFontColor;
     font-size: 14px;
     line-height: 1.5em;
     transition: background 300ms;
@@ -231,7 +250,8 @@
       font-size: 18px;
       line-height: 20px;
       text-decoration: none;
-      color: #20113c;
+      color: @darkFontColor;
+      transition: color 200ms;
 
       .sage {
         top: -3px;
@@ -247,7 +267,7 @@
       }
 
       &:hover {
-        color: #3e00a4;
+        color: @darkFontHoverColor;
       }
     }
 
@@ -260,17 +280,17 @@
       line-height: 2em;
       text-align: center;
       float: right;
-      background: #d7cceb;
+      background: @lighterColor;
       display: block;
     }
 
     &:hover, &.selected {
-      background: #ece8f5;
+      background: @lightestColor;
       .title {
-        color: #3e00a4;
+        color: @darkFontHoverColor;
 
         &:hover {
-          color: #5c00ff;
+          color: lighten(@darkFontColor, 40%);
         }
 
         .sage {
@@ -279,7 +299,7 @@
       }
 
       .time {
-        background: #c0b5d3;
+        background: @lightColor;
       }
     }
   }
@@ -291,18 +311,18 @@
     > div {
       position: relative;
       a {
-        color: #3e00a4;
+        color: @mainThemeColor;
         margin: 0 3px;
         padding: 3px 10px;
         font-size: 11px;
-        border: #3e00a4 1px solid;
+        border: @mainThemeColor 1px solid;
         border-radius: 14px;
         transition: all 200ms;
         display: block;
 
         &:link, &:visited {
           text-decoration: none;
-          color: #3e00a4;
+          color: @mainThemeColor;
         }
       }
 
@@ -310,7 +330,7 @@
         a {
           color: white;
           border-color: transparent;
-          background: #3e00a4;
+          background: @mainThemeColor;
           .color_sheet();
         }
       }
@@ -325,7 +345,7 @@
   }
   .search {
     i::before {
-      color: #3e00a4;
+      color: @mainThemeColor;
     }
     span {
       position: relative;
@@ -336,7 +356,7 @@
         width: 0;
         height: 5px;
         margin: 0 5px;
-        border: #3e00a4 solid 1px;
+        border: @mainThemeColor solid 1px;
         border-top: none;
         position: absolute;
         opacity: 0;
@@ -348,7 +368,7 @@
       width: 0;
       border: 0;
       margin: 0 10px;
-      color: #20113c;
+      color: @darkFontColor;
       opacity: 0;
       transition: width 200ms;
     }
@@ -420,7 +440,7 @@
     .dialog_head {
       width: 100%;
       padding: 20px 20px;
-      border-bottom: 1px solid #c0b5d3;
+      border-bottom: 1px solid @lighterColor;
       display: flex;
       align-content: flex-start;
     }
@@ -812,7 +832,7 @@
 .s_select {
   width: auto;
   position: relative;
-  select {
+  input {
     display: none;
   }
   .s_choosen {
@@ -833,26 +853,28 @@
     height: 0;
     border-width: 4px;
     border-style: solid;
-    border-color: #2c184f transparent transparent transparent;
+    border-color: @darkestThemeColor transparent transparent transparent;
     display: block;
     position: absolute;
 
   }
   .s_choosen:hover::after {
-    border-color: #c0b5d3 transparent transparent transparent;
+    border-color: @lightColor transparent transparent transparent;
   }
 
   .s_select_body {
     top: 22px;
     left: 0;
-    height: 0;
+    max-height: 0;
     width: 80px;
     border: 1px solid transparent;
     border-radius: 3px;
     background: rgba(255, 255, 255, 0.8);
+    opacity: 0;
     box-sizing: border-box;
     overflow: hidden;
     position: absolute;
+    transition: max-height 500ms, opacity 60ms;
     li {
       padding: 5px 6px;
       cursor: pointer;
@@ -872,8 +894,9 @@
     }
   }
   .s_select_body.selected {
-    height: auto;
-    border-color: #c0b5d3;
+    max-height: 300px;
+    opacity: 1;
+    border-color: @lighterColor;
     background: rgba(255, 255, 255, 0.8);
   }
 }
@@ -1312,8 +1335,8 @@ footer {
         width: 21px;
         height: 21px;
         margin-left: 3px;
-        color: #3e00a4;
-        border: 1px solid #3e00a4;
+        color: @mainThemeColor;
+        border: 1px solid @mainThemeColor;
         font-size: 12px;
         border-radius: 12px;
         display: block;

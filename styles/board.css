@@ -177,6 +177,7 @@
   line-height: 20px;
   text-decoration: none;
   color: #20113c;
+  transition: color 200ms;
 }
 #main .post .title .sage {
   top: -3px;
@@ -215,7 +216,7 @@
 }
 #main .post:hover .title:hover,
 #main .post.selected .title:hover {
-  color: #5c00ff;
+  color: #794dcc;
 }
 #main .post:hover .title .sage,
 #main .post.selected .title .sage {
@@ -378,7 +379,7 @@
 #post_dialog form .dialog_head {
   width: 100%;
   padding: 20px 20px;
-  border-bottom: 1px solid #c0b5d3;
+  border-bottom: 1px solid #d7cceb;
   display: flex;
   align-content: flex-start;
 }
@@ -692,7 +693,7 @@
   width: auto;
   position: relative;
 }
-.s_select select {
+.s_select input {
   display: none;
 }
 .s_select .s_choosen {
@@ -723,14 +724,16 @@
 .s_select .s_select_body {
   top: 22px;
   left: 0;
-  height: 0;
+  max-height: 0;
   width: 80px;
   border: 1px solid transparent;
   border-radius: 3px;
   background: rgba(255, 255, 255, 0.8);
+  opacity: 0;
   box-sizing: border-box;
   overflow: hidden;
   position: absolute;
+  transition: max-height 500ms, opacity 60ms;
 }
 .s_select .s_select_body li {
   padding: 5px 6px;
@@ -790,8 +793,9 @@
   background: #deedf1 !important;
 }
 .s_select .s_select_body.selected {
-  height: auto;
-  border-color: #c0b5d3;
+  max-height: 300px;
+  opacity: 1;
+  border-color: #d7cceb;
   background: rgba(255, 255, 255, 0.8);
 }
 .float_icon {

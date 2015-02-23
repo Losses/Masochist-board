@@ -1,14 +1,17 @@
 <div class="function_list clear">
     <div class="category left">
-        <div ng-repeat="category in categories" ng-if="(category.mute == 0)||logined" class="left cate-{{category.id}}">
+        <div ng-repeat="category in categories"
+             ng-if="(category.mute == 0)||logined"
+             ng-class="{'mute': (category.mute == 1), 'hide': (category.hide == 1)}"
+             class="left cate-{{category.id}}">
             <a href="#/category/{{category.id}}" class="{{category.theme}}">
                 {{category.name}}
             </a>
             <i class="manage_category_button" ng-if="logined">
                 <span class="card">
-                    <i class="hide_category icon-" data-category="{{category.id}}"></i>
-                    <i class="mute_category icon-" data-category="{{category.id}}"></i>
-                    <i class="edit_category icon-pencil" data-category="{{category.id}}"></i>
+                    <i class="hide_category icon-" title="隐藏/显示{{category.name}}" data-category="{{category.id}}"></i>
+                    <i class="mute_category icon-" title="在{{category.name}}上禁止/准许发PO" data-category="{{category.id}}"></i>
+                    <i class="edit_category icon-pencil" title="编辑{{category.name}}的名字" data-category="{{category.id}}"></i>
                 </span>
             </i>
 

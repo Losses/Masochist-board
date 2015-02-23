@@ -1047,7 +1047,7 @@ footer {
   color: #6b598b;
 }
 .manager .function_list .category > div .manage_category_button span .hide_category::before {
-  content: '\e81d';
+  content: '\e81e';
 }
 .manager .function_list .category > div .manage_category_button span .mute_category::before {
   content: '\e822';
@@ -1171,6 +1171,12 @@ footer {
 }
 .manager .function_list .category > div.rename .manage_category_button {
   display: none;
+}
+.manager .function_list .category > div.hide .hide_category::before {
+  content: '\e81d' !important;
+}
+.manager .function_list .category > div.mute .mute_category::before {
+  content: '\e823' !important;
 }
 .manager .function_list .category .add_new {
   width: 21px;

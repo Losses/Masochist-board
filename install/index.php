@@ -119,7 +119,7 @@ if (isset($_SESSION['info_catched'])
                 min-height: 100%;
                 height: auto !important;
                 height: 100%;
-                margin: 0 auto -80px;
+                margin: 0 auto 0;
             }
 
             .push {
@@ -384,6 +384,7 @@ if (isset($_SESSION['info_catched'])
                 line-height: 300px;
                 text-align: center;
                 margin-top: 40px;
+                margin-bottom: -80px;
             }
 
             .install .push .loading_spin {

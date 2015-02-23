@@ -113,6 +113,7 @@
 		if (!isset($_SESSION['logined']) || $_SESSION['logined'] == false)
 		{
 			response_message(403, "You can't post at mute category!");
+			exit();
 		}
 		
 		$data_sql +=

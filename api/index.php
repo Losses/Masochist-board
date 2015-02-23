@@ -173,7 +173,7 @@
 
 	elseif (isset($_GET['category']))
 	{
-		if (isset($_SESSION['logined']) && ($_SESSION('logined') == true))
+		if (isset($_SESSION['logined']) && ($_SESSION['logined'] == true))
 		{
 			$data = $database->select('category', '*');
 		}

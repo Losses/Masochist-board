@@ -110,7 +110,7 @@
 		$where_sql   = ['id[=]' =>  $post_cate];
 		$is_mute      = $database->select('category',
 			$columns_sql, $where_sql)[0]['mute'] === '1';
-		if (!isset($_SESSION['logined']) || $_SESSION['logined'] == false)
+		if ($is_mute && (!isset($_SESSION['logined']) || $_SESSION['logined'] == false))
 		{
 			response_message(403, "You can't post at mute category!");
 			exit();

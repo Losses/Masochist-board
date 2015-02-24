@@ -367,7 +367,7 @@
 
 					if ($date == false)
 					{
-						$data_false += $post_target_id;
+						array_push($data_false, $post_target_id);
 					}
 				}
 				if (count($data_false) == 0)
@@ -393,7 +393,7 @@
 
 					if ($date == false)
 					{
-						$data_false += $post_target_id;
+						array_push($data_false, $post_target_id);
 					}
 				}
 

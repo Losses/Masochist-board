@@ -7,29 +7,29 @@
  * Time: 9:29 AM
  */
 class plugin
+
 {
     private $plugin_list = [];
 
-    private function __construct()
+    function __construct()
     {
-        $plugin_tree = dir('../plugin');
+        $plugin_tree = scandir('../plugins/');
 
-        while (($file = $plugin_tree->read()) !== false) {
+        for ($h = 2; $h < count($plugin_tree); $h++) {
+            $file = "../plugins/$plugin_tree[$h]";
             if (is_file("$file/config.php")) {
                 $plugin_config = [];
 
                 require_once("$file/config.php");
 
                 foreach ($plugin_config as $hook_name => $hook_file) {
-                    if (!is_array($this->plugin_list[$hook_name]))
+                    if (!isset($this->plugin_list[$hook_name]))
                         $this->plugin_list[$hook_name] = [];
 
                     array_push($this->plugin_list[$hook_name], "$file/$hook_file");
                 }
             }
         }
-
-        $plugin_tree->close();
     }
 
     public function load_hook($hook_name)

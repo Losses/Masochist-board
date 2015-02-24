@@ -8,7 +8,11 @@
 
 	require_once ('../libs/emotions.php');
 
+    require_once ('../libs/plugin.php');
+
 	$emotion  = new emotions();
+
+    $plugin = new plugin();
 
 	$database = new medoo
 	(
@@ -32,6 +36,8 @@
 
 	if (isset($_GET['new']))
 	{
+        $plugin->load_hook("HOOK-BEFORE_POST");
+
 		$post_title   =  isset($_POST['title'])    ? $_POST['title']    : '';
 		$post_content =  isset($_POST['content'])  ? $_POST['content']  : '';
 		$post_upid    =  isset($_POST['upid'])     ? $_POST['upid']     : 0;

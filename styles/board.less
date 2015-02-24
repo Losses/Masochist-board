@@ -1658,6 +1658,7 @@ footer {
           position: absolute;
           transition: all 300ms;
           .drop_shadow(2);
+          z-index: 3;
 
           &::after {
             content: '\feff';
@@ -1739,15 +1740,27 @@ footer {
             }
           }
 
-          .s_select_body {
-            top: 5px;
+          .s_select_body_warp {
+            top: -45px;
+            height: 40px;
+            width: 80px;
             position: relative;
+            overflow: visible;
+            z-index: -1;
+          }
+
+          .s_select_body {
+            top: auto;
+            bottom: 35px;
+            position: absolute;
             background: white;
             border: 0;
             .drop_shadow(3);
+            z-index: 1;
 
             li {
               height: 20px;
+              width: 80px;
               font-size: 12px;
             }
           }

@@ -104,10 +104,8 @@ function sSelect(selector) {
         }, 1);
     }
 
-    var selectBody = $(selector).children('.s_select_body')
+    var selectBody = $(selector).find('.s_select_body')
         , choosenElement = $(selector).children('.s_choosen');
-
-    console.log(selectBody);
 
 
     choosenElement.click(function (event) {

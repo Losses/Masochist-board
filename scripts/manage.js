@@ -40,7 +40,7 @@ $(document).ready(function () {
             console.log(actionContent.target);
 
             if (action === 'trans')
-                actionContent.category = $('select[name="manage_transform"]').val();
+                actionContent.category = $('input[name="manage_transform"]').val();
 
             $.post('api/?manage', actionContent, function (data) {
                     var response;
@@ -97,7 +97,7 @@ $(document).ready(function () {
         });
 
         $('.color_picker').mouseover(function (event) {
-            if ($(event.target).attr('type') === 'submit') {
+            if ($(event.target).prop('tagName') === 'BUTTON') {
                 $('.add_new').attr('class', newCategloryClasses + ' ' + $(event.target).attr('class'));
             }
         })

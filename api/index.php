@@ -20,7 +20,7 @@
 			'password'		=>	DB_PASSWORD,
 			'port'			=>	DB_PORT,
 			'charset'		=>	'utf8',
-			'option'		=>	[PDO::ATTR_CASE =>  PDO::CASE_NATURAL] 
+			'option'		=>	[PDO::ATTR_CASE =>  PDO::CASE_NATURAL]
 		]
 	);
 
@@ -77,7 +77,7 @@
 		{
 			$type_img = ['image/gif', 'image/jpeg', 'image/svg',
 				'image/bmp', 'image/wbmp', 'image/png'];
-				
+
 			if ((in_array($_FILES['image']['type'], $type_img))
 				&& ($_FILES['image']['size']    <   50000000))
 			{
@@ -90,11 +90,11 @@
 					move_uploaded_file($_FILES['image']['tmp_name'],
 						'../upload/' . $_FILES['image']['name']);
 
-					$type_img   = explode('.', '../upload/' 
+					$type_img   = explode('.', '../upload/'
 						. $_FILES['image']['name']);
-					$post_img   = md5(md5_file('../upload/' 
+					$post_img   = md5(md5_file('../upload/'
 						. $_FILES['image']['name'])
-						. date('Y-m-d H:i:s')) . '.' 
+						. date('Y-m-d H:i:s')) . '.'
 						. $type_img[count ($type_img) - 1];
 					rename('../upload/' . $_FILES['image']['name'],
 						'../upload/' . $post_img);
@@ -105,17 +105,17 @@
 		{
 			$post_img = NULL;
 		}
-		
+
 		$columns_sql = ['mute'];
 		$where_sql   = ['id[=]' =>  $post_cate];
-		$ismute      = $database->select('category',
+		$is_mute      = $database->select('category',
 			$columns_sql, $where_sql)[0]['mute'] === '1';
 		if (!isset($_SESSION['logined']) || $_SESSION['logined'] == false)
 		{
 			response_message(403, "You can't post at mute category!");
 			exit();
 		}
-		
+
 		$data_sql +=
 		[
 			'author'		=>	$post_author,
@@ -128,7 +128,7 @@
 			'sage'			=>  $post_sage,
 			'category'		=>  $post_cate
 		];
-		
+
 		$result = $database->insert('content', $data_sql);
 
 		response_message(200, $result);
@@ -137,20 +137,21 @@
 	elseif (isset($_GET['list']))
 	{
 		$_GET['page'] = isset($_GET['page'])  ? $_GET['page'] : 1;
-		
+
 		if (isset($_GET['search']))
 		{
 			$search_key = explode(' ', $_GET['search']);
+            $result_key = '';
 			foreach ($search_key as $key)
 			{
 				$result_key .= '*' . $key . '* ';
 			}
 			$search_key = $database->quote($result_key);
-			$data = $database->query('SELECT * FROM content
+			$data = $database->query("SELECT * FROM content
 						WHERE MATCH (title, content)
-						AGAINST ($search_key IN BOOLEAN MODE)')
+						AGAINST ($search_key IN BOOLEAN MODE)")
 						->fetchAll();
-      
+
 			echo json_encode($data);
 			exit();
 
@@ -199,10 +200,10 @@
 	elseif (isset($_GET['post']))
 	{
 		require_once ('../libs/parsedown.php');
-		
+
 		$Parsedown = new Parsedown();
 
-		$columns_sql = 
+		$columns_sql =
 		[
 			'id',
 			'title',
@@ -225,7 +226,7 @@
 			'LIMIT' =>  [($_GET['page'] -1) * 10, $_GET['page'] * 10]
 		];
 		$data = $database->select('content', $columns_sql, $where_sql);
-		
+
 		if (isset($data[0]['upid']) && $data[0]['upid'] != 0)
 		{
 			response_message(301, $data[0]['upid']);
@@ -233,16 +234,16 @@
 
 		$data_length = count($data);
 		for ($i = 0; $i < $data_length; $i++)
-		{ 
+		{
 			$data[$i]['content'] =
 				$emotion->phrase($Parsedown->text($data[$i]['content']));
-				
+
 			if (isset($data[$i]['img']) && ($data[$i]['img'] != ''))
 			{
 				$data[$i]['img'] = 'upload/' . $data[$i]['img'];
 			}
 		}
-    
+
 		echo json_encode($data);
 		exit();
 	}
@@ -251,14 +252,14 @@
 	{
 		if (isset($_POST['key']))
 		{
-      
+
 			$_SESSION['key'] = md5(md5(date('Y-m-d H:i:s')) . UR_SALT);
 
 			response_message(200, $_SESSION['key']);
 
 		}
 		elseif (isset($_POST['password']))
-		{ 
+		{
 
 			if (!isset($_SESSION['key']))
 			{
@@ -279,7 +280,7 @@
 					response_message(403, 'UCCU输错密码的样子，真是丑陋!');
 				}
 			}
-		}		
+		}
 		elseif (isset($_POST['check']))
 		{
 			if (isset($_SESSION['logined']) && ($_SESSION['logined'] == true))
@@ -297,7 +298,7 @@
 			if (isset($_POST['action']) && ($_POST['action'] == 'delete'))
 			{
 				$data_false = [];
-				
+
 				foreach ($_POST['target'] as $post_target_id)
 				{
 					$data_sql =
@@ -309,13 +310,13 @@
 						]
 					];
 				$data = $database->delete('content', $data_sql);
-				
+
 					if ($data == false)
 					{
 						$data_false += [$post_target_id];
-          
+
 					}
-			
+
 				}
 
 				if (count($data_false) == 0)
@@ -335,7 +336,7 @@
 			if (isset($_POST['action']) && ($_POST['action'] == 'sage'))
 			{
 				$data_false = [];
-				
+
 				foreach ($_POST['target'] as $post_target_id)
 				{
 					$columns_sql = ['sage'];
@@ -345,7 +346,7 @@
 					if ($issage)
 					{
 						$data_sql  = ['sage'	=>	0];
-						
+
 					}
 					else
 					{
@@ -353,10 +354,10 @@
 					}
 					$where_sql = ['id[=]'	=>	$post_target_id];
 					$data = $database->update('content', $data_sql, $where_sql);
-					
+
 					if ($date == false)
 					{
-						$data_false += $post_target_id;          
+						$data_false += $post_target_id;
 					}
 				}
 				if (count($data_false) == 0)
@@ -369,7 +370,7 @@
 						. implode(' ', $data_false));
 				}
 			}
-			
+
 			if (isset($_POST['action']) && ($_POST['action'] == 'trans'))
 			{
 				$data_false = [];
@@ -412,9 +413,9 @@
 					response_message(200, '炸鸡馒头');
 				}
 			}
-			
+
 			if (isset($_POST['action']) && ($_POST['action'] == 'hidden_cate'))
-			{	
+			{
 				$columns_sql = ['hide'];
 				$where_sql   = ['id[=]' =>  $_POST['target']];
 				$ishide = $database->select('hide',
@@ -430,7 +431,7 @@
 				$data_sql  = ['hide'		=>	1];
 				$where_sql = ['id[=]'		=>	$_POST['target']];
 				$data	   = $database->update('category', $data_sql, $where_sql);
-				
+
 				if ($data == true)
 				{
 					response_message(200, 'Hidden success!');
@@ -441,7 +442,7 @@
 						. implode(' ', $data));
 				}
 			}
-			
+
 			if (isset($_POST['action']) && ($_POST['action'] == 'mute_cate'))
 			{
 				$columns_sql = ['mute'];
@@ -459,7 +460,7 @@
 				$data_sql  = ['mute'		=>	1];
 				$where_sql = ['id[=]'		=>	$_POST['target']];
 				$data	   = $database->update('category', $data_sql, $where_sql);
-				
+
 				if ($data == true)
 				{
 					response_message(200, 'Mute success!');
@@ -470,13 +471,13 @@
 						. implode(' ', $data));
 				}
 			}
-			
+
 			if (isset($_POST['action']) && ($_POST['action'] == 'rename_cate'))
-			{	
+			{
 				$data_sql  = ['name'	=>	$_POST['name']];
 				$where_sql = ['id[=]'	=>	$_POST['target']];
 				$data = $database->update(['category'], $data_sql, $where_sql);
-				
+
 				if ($data == true)
 				{
 					response_message(200, 'Rename success!');
@@ -487,12 +488,12 @@
 						. implode(' ', $data));
 				}
 			}
-			
+
 			if (isset($_POST['action']) && ($_POST['action'] == 'add_cate'))
-			{	
+			{
 				$data_sql  = ['name'	=>	$_POST['name']];
 				$data = $database->insert('category', $data_sql);
-				
+
 				if ($data == true)
 				{
 					response_message(200, 'Add category success!');
@@ -502,7 +503,7 @@
 					response_message(403, 'Add category failed OAQ '
 						. implode(' ', $data));
 				}
-				
+
 				if ($data == true)
 				{
 					response_message(200, 'Add category success!');

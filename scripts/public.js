@@ -437,8 +437,8 @@ $(document).ready(function documentReady() {
             }
             if (data.code != 200) {
                 losses.elements.submitIcon.removeClass('fly');
-                publicWarning(data.message);
                 switchLoading(false);
+                publicWarning(data.message);
                 return;
             }
 
@@ -460,8 +460,8 @@ $(document).ready(function documentReady() {
             function finishProcess() {
                 $('body').click();
                 losses.elements.submitIcon.removeClass('fly');
-                removeImage();
                 $('#post_form')[0].reset();
+                removeImage();
                 $('#post_dialog .checkbox_rebuild').removeClass('selected');
                 if (!losses.global.router.postId)
                     magicalLocation('#/post/' + data.message);

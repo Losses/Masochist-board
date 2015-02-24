@@ -160,7 +160,42 @@
 						AGAINST ($search_key IN BOOLEAN MODE)")
 						->fetchAll();
 			
-			echo json_encode($search_result);
+			$search_result = [];
+			foreach ($data as $result)
+			{
+				$search_result[$result['id']] = ['post'=>[],'reply'=>[]];
+				
+				if ($result['upid'] == 0)
+				{
+					$search_result[$result['id']]['post'] = $result;
+				}
+				else
+				{
+					$search_result[$result['upid']]['reply'][] = $result;
+				}
+			}
+
+			$sql_condition = ['id'=>[]];
+
+			foreach($search_result as $key => $value)
+			{
+				if(count($value['post']) == 0)
+				{
+					$sql_condition['id'][] = $key;
+				}
+			}
+
+			if(count($sql_condition['id']) != 0)
+			{
+				$plugin_results = $database -> select ('content','*',$sql_condition);
+			}
+
+			foreach($plugin_results as $result)
+			{
+				$search_result[$result['id']]['post'] = $result;
+			}
+
+			echo json_encode(array_values($search_result));
 			exit();
 		}
 

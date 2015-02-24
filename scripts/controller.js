@@ -41,13 +41,13 @@ function postCtrl($http, $scope, $routeParams) {
                 loading = true;
                 $http.get(apiRule)
                     .success(function (response) {
-                        console.log(response);
                         if (response.length === 0)
                             page--;
 
                         for (var i = 0; i <= response.length - 1; i++) {
                             $scope.posts.push(response[i]);
                         }
+
                         loading = false;
 
                         switchLoading(false);

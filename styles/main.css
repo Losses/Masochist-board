@@ -55,6 +55,7 @@ header nav {
   float: right;
   transform: skew(-22.5deg);
   transition: all 0.3s;
+  position: relative;
 }
 header nav * {
   transform: skew(22.5deg);
@@ -72,7 +73,7 @@ header nav li a:link {
 header nav .highlight {
   width: 85px;
   height: 62px;
-  right: -90px;
+  left: 1000px;
   background: #fdd000;
   transform: skew(0deg);
   display: block;

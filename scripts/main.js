@@ -8,7 +8,7 @@
     for (var x = 0; x < headerLis.length; x++) {
         $(headerLis[x]).on({
                 'mouseenter': function (event) {
-                    $(highlightItem).css('right', $("body").width() - ($(event.target).offset().left + 60));
+                    $(highlightItem).css('left', $(event.target).position().left);
                     $(this).addClass('high');
 
                     event.stopPropagation();
@@ -21,13 +21,13 @@
     }
 
     $('nav').on('mouseleave', function (event) {
-        highlightItem.setAttribute('style', 'right:-200px;');
+        highlightItem.setAttribute('style', 'left:1000px');
 
         event.stopPropagation();
         event.preventDefault();
     });
 
-    $('#close').on('click',function(){
+    $('#close').on('click', function () {
         $('#highlight').slideUp();
     })
 })();

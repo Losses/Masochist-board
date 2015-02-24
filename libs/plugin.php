@@ -11,23 +11,28 @@ class plugin
 {
     private $plugin_list = [];
 
+    public $config = [];
+
     function __construct()
     {
         $plugin_tree = scandir('../plugins/');
 
         for ($h = 2; $h < count($plugin_tree); $h++) {
             $file = "../plugins/$plugin_tree[$h]";
+
             if (is_file("$file/config.php")) {
-                $plugin_config = [];
+                $plugin_injector = [];
 
                 require_once("$file/config.php");
 
-                foreach ($plugin_config as $hook_name => $hook_file) {
+                foreach ($plugin_injector as $hook_name => $hook_file) {
                     if (!isset($this->plugin_list[$hook_name]))
                         $this->plugin_list[$hook_name] = [];
 
                     array_push($this->plugin_list[$hook_name], "$file/$hook_file");
                 }
+
+                $this->config[$plugin_info['IDENTIFICATION']] = $plugin_config;
             }
         }
     }

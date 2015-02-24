@@ -438,6 +438,7 @@ $(document).ready(function documentReady() {
             if (data.code != 200) {
                 losses.elements.submitIcon.removeClass('fly');
                 publicWarning(data.message);
+                switchLoading(false);
                 return;
             }
 

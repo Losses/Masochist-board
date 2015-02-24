@@ -13,7 +13,7 @@
 
         <div class="left article_group">
             <p ng-if="post.title != ''">
-                <span class="category {{category[post.category].theme}}">{{category[post.category].name}}</span>
+                <span class="category {{categories[post.category - 1].theme}}">{{categories[post.category - 1].name}}</span>
                 <a class='title' href='#/post/{{post.id}}'>{{post.title}}</a>
                 <span class="sage" ng-show="post.sage == 1">SAGE</span>
             </p>

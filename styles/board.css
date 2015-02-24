@@ -962,6 +962,7 @@ footer {
   transition: all 300ms;
   opacity: 0;
   visibility: hidden;
+  z-index: 6;
 }
 .loading_spin.down {
   margin-top: -50px;

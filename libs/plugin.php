@@ -20,7 +20,7 @@ class plugin
         for ($h = 2; $h < count($plugin_tree); $h++) {
             $file = "../plugins/$plugin_tree[$h]";
 
-            if (is_file("$file/config.php")) {
+            if (is_dir($file) && is_file("$file/config.php")) {
                 $plugin_injector = [];
 
                 require_once("$file/config.php");

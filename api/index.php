@@ -159,10 +159,9 @@
 						WHERE MATCH (title, content)
 						AGAINST ($search_key IN BOOLEAN MODE)")
 						->fetchAll();
-
-			echo json_encode($data);
+			
+			echo json_encode($search_result);
 			exit();
-
 		}
 
 		$columns_sql =
@@ -501,7 +500,11 @@
 
 			if (isset($_POST['action']) && ($_POST['action'] == 'add_cate'))
 			{
-				$data_sql  = ['name'	=>	$_POST['name']];
+				$data_sql  = 
+				[
+					'name'	=>	$_POST['name'],
+					'theme'	=>	$_POST['theme']
+				];
 				$data = $database->insert('category', $data_sql);
 
 				if ($data == true)

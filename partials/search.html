@@ -6,10 +6,10 @@
     </div>
 </div>
 
-<ul class="post_list">
+<ul class="post_page search_list">
     <li class="post clear" ng-repeat="result in posts">
         <p class="time">{{result.post.time}}</p>
-        <img ng-if="result.post.img" ng-src="{{result.post.img}}" class="uploaded_image lbox"/>
+        <img ng-if="result.post.img" ng-src="{{result.post.img}}" class="uploaded_image lbox left"/>
 
         <div class="left article_group">
             <p ng-if="result.post.title != ''">
@@ -22,8 +22,8 @@
                 {{result.post.content}}
             </article>
 
-            <ul class="replies" ng-repeat="reply in post.reply track by $index">
-                <li>
+            <ul class="replies clear" ng-if="result.reply.length > 0">
+                <li ng-repeat="reply in result.reply">
                     <span class="author">{{reply.author}}</span>
                     <article ng-bind-html="reply.content | trustHtml">
                         {{reply.content}}

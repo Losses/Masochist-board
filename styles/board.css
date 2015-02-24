@@ -239,6 +239,36 @@ body {
 #main .post.selected .time {
   background: #c0b5d3;
 }
+#main .search_list > li:hover .replies {
+  background: #e5def2;
+}
+#main .search_list > li:hover .replies li {
+  border-color: #cec5dd;
+}
+#main .search_list .article_group {
+  width: calc(100% - 300px);
+}
+#main .search_list article {
+  width: calc(100% - 30px);
+}
+#main .search_list .replies {
+  width: calc(100% - 200px);
+  padding: 10px;
+  margin: 10px 20px;
+  background: #f2eff8;
+  border-radius: 3px;
+  transition: background 300ms;
+}
+#main .search_list .replies li {
+  padding: 5px 10px;
+  border-top: 1px dashed #d7cceb;
+}
+#main .search_list .replies li article {
+  margin-left: 10px;
+}
+#main .search_list .replies li:nth-of-type(1) {
+  border: 0;
+}
 .function_list {
   margin: 0 10px 15px 10px;
 }

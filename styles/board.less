@@ -318,6 +318,47 @@ html, body {
       }
     }
   }
+
+  .search_list {
+    > li {
+      &:hover {
+        .replies {
+          background: lighten(@lighterColor, 5%);
+          li {
+            border-color: lighten(@lightColor, 5%);
+          }
+        }
+      }
+    }
+
+    .article_group {
+      width: ~"calc(100% - 300px)"
+    }
+    article {
+      width: ~"calc(100% - 30px)";
+    }
+    .replies {
+      width: ~"calc(100% - 200px)";
+      padding: 10px;
+      margin: 10px 20px;
+      background: lighten(@lightestColor, 2%);
+      border-radius: 3px;
+      transition: background 300ms;
+
+      li {
+        padding: 5px 10px;
+        border-top: 1px dashed @lighterColor;
+
+        article {
+          margin-left: 10px;
+        }
+
+        &:nth-of-type(1) {
+          border: 0;
+        }
+      }
+    }
+  }
 }
 
 .function_list {

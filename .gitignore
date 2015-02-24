@@ -5,3 +5,4 @@ config.php
 /upload/*.png
 /upload/*.gif
 /backup/*/*
+/plugin/*

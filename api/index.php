@@ -36,15 +36,15 @@
 
 	if (isset($_GET['new']))
 	{
-        $plugin->load_hook("HOOK-BEFORE_POST");
-
-		$post_title   =  isset($_POST['title'])    ? $_POST['title']    : '';
+ 		$post_title   =  isset($_POST['title'])    ? $_POST['title']    : '';
 		$post_content =  isset($_POST['content'])  ? $_POST['content']  : '';
 		$post_upid    =  isset($_POST['upid'])     ? $_POST['upid']     : 0;
 		$post_sage    =  isset($_POST['sage'])     ? 1                  : 0;
 		$post_cate    =  isset($_POST['category']) ? $_POST['category'] : 0;
 		$post_author  = (isset($_SESSION['logined'])
-			&& $_SESSION['logined'] == true)       ? 'Admin'            : $_POST['author'];
+			&& $_SESSION['logined'] == true)       ? 'Admin'            : 'a person';
+
+        $plugin->load_hook("HOOK-BEFORE_NEW");
 
 		if ($post_upid == 0)
 		{
@@ -142,6 +142,8 @@
 
 	elseif (isset($_GET['list']))
 	{
+        $plugin->load_hook("HOOK-BEFORE_LIST");
+
 		$_GET['page'] = isset($_GET['page'])  ? $_GET['page'] : 1;
 
 		if (isset($_GET['search']))
@@ -205,6 +207,8 @@
 
 	elseif (isset($_GET['post']))
 	{
+        $plugin->load_hook("HOOK-BEFORE_POST");
+
 		require_once ('../libs/parsedown.php');
 
 		$Parsedown = new Parsedown();

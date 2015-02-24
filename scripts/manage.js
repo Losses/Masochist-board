@@ -119,7 +119,7 @@ $(document).ready(function () {
                     if (response && (response.code == 200)) {
                         inputElement.val('');
                         publicWarning('添加成功');
-                        location.reload(true);
+                        losses.global.reloadCate();
                     } else {
                         publicWarning(response.message);
                     }

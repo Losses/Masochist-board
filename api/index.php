@@ -391,7 +391,7 @@
 					$where_sql = ['id[=]'		=>	$post_target_id];
 					$data = $database->update('content', $data_sql, $where_sql);
 
-					if ($date == false)
+					if ($data == false)
 					{
 						array_push($data_false, $post_target_id);
 					}

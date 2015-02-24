@@ -7,8 +7,8 @@
 </div>
 
 <ul class="post_list">
-    <li class="post clear" ng-repeat="result in posts track by $index">
-        <p class="time">{{post.time}}</p>
+    <li class="post clear" ng-repeat="result in posts">
+        <p class="time">{{result.post.time}}</p>
         <img ng-if="result.post.img" ng-src="{{result.post.img}}" class="uploaded_image lbox"/>
 
         <div class="left article_group">

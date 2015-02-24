@@ -161,9 +161,15 @@
 						->fetchAll();
 			
 			$search_result = [];
+
 			foreach ($data as $result)
 			{
 				$search_result[$result['id']] = ['post'=>[],'reply'=>[]];
+
+                if (isset($result['img']) && ($result['img'] != ''))
+                {
+                    $result['img'] = 'upload/' . $result['img'];
+                }
 				
 				if ($result['upid'] == 0)
 				{

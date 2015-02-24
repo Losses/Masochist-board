@@ -239,6 +239,19 @@ html, body {
     .multi_select {
       display: none;
     }
+
+    .sage {
+      top: -3px;
+      font-size: 11px;
+      margin: 0 0 0 5px;
+      padding: 0 5px;
+      color: red;
+      border: red 1px solid;
+      border-radius: 14px;
+      position: relative;
+      transition: all 200ms;
+      display: inline-block;
+    }
   }
 
   .post {
@@ -267,19 +280,6 @@ html, body {
       text-decoration: none;
       color: @darkFontColor;
       transition: color 200ms;
-
-      .sage {
-        top: -3px;
-        font-size: 11px;
-        margin: 0 0 0 5px;
-        padding: 0 5px;
-        color: red;
-        border: red 1px solid;
-        border-radius: 14px;
-        position: relative;
-        transition: all 200ms;
-        display: inline-block;
-      }
 
       &:hover {
         color: @darkFontHoverColor;

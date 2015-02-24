@@ -125,6 +125,18 @@ body {
 #main .post_list .multi_select {
   display: none;
 }
+#main .post_list .sage {
+  top: -3px;
+  font-size: 11px;
+  margin: 0 0 0 5px;
+  padding: 0 5px;
+  color: red;
+  border: red 1px solid;
+  border-radius: 14px;
+  position: relative;
+  transition: all 200ms;
+  display: inline-block;
+}
 #main .post {
   padding: 10px;
   border-bottom: 1px dashed #c0b5d3;
@@ -191,18 +203,6 @@ body {
   text-decoration: none;
   color: #20113c;
   transition: color 200ms;
-}
-#main .post .title .sage {
-  top: -3px;
-  font-size: 11px;
-  margin: 0 0 0 5px;
-  padding: 0 5px;
-  color: red;
-  border: red 1px solid;
-  border-radius: 14px;
-  position: relative;
-  transition: all 200ms;
-  display: inline-block;
 }
 #main .post .title:hover {
   color: #3e00a4;

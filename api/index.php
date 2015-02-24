@@ -1,5 +1,5 @@
 <?php
-
+    session_set_cookie_params(31536000);
 	session_start();
 
 	require_once ('../config.php');

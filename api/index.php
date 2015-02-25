@@ -31,6 +31,7 @@
 	$columns_sql = [];
 	$where_sql   = [];
 	$data_sql    = [];
+	$join_sql	 = [];
 
 	$current_time = $database->query('SELECT NOW()')->fetchAll()[0][0];
 
@@ -205,27 +206,39 @@
 			exit();
 		}
 
+		$join_sql =
+		[
+			'[><]category'	=>
+			[
+				'category'	=>	'id'
+			]
+		];
+
 		$columns_sql =
 		[
-			'id',
-			'title',
-			'author',
-			'time',
-			'category',
-			'sage',
-			'img'
+			'content.id',
+			'content.title',
+			'content.author',
+			'content.time',
+			'content.category',
+			'content.sage',
+			'content.img'
 		];
 		$where_sql =
 		[
-			'AND'   =>  ['upid[=]'  =>  0],
-			'ORDER' =>  ['active_time DESC', 'time DESC'],
+			'AND'   =>  ['content.upid[=]'  =>  0],
+			'ORDER' =>  ['content.active_time DESC', 'content.time DESC'],
 			'LIMIT' =>  [($_GET['page'] - 1) * 10, $_GET['page'] * 10],
 		];
+		if (!isset($_SESSION['logined']) || $_SESSION['logined'] == false)
+		{
+			$where_sql['AND']['category.hide[=]'] = 0;
+		}
 		if (isset($_GET['category']))
 		{
-			$where_sql['AND']['category[=]'] = (int)$_GET['category'];
+			$where_sql['AND']['content.category[=]'] = (int)$_GET['category'];
 		}
-		$data = $database->select('content', $columns_sql, $where_sql);
+		$data = $database->select('content', $join_sql, $columns_sql, $where_sql);
 
 		echo json_encode($data);
 		exit();
@@ -488,9 +501,9 @@
 			if (isset($_POST['action']) && ($_POST['action'] == 'mute_cate'))
 			{
 				$where_sql   = ['id[=]' =>  $_POST['target']];
-				$ishide = $database->select('category',
+				$ismute = $database->select('category',
 					'mute', $where_sql)[0]['mute'] === '1';
-				if ($ishide)
+				if ($ismute)
 				{
 					$data_sql  = ['mute'	=>	0];
 				}
@@ -579,3 +592,34 @@
 		echo json_encode($Response);
 		exit();
 	}
+
+	$database->select("post",
+	[
+		"[>]account" =>
+		[
+			"author_id" => "user_id"
+		],
+		"[>]album" => "user_id",
+		"[>]photo" =>
+		[
+			"user_id", "avatar_id"
+		],
+		"[>]account (replyer)" => 
+		[
+			"replyer_id" => "user_id"
+		]
+	],
+	[
+		"post.post_id",
+		"post.title",
+		"account.user_id",
+		"account.city",
+		"replyer.user_id",
+		"replyer.city"
+	],
+	[
+		"post.user_id" => 100,
+		"ORDER" => "post.post_id DESC",
+		"LIMIT" => 50
+	]
+	);

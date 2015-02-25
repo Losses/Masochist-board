@@ -47,6 +47,11 @@ mKnowledge.filter('trustHtml', function ($sce) {
     }
 });
 
+//进入全屏模式
+/mobile/i.test(navigator.userAgent) && !pageYOffset && !location.hash && setTimeout(function () {
+    window.scrollTo(0, 1);
+}, 1000);​
+
 var losses = {router: {}, scope: {}, data: {}, global: {}, multiSelect: []};
 
 function processPageElement(routerResult) {

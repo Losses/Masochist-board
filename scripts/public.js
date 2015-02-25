@@ -354,6 +354,7 @@ $(document).ready(function documentReady() {
     })();
 
     switchLoading(true);
+
     $.post('api/?manage', {'check': ''}, function (data) {
         switchLoading(false);
         var response = JSON.parse(data);
@@ -477,10 +478,14 @@ $(document).ready(function documentReady() {
         });
     });
 
-    $('body').delegate('#search', 'submit', function (event) {
-        event.preventDefault();
-        magicalLocation('#/search/' + $('input[name="search"]').val());
-    })
+    $('body')
+        .on('touchstart', function () {
+            $(this).addClass('touch_screen');
+        })
+        .delegate('#search', 'submit', function (event) {
+            event.preventDefault();
+            magicalLocation('#/search/' + $('input[name="search"]').val());
+        })
         .delegate('.post', 'click', function () {
             var that = $(this);
 

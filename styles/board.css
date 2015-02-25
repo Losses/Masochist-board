@@ -1742,6 +1742,9 @@ footer {
     height: calc(100% - 225px) !important;
   }
 }
+.touch_screen .post_submit::before {
+  content: '\e80b';
+}
 .lightbox .darkness {
   top: 0;
   left: 0;

@@ -522,9 +522,18 @@
 
 			if (isset($_POST['action']) && ($_POST['action'] == 'rename_cate'))
 			{
-				$data_sql  = ['name'	=>	$_POST['name']];
-				$where_sql = ['id[=]'	=>	$_POST['target']];
-				$data = $database->update('category', $data_sql, $where_sql);
+				
+				$data = $database->select('category', 'name', $where_sql);
+				if ($_POST['name'] == $data[0]['name'])
+				{
+					response_message(403, '当前名称板块已存在');
+				}
+				else
+				{
+					$data_sql  = ['name'	=>	$_POST['name']];
+					$where_sql = ['id[=]'	=>	$_POST['target']];
+					$data = $database->update('category', $data_sql, $where_sql);
+				}
 
 				if ($data == true)
 				{
@@ -534,18 +543,23 @@
 				{
 					response_message(403, 'Rename failed OAQ ');
 				}
-				echo json_encode($data);
 			}
 
 			if (isset($_POST['action']) && ($_POST['action'] == 'add_cate'))
 			{
-				$data_sql  = 
-				[
-					'name'	=>	$_POST['name'],
-					'theme'	=>	$_POST['theme']
-				];
-				$data = $database->insert('category', $data_sql);
-
+				if ($_POST['name'] == $data[0]['name'])
+				{
+					response_message(403, '当前名称板块已存在');
+				}
+				else
+				{
+					$data_sql  = 
+					[
+						'name'	=>	$_POST['name'],
+						'theme'	=>	$_POST['theme']
+					];
+					$data = $database->insert('category', $data_sql);
+				}
 				if ($data == true)
 				{
 					response_message(200, 'Add category success!');

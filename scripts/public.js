@@ -474,7 +474,6 @@ $(document).ready(function documentReady() {
     $('body')
         .on('touchstart', function () {
             $(this).addClass('touch_screen');
-            $('html').css('height', 'calc(100% + 1px)');
         })
         .delegate('#search', 'submit', function (event) {
             event.preventDefault();

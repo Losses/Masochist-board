@@ -61,7 +61,7 @@ $(document).ready(function () {
                                 }
                             }
                         } else {
-                            location.refresh(true);
+                            location.reload(true);
                         }
                         losses.multiSelect = [];
                     } else {

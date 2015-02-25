@@ -1,6 +1,6 @@
 .git
 .idea
-config.php
+/config.php
 /upload/*.jpg
 /upload/*.png
 /upload/*.gif

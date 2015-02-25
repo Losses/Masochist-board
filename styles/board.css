@@ -1704,6 +1704,9 @@ footer {
   .post {
     padding: 10px 5px !important;
   }
+  .post .content_group {
+    margin-right: 0 !important;
+  }
   .post .time {
     display: none !important;
   }

@@ -83,9 +83,9 @@ function postCtrl($http, $scope, $rootScope, $routeParams) {
         }
     }
 
-    $('body').off('scroll.globalScroll')
+    $(window).off('scroll.globalScroll')
         .on('scroll.globalScroll', function () {
-            if ($(this)[0].scrollHeight - $(this)[0].scrollTop - $(window).height() === 0) {
+            if ($(document).scrollTop() + $(window).height() >= $(document).height()) {
                 pushContent();
             }
         });

@@ -23,7 +23,7 @@ function globalCtrl($scope, $http, $routeParams) {
     loadCate();
 }
 
-function postCtrl($http, $scope, $routeParams) {
+function postCtrl($http, $scope, $rootScope, $routeParams) {
 
     losses.scope.postCtrl = $scope;
     losses.multiSelect = [];
@@ -50,6 +50,9 @@ function postCtrl($http, $scope, $routeParams) {
 
                         loading = false;
 
+                        if (page = 1)
+                            switchTitle();
+
                         switchLoading(false);
                     });
             }
@@ -66,6 +69,19 @@ function postCtrl($http, $scope, $routeParams) {
         }
 
         page++;
+    }
+
+    function switchTitle() {
+        if ($routeParams.categoryId) {
+            $rootScope.title = $scope.categories[$routeParams.categoryId - 1].name + ' - ';
+        } else if ($routeParams.searchKey) {
+            $rootScope.title = "搜索：" + $routeParams.searchKey + ' - ';
+        } else if ($routeParams.postId) {
+            console.log($scope);
+            $rootScope.title = $scope.posts[0].title + ' - ';
+        } else {
+            $rootScope.title = '';
+        }
     }
 
     $(window).on('scroll', function () {

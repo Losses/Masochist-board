@@ -159,7 +159,7 @@
 						WHERE MATCH (title, content)
 						AGAINST ($search_key IN BOOLEAN MODE)")
 						->fetchAll();
-			
+
 			$search_result = [];
 
 			foreach ($data as $result)
@@ -170,7 +170,7 @@
                 {
                     $result['img'] = 'upload/' . $result['img'];
                 }
-				
+
 				if ($result['upid'] == 0)
 				{
 					$search_result[$result['id']]['post'] = $result;
@@ -517,7 +517,7 @@
 
 			if (isset($_POST['action']) && ($_POST['action'] == 'rename_cate'))
 			{
-				
+
 				$data = $database->select('category', 'name');
 				foreach ($data as $result)
 				{
@@ -530,7 +530,7 @@
 				$data_sql  = ['name'	=>	$_POST['name']];
 				$where_sql = ['id[=]'	=>	$_POST['target']];
 				$data = $database->update('category', $data_sql, $where_sql);
-				
+
 
 				if ($data == true)
 				{
@@ -553,7 +553,7 @@
 						exit();
 					}
 				}
-				$data_sql  = 
+				$data_sql  =
 				[
 					'name'	=>	$_POST['name'],
 					'theme'	=>	$_POST['theme']

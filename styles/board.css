@@ -1747,9 +1747,9 @@ footer {
     height: calc(100% - 225px) !important;
   }
   .float_icon {
-    right: 8px !important;
-    bottom: 8px !important;
-    transform: scale(0.7);
+    right: 20px !important;
+    bottom: 20px !important;
+    transform: scale(0.85);
   }
 }
 .touch_screen .post_submit.lock {
@@ -1757,6 +1757,12 @@ footer {
 }
 .touch_screen .post_submit::before {
   content: '\e80b' !important;
+}
+.touch_screen .close_dialog {
+  right: 10px;
+  transform: rotate(0);
+  opacity: 1;
+  visibility: visible;
 }
 .lightbox .darkness {
   top: 0;

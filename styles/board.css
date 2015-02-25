@@ -139,6 +139,7 @@ html, body {
   display: inline-block;
 }
 #main .post {
+  min-height: 48px;
   padding: 10px;
   border-bottom: 1px dashed #c0b5d3;
   color: #3c324d;
@@ -277,7 +278,7 @@ html, body {
 }
 .function_list .category > div a {
   color: #3e00a4;
-  margin: 0 3px;
+  margin: 3px;
   padding: 3px 10px;
   font-size: 11px;
   border: #3e00a4 1px solid;
@@ -1746,8 +1747,8 @@ footer {
     height: calc(100% - 225px) !important;
   }
   .float_icon {
-    right: 15px;
-    bottom: 15px;
+    right: 8px !important;
+    bottom: 8px !important;
     transform: scale(0.7);
   }
 }

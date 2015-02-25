@@ -488,8 +488,7 @@
 				}
 				else
 				{
-					response_message(403, 'Hidden failed OAQ '
-						. implode(' ', $data));
+					response_message(403, 'Hidden failed OAQ ');
 				}
 			}
 
@@ -517,8 +516,7 @@
 				}
 				else
 				{
-					response_message(403, 'Mute failed OAQ '
-						. implode(' ', $data));
+					response_message(403, 'Mute failed OAQ ');
 				}
 			}
 
@@ -526,7 +524,7 @@
 			{
 				$data_sql  = ['name'	=>	$_POST['name']];
 				$where_sql = ['id[=]'	=>	$_POST['target']];
-				$data = $database->update(['category'], $data_sql, $where_sql);
+				$data = $database->update('category', $data_sql, $where_sql);
 
 				if ($data == true)
 				{
@@ -534,9 +532,9 @@
 				}
 				else
 				{
-					response_message(403, 'Rename failed OAQ '
-						. implode(' ', $data));
+					response_message(403, 'Rename failed OAQ ');
 				}
+				echo json_encode($data);
 			}
 
 			if (isset($_POST['action']) && ($_POST['action'] == 'add_cate'))
@@ -554,18 +552,7 @@
 				}
 				else
 				{
-					response_message(403, 'Add category failed OAQ '
-						. implode(' ', $data));
-				}
-
-				if ($data == true)
-				{
-					response_message(200, 'Add category success!');
-				}
-				else
-				{
-					response_message(403, 'Add category failed OAQ '
-						. implode(' ', $data));
+					response_message(403, 'Add category failed OAQ ');
 				}
 			}
 		}

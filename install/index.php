@@ -734,8 +734,8 @@ function install_mb()
         <?php
 
         define('DB_HOST', '" . $_POST['DB_HOST'] . "');
-        define('DB_USER', '" . $_POST['DB_PASSWORD'] . "');
-        define('DB_PASSWORD', '" . $_POST['DB_USER'] . "');
+        define('DB_USER', '" . $_POST['DB_USER'] . "');
+        define('DB_PASSWORD', '" . $_POST['DB_PASSWORD'] . "');
         define('DB_NAME', '" . $_POST['DB_NAME'] . "');
         define('DB_PORT', '" . $_POST['DB_PORT'] . "');
         define('UR_PASSWORD', '" . $_POST['UR_PASSWORD'] . "');

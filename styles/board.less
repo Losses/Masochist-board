@@ -1937,8 +1937,13 @@ footer {
 }
 
 .touch_screen {
-  .post_submit::before {
-    content: '\e80b';
+  .post_submit {
+    &.lock {
+      opacity: 0.5 !important;
+    }
+    &::before {
+      content: '\e80b' !important;
+    }
   }
 }
 

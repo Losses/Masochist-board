@@ -1745,8 +1745,11 @@ footer {
     height: calc(100% - 225px) !important;
   }
 }
+.touch_screen .post_submit.lock {
+  opacity: 0.5 !important;
+}
 .touch_screen .post_submit::before {
-  content: '\e80b';
+  content: '\e80b' !important;
 }
 .lightbox .darkness {
   top: 0;

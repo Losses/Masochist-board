@@ -126,7 +126,7 @@
 		[
 			'author'		=>	$post_author,
 			'title'			=>  $post_title,
-			'content'		=>  htmlspecialchars($post_content),
+			'content'		=>  str_replace(array("\r\n", "\r", "\n"), "\n\n", htmlspecialchars($post_content)),
 			'time'			=>  $current_time,
 			'active_time'	=>  $current_time,
 			'img'			=>  $post_img,

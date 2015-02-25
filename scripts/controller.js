@@ -83,11 +83,12 @@ function postCtrl($http, $scope, $rootScope, $routeParams) {
         }
     }
 
-    $('body').on('scroll.globalScroll', function () {
-        if ($(this)[0].scrollHeight - $(this)[0].scrollTop - $(window).height() === 0) {
-            pushContent();
-        }
-    });
+    $('body').off('scroll.globalScroll')
+        .on('scroll.globalScroll', function () {
+            if ($(this)[0].scrollHeight - $(this)[0].scrollTop - $(window).height() === 0) {
+                pushContent();
+            }
+        });
 
     pushContent();
 }

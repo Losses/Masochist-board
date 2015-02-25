@@ -459,12 +459,11 @@
 				}
 			}
 
-			if (isset($_POST['action']) && ($_POST['action'] == 'hidden_cate'))
+			if (isset($_POST['action']) && ($_POST['action'] == 'hide_cate'))
 			{
-				$columns_sql = ['hide'];
 				$where_sql   = ['id[=]' =>  $_POST['target']];
-				$ishide = $database->select('hide',
-					$columns_sql, $where_sql)[0]['hide'] === '1';
+				$ishide = $database->select('category',
+					'hide', $where_sql)[0]['hide'] === '1';
 				if ($ishide)
 				{
 					$data_sql  = ['hide'	=>	0];
@@ -473,26 +472,24 @@
 				{
 					$data_sql  = ['hide'	=>	1];
 				}
-				$data_sql  = ['hide'		=>	1];
 				$where_sql = ['id[=]'		=>	$_POST['target']];
 				$data	   = $database->update('category', $data_sql, $where_sql);
 
-				if ($data == true)
+				if ($data != false)
 				{
-					response_message(200, 'Hidden success!');
+					response_message(200, 'Hide success!');
 				}
 				else
 				{
-					response_message(403, 'Hidden failed OAQ ');
+					response_message(403, 'Hide failed OAQ ');
 				}
 			}
 
 			if (isset($_POST['action']) && ($_POST['action'] == 'mute_cate'))
 			{
-				$columns_sql = ['mute'];
 				$where_sql   = ['id[=]' =>  $_POST['target']];
-				$ishide = $database->select('mute',
-					$columns_sql, $where_sql)[0]['mute'] === '1';
+				$ishide = $database->select('category',
+					'mute', $where_sql)[0]['mute'] === '1';
 				if ($ishide)
 				{
 					$data_sql  = ['mute'	=>	0];
@@ -501,11 +498,10 @@
 				{
 					$data_sql  = ['mute'	=>	1];
 				}
-				$data_sql  = ['mute'		=>	1];
 				$where_sql = ['id[=]'		=>	$_POST['target']];
 				$data	   = $database->update('category', $data_sql, $where_sql);
 
-				if ($data == true)
+				if ($data != false)
 				{
 					response_message(200, 'Mute success!');
 				}

@@ -141,7 +141,7 @@
                     <div class="transport_select_warp">
                         <div class="s_select transport_category">
                             <input class="select_rebuild" name="manage_transform" readonly value="1"/>
-                            <button class="s_choosen">兄贵</button>
+                            <button class="s_choosen">{{categories[0].name}}</button>
                             <div class="s_select_body_warp">
                                 <ul class="s_select_body">
                                     <li ng-repeat="category in categories" ng-if="(category.hide == 0) || logined"

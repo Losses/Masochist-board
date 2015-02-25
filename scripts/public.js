@@ -601,7 +601,6 @@ $(document).ready(function documentReady() {
 ;
 
 function callManageDialog() {
-
     function requireCode() {
         switchLoading(true);
         $.post('api/?manage', {'key': ''}, function (data) {
@@ -613,8 +612,6 @@ function callManageDialog() {
                 losses.key = null;
                 publicWarning('无法与服务器正确沟通！');
             }
-
-            console.log(response);
         });
     }
 

@@ -77,7 +77,6 @@ function postCtrl($http, $scope, $rootScope, $routeParams) {
         } else if ($routeParams.searchKey) {
             $rootScope.title = "搜索：" + $routeParams.searchKey + ' - ';
         } else if ($routeParams.postId) {
-            console.log($scope);
             $rootScope.title = $scope.posts[0].title + ' - ';
         } else {
             $rootScope.title = '';

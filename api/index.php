@@ -16,8 +16,8 @@
 	$emotion  = new emotions();
 
     $plugin = new plugin();
-	
-	$purifier = new HTMLPurifier();
+
+	$purifier = new HTMLPurifier(HTMLPurifier_Config::createDefault());
 
 	$database = new medoo
 	(

@@ -1,5 +1,5 @@
 <?php
-    session_set_cookie_params(31536000);
+	session_set_cookie_params(31536000);
 	session_start();
 
 	require_once ('../config.php');
@@ -253,6 +253,9 @@
 
 		$Parsedown = new Parsedown();
 
+        if (!isset($_GET['page']))
+            $_GET['page'] = 1;
+
 		$columns_sql =
 		[
 			'id',
@@ -262,8 +265,8 @@
 			'time',
 			'img',
 			'sage',
-			'category'
-
+			'category',
+            'upid'
 		];
 		$where_sql =
 		[
@@ -276,11 +279,6 @@
 			'LIMIT' =>  [($_GET['page'] -1) * 10, $_GET['page'] * 10]
 		];
 		$data = $database->select('content', $columns_sql, $where_sql);
-
-		if (isset($data[0]['upid']) && $data[0]['upid'] != 0)
-		{
-			response_message(301, $data[0]['upid']);
-		}
 
 		$data_length = count($data);
 		for ($i = 0; $i < $data_length; $i++)

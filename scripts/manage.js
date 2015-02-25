@@ -149,13 +149,19 @@ $(document).ready(function () {
                 }
 
                 if (response && response.code == 200) {
-                    var actionClass;
-                    if (condition.action == 'mute_cate') {
-                        actionClass = 'mute';
-                    } else if (condition.action == 'hide_cate') {
-                        actionClass = 'hide';
+                    var actionClass = null;
+                    switch (condition.action) {
+                        case 'mute_cate':
+                            actionClass = 'mute';
+                            break;
+                        case 'hide_cate':
+                            actionClass = 'hide';
+                            break;
+                        case 'rename_cate':
+                            losses.global.reloadCate();
                     }
-                    $(this).parents('.category_warp').toggleClass(actionClass);
+                    if (actionClass)
+                        $(this).parents('.category_warp').toggleClass(actionClass);
                 } else {
                     if (response)
                         publicWarning(response.message);

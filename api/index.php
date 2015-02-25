@@ -362,7 +362,6 @@
 					if ($data == false)
 					{
 						$data_false += [$post_target_id];
-
 					}
 
 				}
@@ -370,13 +369,11 @@
 				if (count($data_false) == 0)
 				{
 					response_message(200, 'rm -rf /');
-
 				}
 				else
 				{
 					response_message(403, 'Delete failed OAQ '
-						. implode(' ', $data_false));
-
+						. implode(',', $data_false));
 				}
 
 			}
@@ -403,7 +400,7 @@
 					$where_sql = ['id[=]'	=>	$post_target_id];
 					$data = $database->update('content', $data_sql, $where_sql);
 
-					if ($date == false)
+					if ($data == false)
 					{
 						array_push($data_false, $post_target_id);
 					}
@@ -414,8 +411,8 @@
 				}
 				else
 				{
-					response_message(403, 'Sage failed OAQ '
-						. implode(' ', $data_false));
+					response_message(403, 'Sage or unsage failed OAQ '
+						. implode(',', $data_false));
 				}
 			}
 

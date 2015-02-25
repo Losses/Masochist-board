@@ -51,7 +51,7 @@ mKnowledge.filter('trustHtml', function ($sce) {
 (function (win) {
     var doc = win.document;
 
-    if (!location.hash && win.addEventListener) {
+    if (win.addEventListener) {
 
         window.scrollTo(0, 1);
         var scrollTop = 1,

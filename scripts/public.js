@@ -243,7 +243,7 @@ $(document).ready(function documentReady() {
             if (!losses.global.router)
                 return;
             losses.elements.submitable = losses.global.router.postId ? (
-            (losses.elements.contentElement.val().length <= 35)
+            (losses.elements.contentElement.val().length <= 10000)
             && (losses.elements.contentElement.val().length !== 0)
             ) : (
             (losses.elements.titleElement.val().length <= 35)

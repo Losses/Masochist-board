@@ -239,17 +239,14 @@ body {
 #main .post.selected .time {
   background: #c0b5d3;
 }
+#main .search_list .article_group {
+  width: calc(100% - 300px);
+}
 #main .search_list > li:hover .replies {
   background: #e5def2;
 }
 #main .search_list > li:hover .replies li {
   border-color: #cec5dd;
-}
-#main .search_list .article_group {
-  width: calc(100% - 300px);
-}
-#main .search_list article {
-  width: calc(100% - 30px);
 }
 #main .search_list .replies {
   width: calc(100% - 200px);
@@ -955,6 +952,7 @@ footer {
   margin: 0 0 0 20px;
 }
 .post_page .article_group article {
+  width: calc(100% - 30px);
   margin: 10px;
 }
 .post_page .article_group article .emoji {
@@ -1696,6 +1694,12 @@ footer {
   content: '\e80c' !important;
 }
 @media only screen and (max-width: 550px) {
+  #main {
+    margin: 15px 10px;
+  }
+  .post {
+    padding: 10px 5px !important;
+  }
   #post_dialog {
     left: 0;
     top: 250px;

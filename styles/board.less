@@ -320,6 +320,10 @@ html, body {
   }
 
   .search_list {
+    .article_group {
+      width: ~"calc(100% - 300px)"
+    }
+
     > li {
       &:hover {
         .replies {
@@ -331,12 +335,6 @@ html, body {
       }
     }
 
-    .article_group {
-      width: ~"calc(100% - 300px)"
-    }
-    article {
-      width: ~"calc(100% - 30px)";
-    }
     .replies {
       width: ~"calc(100% - 200px)";
       padding: 10px;
@@ -1096,6 +1094,7 @@ footer {
   .article_group {
     margin: 0 0 0 20px;
     article {
+      width: ~"calc(100% - 30px)";
       margin: 10px;
 
       .emoji {
@@ -1868,6 +1867,14 @@ footer {
 }
 
 @media only screen and (max-width: 550px) {
+  #main {
+    margin: 15px 10px;
+  }
+
+  .post {
+    padding: 10px 5px !important;
+  }
+
   #post_dialog {
     left: 0;
     top: 250px;

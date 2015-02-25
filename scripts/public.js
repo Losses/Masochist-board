@@ -481,7 +481,6 @@ $(document).ready(function documentReady() {
     $('body')
         .on('touchstart', function () {
             $(this).addClass('touch_screen');
-            console.log($(this));
         })
         .delegate('#search', 'submit', function (event) {
             event.preventDefault();

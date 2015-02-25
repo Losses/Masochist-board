@@ -442,18 +442,11 @@ $(document).ready(function documentReady() {
             }
 
             if (losses.global.router.postId) {
-                var date = new Date()
-                    , month = ((date.getMonth() + 1) > 9) ? (date.getMonth() + 1) : '0' + date.getMonth()
-                    , day = (date.getDate() > 9) ? date.getDate() : '0' + date.getDate()
-                    , time = date.getFullYear() + '-' + month + '-' + day + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-                losses.scope.postCtrl.posts.push({
-                    title: '',
-                    author: 'a person', /*二次开发注意需要!*/
-                    time: time,
-                    content: $('textarea[name="content"]')[0].value,
-                    img: losses.data.lastImg
+                $.post('api/?post&id=' + data.message, function (single_data) {
+                    var response = JSON.parse(single_data);
+                    losses.scope.postCtrl.posts.push(response[0]);
+                    losses.scope.postCtrl.$digest();
                 });
-                losses.scope.postCtrl.$digest();
             }
 
             function finishProcess() {

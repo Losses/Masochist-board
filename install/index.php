@@ -761,7 +761,7 @@ function install_mb()
       `name` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
       `mute` tinyint(4) NOT NULL DEFAULT '0',
       `hide` tinyint(4) NOT NULL DEFAULT '0',
-      `theme` varchar(8) COLLATE utf8_unicode_ci NOT NULL
+      `theme` varchar(30) COLLATE utf8_unicode_ci NOT NULL
     ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
     INSERT INTO `category` (`id`, `name`, `mute`, `hide`, `theme`) VALUES

@@ -1745,6 +1745,11 @@ footer {
   .post_page #post_dialog.fold textarea {
     height: calc(100% - 225px) !important;
   }
+  .float_icon {
+    right: 15px;
+    bottom: 15px;
+    transform: scale(0.7);
+  }
 }
 .touch_screen .post_submit.lock {
   opacity: 0.5 !important;

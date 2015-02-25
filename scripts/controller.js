@@ -41,8 +41,10 @@ function postCtrl($http, $scope, $rootScope, $routeParams) {
                 loading = true;
                 $http.get(apiRule)
                     .success(function (response) {
-                        if (response.length === 0)
+                        page++;
+                        if (response.length === 0) {
                             page--;
+                        }
 
                         for (var i = 0; i <= response.length - 1; i++) {
                             $scope.posts.push(response[i]);
@@ -50,7 +52,7 @@ function postCtrl($http, $scope, $rootScope, $routeParams) {
 
                         loading = false;
 
-                        if (page = 1)
+                        if (page == 1)
                             switchTitle();
 
                         switchLoading(false);
@@ -67,8 +69,6 @@ function postCtrl($http, $scope, $rootScope, $routeParams) {
         } else {
             getContent("api/?list&page=" + page);
         }
-
-        page++;
     }
 
     function switchTitle() {
@@ -83,8 +83,8 @@ function postCtrl($http, $scope, $rootScope, $routeParams) {
         }
     }
 
-    $(window).on('scroll', function () {
-        if ($(document).scrollTop() + $(window).height() >= $(document).height()) {
+    $('body').on('scroll.globalScroll', function () {
+        if ($(this)[0].scrollHeight - $(this)[0].scrollTop - $(window).height() === 0) {
             pushContent();
         }
     });

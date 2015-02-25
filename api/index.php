@@ -523,17 +523,19 @@
 			if (isset($_POST['action']) && ($_POST['action'] == 'rename_cate'))
 			{
 				
-				$data = $database->select('category', 'name', $where_sql);
-				if ($_POST['name'] == $data[0]['name'])
+				$data = $database->select('category', 'name');
+				foreach ($data as $result)
 				{
-					response_message(403, '当前名称板块已存在');
+					if ($_POST['name'] == $result)
+					{
+						response_message(403, '当前名称板块已存在');
+						exit();
+					}
 				}
-				else
-				{
-					$data_sql  = ['name'	=>	$_POST['name']];
-					$where_sql = ['id[=]'	=>	$_POST['target']];
-					$data = $database->update('category', $data_sql, $where_sql);
-				}
+				$data_sql  = ['name'	=>	$_POST['name']];
+				$where_sql = ['id[=]'	=>	$_POST['target']];
+				$data = $database->update('category', $data_sql, $where_sql);
+				
 
 				if ($data == true)
 				{
@@ -547,19 +549,22 @@
 
 			if (isset($_POST['action']) && ($_POST['action'] == 'add_cate'))
 			{
-				if ($_POST['name'] == $data[0]['name'])
+				$data = $database->select('category', 'name');
+				foreach ($data as $result)
 				{
-					response_message(403, '当前名称板块已存在');
+					if ($_POST['name'] == $result)
+					{
+						response_message(403, '当前名称板块已存在');
+						exit();
+					}
 				}
-				else
-				{
-					$data_sql  = 
-					[
-						'name'	=>	$_POST['name'],
-						'theme'	=>	$_POST['theme']
-					];
-					$data = $database->insert('category', $data_sql);
-				}
+				$data_sql  = 
+				[
+					'name'	=>	$_POST['name'],
+					'theme'	=>	$_POST['theme']
+				];
+				$data = $database->insert('category', $data_sql);
+
 				if ($data == true)
 				{
 					response_message(200, 'Add category success!');

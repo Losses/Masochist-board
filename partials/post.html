@@ -9,18 +9,21 @@
 <ul class="post_list">
     <li class="post clear" id="post-{{post.id}}" ng-repeat="post in posts track by $index">
         <p class="time">{{post.time}}</p>
-        <img ng-if="post.img" ng-src="{{post.img}}" class="uploaded_image lbox"/>
 
-        <div class="left article_group">
-            <p ng-if="post.title != ''">
-                <span class="category {{categories[post.category - 1].theme}}">{{categories[post.category - 1].name}}</span>
-                <a class='title' href='#/post/{{post.id}}'>{{post.title}}</a>
-                <span class="sage" ng-show="post.sage == 1">SAGE</span>
-            </p>
-            <span class="author">{{post.author}}</span>
-            <article ng-bind-html="post.content | trustHtml">
-                {{post.content}}
-            </article>
+        <div class="content_group clear">
+            <img ng-if="post.img" ng-src="{{post.img}}" class="uploaded_image lbox"/>
+
+            <div class="left article_group">
+                <p ng-if="post.title != ''">
+                    <span class="category {{categories[post.category - 1].theme}}">{{categories[post.category - 1].name}}</span>
+                    <a class='title' href='#/post/{{post.id}}'>{{post.title}}</a>
+                    <span class="sage" ng-show="post.sage == 1">SAGE</span>
+                </p>
+                <span class="author">{{post.author}}</span>
+                <article ng-bind-html="post.content | trustHtml">
+                    {{post.content}}
+                </article>
+            </div>
         </div>
 
         <input type="checkbox" class="manage_ multi_select" data-post-id="{{post.id}}"/>

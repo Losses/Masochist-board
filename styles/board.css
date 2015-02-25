@@ -144,6 +144,7 @@ body {
   font-size: 14px;
   line-height: 1.5em;
   transition: background 300ms;
+  position: relative;
 }
 #main .post .category {
   top: -2px;
@@ -208,16 +209,17 @@ body {
   color: #3e00a4;
 }
 #main .post .time {
+  top: 10px;
+  right: 10px;
   width: 90px;
   border-radius: 3px;
-  margin-top: -2px;
-  margin-right: 10px;
   font-size: 12px;
   line-height: 2em;
   text-align: center;
   float: right;
   background: #d7cceb;
   display: block;
+  position: absolute;
 }
 #main .post:hover,
 #main .post.selected {
@@ -948,11 +950,13 @@ footer {
 .post_page #new_post > i::before {
   content: '\e80c';
 }
+.post_page .content_group {
+  margin-right: 100px;
+}
 .post_page .article_group {
   margin: 0 0 0 20px;
 }
 .post_page .article_group article {
-  width: calc(100% - 30px);
   margin: 10px;
 }
 .post_page .article_group article .emoji {
@@ -1699,6 +1703,9 @@ footer {
   }
   .post {
     padding: 10px 5px !important;
+  }
+  .post .time {
+    display: none !important;
   }
   #post_dialog {
     left: 0;

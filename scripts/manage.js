@@ -37,8 +37,6 @@ $(document).ready(function () {
             } else
                 actionContent.target = losses.multiSelect;
 
-            console.log(actionContent.target);
-
             if (action === 'trans')
                 actionContent.category = $('input[name="manage_transform"]').val();
 

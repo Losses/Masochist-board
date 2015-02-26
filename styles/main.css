@@ -79,7 +79,6 @@ header nav .highlight {
   display: block;
   position: absolute;
   transition: all 0.3s ease-in-out;
-  -moz-transition: all ease-in-out 0.3s;
 }
 header nav .high a:link,
 header nav .high a:hover,
@@ -177,6 +176,7 @@ footer a:hover {
   }
   header nav .highlight {
     height: 51px;
-    margin-right: -45px;
+    width: 122px !important;
+    padding-top: 1px;
   }
 }

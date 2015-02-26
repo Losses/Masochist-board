@@ -3,22 +3,15 @@
  */
 
 (function () {
-    var headerLis = document.querySelectorAll('.nav_item') /*nxt line*/
+    var headerList = $('header>nav') /*nxt line*/
         , highlightItem = document.querySelector('.highlight');
-    for (var x = 0; x < headerLis.length; x++) {
-        $(headerLis[x]).on({
-                'mouseenter': function (event) {
-                    $(highlightItem).css('left', $(event.target).position().left);
-                    $(this).addClass('high');
 
-                    event.stopPropagation();
-                },
-                'mouseleave': function () {
-                    $(this).removeClass('high');
-                }
-            }
-        );
-    }
+    headerList.delegate('li', 'mouseenter', function () {
+        $(highlightItem).css('left', $(this).position().left);
+        $(this).addClass('high');
+    }).delegate('li', 'mouseleave', function () {
+        $(this).removeClass('high');
+    });
 
     $('nav').on('mouseleave', function (event) {
         highlightItem.setAttribute('style', 'left:1000px');

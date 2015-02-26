@@ -157,6 +157,7 @@ html, body {
   font-size: 11px;
   line-height: 18px;
   position: relative;
+  background: #3E00A4;
 }
 #main .post .category.orange {
   background: #ff9800;
@@ -295,6 +296,7 @@ html, body {
   color: white;
   border-color: transparent;
   background: #3e00a4;
+  background: #3E00A4;
 }
 .function_list .category > div:hover a.orange {
   background: #ff9800;
@@ -787,6 +789,7 @@ html, body {
 .s_select .s_select_body li:hover {
   background: #deedf1;
   color: white;
+  background: #3E00A4;
 }
 .s_select .s_select_body li:hover.orange {
   background: #ff9800;
@@ -1157,6 +1160,7 @@ footer {
   color: transparent;
   width: 110px;
   padding-right: 10px !important;
+  background: #3E00A4;
 }
 .manager .function_list .category > div.rename > a.orange {
   background: #ff9800;
@@ -1305,6 +1309,7 @@ footer {
   border-radius: 50%;
   opacity: 1;
   transition: all 200ms;
+  background: #3E00A4;
 }
 .manager .function_list .category .add_new .color_picker_warp .color_picker button.orange {
   background: #ff9800;
@@ -1378,6 +1383,7 @@ footer {
   width: 120px;
   background: #3e00a4;
   border-color: transparent;
+  background: #3E00A4;
 }
 .manager .function_list .category .add_new:hover input {
   opacity: 1;

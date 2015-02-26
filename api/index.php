@@ -138,7 +138,8 @@
 			'img'			=>  $post_img,
 			'upid'			=>  $post_upid,
 			'sage'			=>  $post_sage,
-			'category'		=>  $post_cate
+			'category'		=>  $post_cate,
+            'ip'            =>  get_ip_address()
 		];
 
 		$result = $database->insert('content', $data_sql);
@@ -598,33 +599,23 @@
 		exit();
 	}
 
-	$database->select("post",
-	[
-		"[>]account" =>
-		[
-			"author_id" => "user_id"
-		],
-		"[>]album" => "user_id",
-		"[>]photo" =>
-		[
-			"user_id", "avatar_id"
-		],
-		"[>]account (replyer)" => 
-		[
-			"replyer_id" => "user_id"
-		]
-	],
-	[
-		"post.post_id",
-		"post.title",
-		"account.user_id",
-		"account.city",
-		"replyer.user_id",
-		"replyer.city"
-	],
-	[
-		"post.user_id" => 100,
-		"ORDER" => "post.post_id DESC",
-		"LIMIT" => 50
-	]
-	);
+    function get_ip_address()
+    {
+        $ipaddress = '';
+        if (getenv('HTTP_CLIENT_IP'))
+            $ipaddress = getenv('HTTP_CLIENT_IP');
+        else if (getenv('HTTP_X_FORWARDED_FOR'))
+            $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+        else if (getenv('HTTP_X_FORWARDED'))
+            $ipaddress = getenv('HTTP_X_FORWARDED');
+        else if (getenv('HTTP_FORWARDED_FOR'))
+            $ipaddress = getenv('HTTP_FORWARDED_FOR');
+        else if (getenv('HTTP_FORWARDED'))
+            $ipaddress = getenv('HTTP_FORWARDED');
+        else if (getenv('REMOTE_ADDR'))
+            $ipaddress = getenv('REMOTE_ADDR');
+        else
+            $ipaddress = 'UNKNOWN';
+
+        return $ipaddress;
+    }

@@ -190,6 +190,10 @@ function publicWarning(text) {
     }, 2000);
 }
 
+function debugWarning() {
+    losses.elements.warningElement.toggleClass('show');
+}
+
 function manageLoginProcess() {
     if (losses.global.logined) {
         $('body').addClass('manager');

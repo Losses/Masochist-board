@@ -6,12 +6,14 @@ function globalCtrl($scope, $http, $routeParams) {
     losses.global = $scope;
     $scope.reloadCate = loadCate;
     $scope.router = $routeParams;
-    $scope.categories = [];
+    $scope.categories = {};
 
     function loadCate() {
         $http.get("api/?category")
             .success(function (response) {
-                $scope.categories = response;
+                for (var i = 0; i < response.length; i++) {
+                    $scope.categories[response[i].id] = response[i];
+                }
 
                 setTimeout(function () {
                     sSelect('.post_category');

@@ -9,15 +9,13 @@
 	require_once ('../libs/emotions.php');
 
     require_once ('../libs/plugin.php');
-	
-	require_once ('../libs/htmlpurifier/HTMLPurifier.auto.php');
+
+    require_once ('../libs/remove_xss.php');
 	
 
 	$emotion  = new emotions();
 
     $plugin = new plugin();
-
-	$purifier = new HTMLPurifier(HTMLPurifier_Config::createDefault());
 
 	$database = new medoo
 	(
@@ -303,7 +301,7 @@
 		for ($i = 0; $i < $data_length; $i++)
 		{
 			$data[$i]['content'] =
-				$emotion->phrase($purifier->purify($Parsedown->text($data[$i]['content'])));
+				$emotion->phrase(RemoveXSS($Parsedown->text($data[$i]['content'])));
 
 			if (isset($data[$i]['img']) && ($data[$i]['img'] != ''))
 			{

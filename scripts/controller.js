@@ -26,7 +26,6 @@ function globalCtrl($scope, $http, $routeParams) {
 function postCtrl($http, $scope, $rootScope, $routeParams) {
 
     losses.scope.postCtrl = $scope;
-    losses.multiSelect = [];
     processPageElement($scope.router);
 
     var page = 1

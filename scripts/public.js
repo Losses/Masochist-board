@@ -50,7 +50,6 @@ mKnowledge.filter('trustHtml', function ($sce) {
 var losses = {router: {}, scope: {}, data: {}, global: {}, multiSelect: []};
 
 function processPageElement(routerResult) {
-    losses.multiSelect = [];
     var body = $('body');
 
     losses.elements.dialogElement.hide();
@@ -74,7 +73,9 @@ function processPageElement(routerResult) {
     }
 
     setTimeout(function () {
-        losses.elements.dialogElement.show()
+        losses.elements.dialogElement.show();
+
+        losses.multiSelect = [];
     }, 300);
 
 

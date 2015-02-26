@@ -198,6 +198,14 @@ html, body {
 #main .post .category.light_green {
   background: #8bc34a;
 }
+#main .post .category.lime {
+  color: grey;
+  background: #cddc39;
+}
+#main .post .category.yellow {
+  color: grey;
+  background: #ffeb3b;
+}
 #main .post .category.blue_gray {
   background: #607d8b;
 }
@@ -336,6 +344,14 @@ html, body {
 }
 .function_list .category > div:hover a.light_green {
   background: #8bc34a;
+}
+.function_list .category > div:hover a.lime {
+  color: grey;
+  background: #cddc39;
+}
+.function_list .category > div:hover a.yellow {
+  color: grey;
+  background: #ffeb3b;
 }
 .function_list .category > div:hover a.blue_gray {
   background: #607d8b;
@@ -830,6 +846,14 @@ html, body {
 .s_select .s_select_body li:hover.light_green {
   background: #8bc34a;
 }
+.s_select .s_select_body li:hover.lime {
+  color: grey;
+  background: #cddc39;
+}
+.s_select .s_select_body li:hover.yellow {
+  color: grey;
+  background: #ffeb3b;
+}
 .s_select .s_select_body li:hover.blue_gray {
   background: #607d8b;
 }
@@ -1201,6 +1225,14 @@ footer {
 .manager .function_list .category > div.rename > a.light_green {
   background: #8bc34a;
 }
+.manager .function_list .category > div.rename > a.lime {
+  color: grey;
+  background: #cddc39;
+}
+.manager .function_list .category > div.rename > a.yellow {
+  color: grey;
+  background: #ffeb3b;
+}
 .manager .function_list .category > div.rename > a.blue_gray {
   background: #607d8b;
 }
@@ -1350,6 +1382,14 @@ footer {
 .manager .function_list .category .add_new .color_picker_warp .color_picker button.light_green {
   background: #8bc34a;
 }
+.manager .function_list .category .add_new .color_picker_warp .color_picker button.lime {
+  color: grey;
+  background: #cddc39;
+}
+.manager .function_list .category .add_new .color_picker_warp .color_picker button.yellow {
+  color: grey;
+  background: #ffeb3b;
+}
 .manager .function_list .category .add_new .color_picker_warp .color_picker button.blue_gray {
   background: #607d8b;
 }
@@ -1427,6 +1467,14 @@ footer {
 }
 .manager .function_list .category .add_new:hover.light_green {
   background: #8bc34a;
+}
+.manager .function_list .category .add_new:hover.lime {
+  color: grey;
+  background: #cddc39;
+}
+.manager .function_list .category .add_new:hover.yellow {
+  color: grey;
+  background: #ffeb3b;
 }
 .manager .function_list .category .add_new:hover.blue_gray {
   background: #607d8b;

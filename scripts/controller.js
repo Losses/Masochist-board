@@ -49,10 +49,10 @@ function postCtrl($http, $scope, $rootScope, $routeParams) {
                             $scope.posts.push(response[i]);
                         }
 
-                        loading = false;
-
-                        if (page == 1)
+                        if (page == 2)
                             switchTitle();
+
+                        loading = false;
 
                         switchLoading(false);
                     });

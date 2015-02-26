@@ -477,7 +477,7 @@ $(document).ready(function documentReady() {
     });
 
     $('body')
-        .on('touchstart', function () {
+        .one('touchstart', function () {
             $(this).addClass('touch_screen');
         })
         .delegate('#search', 'submit', function (event) {

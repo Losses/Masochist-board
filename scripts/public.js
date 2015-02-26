@@ -47,6 +47,17 @@ mKnowledge.filter('trustHtml', function ($sce) {
     }
 });
 
+mKnowledge.filter('object2Array', function () {
+    return function (input) {
+        var output = []
+            , i;
+        for (i in input) {
+            output.push(input[i]);
+        }
+        return output;
+    }
+});
+
 var losses = {router: {}, scope: {}, data: {}, global: {}, multiSelect: []};
 
 function processPageElement(routerResult) {

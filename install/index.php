@@ -779,6 +779,7 @@ function install_mb()
       `content` text COLLATE utf8_unicode_ci NOT NULL,
       `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
       `active_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      `ip` tinytext NOT NULL,
       `img` tinytext COLLATE utf8_unicode_ci,
       `upid` int(11) NOT NULL,
       `sage` tinyint(4) NOT NULL DEFAULT '0',

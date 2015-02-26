@@ -1752,6 +1752,9 @@ footer {
     bottom: 20px !important;
     transform: scale(0.85);
   }
+  .float_icon.hide {
+    bottom: -70px !important;
+  }
 }
 .touch_screen .post_submit.lock {
   opacity: 0.5 !important;

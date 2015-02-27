@@ -1,6 +1,6 @@
 <div class="function_list clear">
     <div class="category left">
-        <div ng-repeat="category in categories | object2Array | orderBy:'id'"
+        <div ng-repeat="category in categories | object2Array"
              ng-if="category.hide == 0 || logined"
              ng-class="{'mute': (category.mute == 1), 'hide': (category.hide == 1)}"
              class="left category_warp cate-{{category.id}}">

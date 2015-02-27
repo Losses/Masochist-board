@@ -64,7 +64,7 @@
                         <input class="select_rebuild" name="category" readonly value="1"/>
                         <button class="s_choosen">{{categories[firstCategoryKey].name}}</button>
                         <ul class="s_select_body">
-                            <li ng-repeat="category in categories" ng-if="(category.hide == 0) || logined"
+                            <li ng-repeat="category in categories | object2Array" ng-if="(category.hide == 0) || logined"
                                 val="{{category.id}}" class="{{category.theme}}">
                                 {{category.name}}
                             </li>
@@ -144,7 +144,7 @@
                             <button class="s_choosen">{{categories[firstCategoryKey].name}}</button>
                             <div class="s_select_body_warp">
                                 <ul class="s_select_body">
-                                    <li ng-repeat="category in categories" ng-if="(category.hide == 0) || logined"
+                                    <li ng-repeat="category in categories | object2Array" ng-if="(category.hide == 0) || logined"
                                         val="{{category.id}}" class="{{category.theme}}">
                                         {{category.name}}
                                     </li>

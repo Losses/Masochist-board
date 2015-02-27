@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#version 0.3
+#version 0.5
 CACHE:
     scripts/angular.min.js
     scripts/angular-route.min.js
@@ -20,5 +20,7 @@ CACHE:
 FALLBACK:
     index.html offline.html
     ./ offline.html
+    scripts/controller.js scripts/offline.js
 NETWORK:
     *
+    scripts/controller.js

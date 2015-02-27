@@ -1278,6 +1278,7 @@ footer {
   display: block;
   position: relative;
   transition: all 300ms;
+  z-index: 7;
 }
 .manager .function_list .category .add_new span {
   margin: 0 7px;

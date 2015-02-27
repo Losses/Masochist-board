@@ -1,9 +1,1 @@
-@media only screen and (max-width: 930px) {
-  header {
-    min-height: 350px;
-  }
-  #intro {
-    top: 160px;
-    width: 100%;
-  }
-}
+@media only screen and (max-width:930px){header{min-height:350px}#intro{top:160px;width:100%}}

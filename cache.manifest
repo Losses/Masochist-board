@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#version 0.1
+#version 0.3
 CACHE:
     scripts/angular.min.js
     scripts/angular-route.min.js
@@ -16,5 +16,9 @@ CACHE:
     fonts/board.eot
     fonts/board.woff
     images/emoji.png
+    images/offline.svg
+FALLBACK:
+    index.html offline.html
+    ./ offline.html
 NETWORK:
     *

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html manifest='cache.manifest'>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <style>
+        @keyframes fly_left {
+            100% {
+                margin-left: -50%;
+            }
+        }
+
+        @keyframes fly_right {
+            100% {
+                margin-left: 50%;
+            }
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background: #5c00ff;
+            background: -moz-linear-gradient(90deg, #5c00ff, #410cc7);
+            background: -webkit-gradient(linear, 0 50%, 100% 50%, from(#5c00ff), to(#410cc7));
+            background: -webkit-linear-gradient(90deg, #5c00ff, #410cc7);
+        }
+
+        .offline_mark {
+            top: 50%;
+            left: 50%;
+            margin-top: -150px;
+            margin-left: -150px;
+            position: absolute;
+        }
+
+        p {
+            width: 100%;
+            color: white;
+            opacity: 0.4;
+            text-align: center;
+            font-size: 40px;
+            position: absolute;
+        }
+
+        .fly_left {
+            animation: fly_left 200s linear infinite alternate;
+        }
+
+        .fly_right {
+            animation: fly_right 200s linear infinite alternate;
+        }
+
+        p:nth-of-type(1) {
+            top: 25%;
+        }
+
+        p:nth-of-type(2) {
+            top: 40%;
+            font-size: 38px;
+        }
+
+        p:nth-of-type(3) {
+            top: 55%;
+            font-size: 38px;
+        }
+
+        p:nth-of-type(4) {
+            top: 70%;
+            font-size: 35px;
+        }
+    </style>
+    <title>离线模式 - Masochist Board</title>
+    <script src="scripts/prefixfree.min.js"></script>
+</head>
+<body>
+
+<p class="fly_left">请连接互联网</p>
+
+<p class="fly_right">Please connect to the Internet</p>
+
+<p class="fly_left">インターネットに接続してください</p>
+
+<p class="fly_right">Se il vous plaît se connecter à Internet</p>
+
+<img class="offline_mark" src="images/offline.svg" alt="offline icon"/>
+
+</body>
+</html>

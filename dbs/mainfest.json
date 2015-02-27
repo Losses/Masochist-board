@@ -1,4 +1,5 @@
 {
+  "short_name": "M-b",
   "name": "Masochist-board",
   "icons": [
     {
@@ -38,7 +39,6 @@
       "density": "4.0"
     }
   ],
-  "start_url": "index.html",
-  "display": "standalone",
-  "orientation": "landscape"
+  "start_url": "../index.html",
+  "display": "standalone"
 }

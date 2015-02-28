@@ -16,8 +16,14 @@
             }
         }
 
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
         html, body {
             height: 100%;
+            width: 100%;
             overflow: hidden;
         }
 
@@ -54,22 +60,34 @@
         }
 
         p:nth-of-type(1) {
-            top: 25%;
+            top: 22%;
         }
 
         p:nth-of-type(2) {
-            top: 40%;
+            top: 37%;
             font-size: 38px;
         }
 
         p:nth-of-type(3) {
-            top: 55%;
+            top: 52%;
             font-size: 38px;
         }
 
         p:nth-of-type(4) {
-            top: 70%;
+            top: 67%;
             font-size: 35px;
+        }
+
+        @media only screen and (max-width: 600px) {
+            p {
+                transform: scale(0.6);
+            }
+        }
+
+        @media only screen and (max-width: 550px) {
+            p {
+                transform: scale(0.4);
+            }
         }
     </style>
     <title>离线模式 - Masochist Board</title>
@@ -88,7 +106,7 @@
 <img class="offline_mark" src="images/offline.svg" alt="offline icon"/>
 
 <script>
-    history.replaceState(null, '离线模式 - Masochist Board', './#/');
+    //history.replaceState(null, '离线模式 - Masochist Board', './#/');
 </script>
 </body>
 </html>

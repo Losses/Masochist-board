@@ -245,7 +245,6 @@ function checkFunctionMenu() {
     if (categoryElement.width() + 340 > windowElement.width()) {
         functionList.addClass('pull_back');
     } else {
-        console.log('!');
         functionList.removeClass('pull_back');
     }
 }

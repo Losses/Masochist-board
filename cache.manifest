@@ -20,7 +20,5 @@ CACHE:
 FALLBACK:
     index.html offline.html
     ./ offline.html
-    scripts/controller.js scripts/offline.js
 NETWORK:
     *
-    scripts/controller.js

@@ -77,6 +77,7 @@
 .icon-other:before { content: '\e818'; } /* '' */
 .icon-ok:before { content: '\e821'; } /* '' */
 .icon-cancel:before { content: '\e819'; } /* '' */
+.icon-tags:before { content: '\e824'; } /* '' */
 .icon-search:before { content: '\e81a'; } /* '' */
 
 .icon-trash:before { content: '\e81b'; } /* '' */

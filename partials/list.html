@@ -1,5 +1,5 @@
 <div class="function_list clear">
-    <div class="category left">
+    <div class="category left" ng-class="{flow_down : flowDownCategory}">
         <div ng-repeat="category in categories | object2Array"
              ng-if="category.hide == 0 || logined"
              ng-class="{'mute': (category.mute == 1), 'hide': (category.hide == 1)}"
@@ -47,6 +47,10 @@
             </div>
         </form>
     </div>
+    <button class="extend_categories icon-tags"
+            ng-click="flowDownCategory = !flowDownCategory"
+            ng-init="flowDownCategory = false"></button>
+
     <div class="search right">
         <form action="api/?list" action="get" id="search">
             <i class="icon-search"></i><span><input name="search" type="text"/></span>

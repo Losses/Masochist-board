@@ -413,6 +413,21 @@ html, body {
   .add_new {
     display: none;
   }
+  .extend_categories {
+    border: 0;
+    background: none;
+    color: @mainThemeColor;
+    margin: 0 10px;
+    font-size: 17px;
+    float: left;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 300ms;
+
+    &:hover {
+      color: lighten(@mainThemeColor, 20%);
+    }
+  }
   .search {
     i::before {
       color: @mainThemeColor;
@@ -454,6 +469,28 @@ html, body {
         width: 200px;
         opacity: 1;
       }
+    }
+  }
+
+  &.pull_back {
+    .extend_categories {
+      clear: both;
+      visibility: visible;
+      opacity: 1;
+    }
+    .category {
+      max-height: 0;
+      margin-bottom: 10px;
+      overflow: hidden;
+      transition: max-height 800ms, margin-bottom 300ms;
+
+      &.flow_down {
+        max-height: 600px;
+      }
+    }
+
+    .search {
+      float: left;
     }
   }
 

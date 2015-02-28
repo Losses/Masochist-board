@@ -15,6 +15,8 @@ function globalCtrl($scope, $http, $routeParams) {
                     $scope.categories[response[i].id] = response[i];
                 }
                 $scope.firstCategoryKey = Object.keys($scope.categories)[0];
+
+                checkFunctionMenu();
                 setTimeout(function () {
                     sSelect('.post_category');
                     sSelect('.transport_category');

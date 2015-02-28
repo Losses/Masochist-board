@@ -237,6 +237,19 @@ function switchLoading(status) {
     }
 }
 
+function checkFunctionMenu() {
+    var categoryElement = $('.function_list>.category')
+        , windowElement = $(this)
+        , functionList = $('.function_list');
+
+    if (categoryElement.width() + 340 > windowElement.width()) {
+        functionList.addClass('pull_back');
+    } else {
+        console.log('!');
+        functionList.removeClass('pull_back');
+    }
+}
+
 $(document).ready(function documentReady() {
     losses.elements = {
         submitable: false,
@@ -381,6 +394,7 @@ $(document).ready(function documentReady() {
         manageLoginProcess();
     });
 
+    $(window).resize(checkFunctionMenu);
 
     $('#new_post>i').click(function () {
 
@@ -611,8 +625,7 @@ $(document).ready(function documentReady() {
     });
 
     setTimeout(checkSumitable, 1000);
-})
-;
+});
 
 function callManageDialog() {
     function requireCode() {

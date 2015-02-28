@@ -1,6 +1,7 @@
 CACHE MANIFEST
-#version 0.5
+#version 0.6
 CACHE:
+    scripts/offline.js
     scripts/angular.min.js
     scripts/angular-route.min.js
     scripts/jquery.js
@@ -22,3 +23,4 @@ FALLBACK:
     ./ offline.html
 NETWORK:
     *
+    images/online.png

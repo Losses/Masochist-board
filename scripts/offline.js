@@ -1,4 +1,6 @@
-/**
- * Created by Don on 2/27/2015.
- */
-location.replace('offline.html');
+var i = new Image();
+i.onerror = (function(){
+    location.replace('offline.html');
+});
+
+i.src = 'images/online.png?d=' + escape(Date());

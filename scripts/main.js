@@ -37,3 +37,28 @@
         $('#highlight').slideUp();
     })
 })();
+
+$(document).ready(function () {
+    var hintElement = $('<span>')
+        .attr('class', 's-tooltip')
+        .html('STooltip by Losses Don');
+    $(document.body)/*nxt line*/
+        .delegate('[title],[data-title]', 'mouseenter', function () {
+            if (typeof( $(this).attr('title') ) != 'undefined') {
+                $(this).attr('data-title', $(this).attr('title'));
+                $(this).removeAttr('title');
+            }
+
+            hintElement.html($(this).attr('data-title'))
+                .css({
+                    'top': $(this).offset().top + $(this).height() + 3,
+                    'left': $(this).offset().left + $(this).width() * 0.5 - $(hintElement).width() * 0.5 - 10
+                })
+                .addClass('show');
+
+        })/*nxt line*/
+        .delegate('[title], [data-title]', 'mouseleave', function () {
+            hintElement.removeClass('show');
+        })/*nxt line*/
+        .append(hintElement);
+});

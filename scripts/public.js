@@ -403,6 +403,11 @@ $(document).ready(function documentReady() {
             .removeClass('show');
 
         setTimeout(function () {
+            if ($(document.body).hasClass('post_page'))
+                $(losses.elements.contentElement).focus();
+            else
+                $(losses.elements.titleElement).focus();
+
             $('body').on('click.activeBody', function (event) {
                 if ($(event.target).parents('#post_dialog').length == 0) {
                     $('#post_dialog').removeClass('flow_up');

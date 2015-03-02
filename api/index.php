@@ -246,10 +246,10 @@
 		
 		foreach ($data as $result)
 		{
-			$isadmin = ($result[author][0] == '$') ? true : false;
+			$isadmin = ($result['author'][0] == '$') ? true : false;
 			if ($isadmin)
 			{
-				$result[author] = substr($result[author], 1);
+				$result['author'] = substr($result['author'], 1);
 			}
 			array_push($return_data, $result);
 		}
@@ -323,10 +323,10 @@
 		
 		foreach ($data as $result)
 		{
-			$isadmin = ($result[author][0] == '$') ? true : false;
+			$isadmin = ($result['author'][0] == '$') ? true : false;
 			if ($isadmin)
 			{
-				$result[author] = substr($result[author], 1);
+				$result['author'] = substr($result['author'], 1);
 			}
 			array_push($return_data, $result);
 		}

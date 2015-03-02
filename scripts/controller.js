@@ -25,6 +25,17 @@ function globalCtrl($scope, $http, $routeParams) {
             });
     };
 
+    $http({
+        method: 'POST',
+        url: 'api/?manage',
+        data: $.param({'check': ''}),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).success(function (response) {
+        $scope.logined = (response.message);
+
+        manageLoginProcess();
+    });
+
     loadCate();
 }
 
@@ -122,14 +133,22 @@ function manageCtrl($scope) {
     losses.scope.manage = $scope;
 }
 
-function manageStarter() {
-    losses.global.router.manage = true;
-
-    if (!losses.logined) {
-        callManageDialog();
+function manageStarter($scope) {
+    if (!$scope.logined) {
+        callManageDialog(true);
     } else {
-        losses.global.router.manage = false;
-        location.href = '#/';
-        location.refresh(true);
+
+        if ($('#masochist-manage-style')[0])
+            return true;
+
+        var newStyleSheet = $('<link>')
+            .attr('id', 'masochist-manage-style')
+            .attr('type', 'text/css')
+            .attr('rel', 'stylesheet')
+            .attr('href', 'styles/manage.css');
+
+        $('head').append(newStyleSheet);
+
+        StyleFix.styleElement(newStyleSheet[0]);
     }
 }

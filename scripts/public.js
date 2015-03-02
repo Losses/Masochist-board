@@ -381,17 +381,19 @@ $(document).ready(function documentReady() {
             });
     })();
 
-    switchLoading(true);
+    /*
+     switchLoading(true);
 
-    $.post('api/?manage', {'check': ''}, function (data) {
-        switchLoading(false);
-        var response = JSON.parse(data);
+     $.post('api/?manage', {'check': ''}, function (data) {
+     switchLoading(false);
+     var response = JSON.parse(data);
 
-        losses.global.logined = (response.message);
-        losses.global.$digest();
+     losses.global.logined = (response.message);
+     losses.global.$digest();
 
-        manageLoginProcess();
-    });
+     manageLoginProcess();
+     });
+*/
 
     $(window).resize(checkFunctionMenu);
 
@@ -631,7 +633,7 @@ $(document).ready(function documentReady() {
     setTimeout(checkSumitable, 1000);
 });
 
-function callManageDialog() {
+function callManageDialog(managePageMode) {
     function requireCode() {
         switchLoading(true);
         $.post('api/?manage', {'key': ''}, function (data) {
@@ -693,16 +695,17 @@ function callManageDialog() {
         });
     });
 
-    $('body').on('click.manage', function (event) {
-        if (losses.global.router.manage)
-            return;
+    if (!managePageMode)
+        $('body').on('click.manage', function (event) {
+            if (losses.global.router.manage)
+                return;
 
-        if ($(event.target).hasClass('password_acion')) {
-            return false;
-        } else {
-            hideDialog();
-        }
-    });
+            if ($(event.target).hasClass('password_acion')) {
+                return false;
+            } else {
+                hideDialog();
+            }
+        });
     pointer = 0;
 }
 

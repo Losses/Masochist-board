@@ -325,7 +325,7 @@
 		}
 		elseif (isset($_POST['password']))
 		{
-
+			$plugin->load_hook("HOOK-BEFORE_LOGIN");
 			if (!isset($_SESSION['key']))
 			{
 				response_message(403, 'You need a key!');

@@ -1,8 +1,24 @@
-<header>
-    <h3>Masochist-board</h3>
-    <p>管理员登陆界面</p>
-</header>
+<div ng-if="!logined">
+    <header>
+        <h3>Masochist-board</h3>
 
-<footer>
-    在任意页面均可通过快捷键：上上下下左右左右BA
-</footer>
+        <p>管理员登陆界面</p>
+    </header>
+
+    <footer>
+        在任意页面均可通过快捷键：上上下下左右左右BA
+    </footer>
+</div>
+
+<div ng-if="logined">
+    <div class="manage_info_warp">
+        <img src="images/about.png" class="logo"/>
+        <dl class="sysinfo">
+            <dt>系统版本</dt>
+            <dd>0.0.0.1 PreAlpha</dd>
+            <dt>php版本</dt>
+            <dd>php 0.0.0.1</dd>
+        </dl>
+        <button class="logout">登出</button>
+    </div>
+</div>

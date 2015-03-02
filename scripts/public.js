@@ -26,11 +26,11 @@ mKnowledge.config(['$routeProvider',
             when('/post/:postId', {
                 templateUrl: 'partials/post.html',
                 controller: postCtrl
-            })/*.
-         when('/manage', {
-         templateUrl: 'partials/manage.html',
-         controller: manageStarter
-         })*/.
+            }).
+            when('/manage', {
+                templateUrl: 'partials/manage.html',
+                controller: manageStarter
+            }).
             otherwise({redirectTo: '/'});
     }
 ]);

@@ -599,11 +599,11 @@
 				}
 			}
 
-            if (isset($_POST['action']) && ($_POST['action'] == 'system_info'))
+            if (isset($_POST['system_info']))
             {
                 if (!$_SESSION['logined'])
                     response_message(403, 'You do not have the permission to access these information.');
-                
+
                 $system_info = [
                     'Current PHP version'       =>    phpversion(),
                     'Current MySQL version'     =>    $database->info()['version'],

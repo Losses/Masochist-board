@@ -558,6 +558,19 @@
 				}
 			}
 
+            if (isset($_POST['action']) && ($_POST['action'] == 'logout')) {
+
+                if($_SESSION['logined'])
+                {
+                    $_SESSION['logined'] = false;
+                    response_message(200, 'logout successfully');
+                }
+                else
+                {
+                    response_message(403, 'you have not logined');
+                }
+            }
+
 			if (isset($_POST['action']) && ($_POST['action'] == 'add_cate'))
 			{
 				$data = $database->select('category', 'name');

@@ -24,6 +24,12 @@
 }
 
 .manager {
+  .logo {
+    margin: 0 auto;
+    pointer-events: none;
+    display: block;
+  }
+
   .sysinfo {
     margin: 0 30px 20px 30px;
     font-size: 14px;
@@ -63,6 +69,10 @@
 
     &:hover {
       .drop_shadow(3);
+    }
+
+    &:active {
+      .drop_shadow(4);
     }
   }
 }

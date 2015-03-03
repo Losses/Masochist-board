@@ -133,12 +133,22 @@ function manageCtrl($scope) {
     losses.scope.manage = $scope;
 }
 
-function manageStarter($scope) {
+function manageStarter($scope, $http) {
     if (!$scope.logined) {
         history.replaceState('', 'Masochist-board 管理员登录', '#/manage/login');
         callManageDialog(true);
     } else {
         history.replaceState('', 'Masochist-board 管理员控制面板', '#/manage/status');
+
+        $http({
+            method: 'POST',
+            url: 'api/?manage',
+            data: $.param({'system_info': ''}),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function (response) {
+            console.log(response);
+            $scope.systemInfo = response;
+        })
     }
 
     if ($('#masochist-manage-style')[0])
@@ -153,4 +163,8 @@ function manageStarter($scope) {
     $('head').append(newStyleSheet);
 
     StyleFix.styleElement(newStyleSheet[0]);
+
+    $scope.logout = function () {
+        console.log('!');
+    }
 }

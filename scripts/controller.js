@@ -135,9 +135,10 @@ function manageCtrl($scope) {
 
 function manageStarter($scope) {
     if (!$scope.logined) {
+        history.replaceState('', 'Masochist-board 管理员登录', '#/manage/login');
         callManageDialog(true);
     } else {
-
+        history.replaceState('', 'Masochist-board 管理员控制面板', '#/manage/status');
         if ($('#masochist-manage-style')[0])
             return true;
 

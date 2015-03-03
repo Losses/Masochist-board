@@ -31,6 +31,10 @@ mKnowledge.config(['$routeProvider',
                 templateUrl: 'partials/manage.html',
                 controller: manageStarter
             }).
+            when('/manage/:manageAction', {
+                templateUrl: 'partials/manage.html',
+                controller: manageStarter
+            }).
             otherwise({redirectTo: '/'});
     }
 ]);
@@ -66,12 +70,10 @@ function processPageElement(routerResult) {
     losses.elements.dialogElement.hide();
 
     if (routerResult.postId) {
-        body.addClass('post_page');
         losses.elements.titleElement.val('');
         losses.elements.upidElement.attr('value', routerResult.postId);
     }
     else {
-        body.removeClass('post_page');
         losses.elements.upidElement.attr('value', 0);
     }
 
@@ -393,7 +395,7 @@ $(document).ready(function documentReady() {
 
      manageLoginProcess();
      });
-*/
+     */
 
     $(window).resize(checkFunctionMenu);
 

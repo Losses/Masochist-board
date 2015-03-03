@@ -46,7 +46,7 @@
 		$post_sage    =  isset($_POST['sage'])     ? 1                  : 0;
 		$post_cate    =  isset($_POST['category']) ? $_POST['category'] : 0;
 		$post_author  = (isset($_SESSION['logined'])
-			&& $_SESSION['logined'] == true)       ? '$Admin'            : 'a person';
+			&& $_SESSION['logined'] == true)       ? 'Admin'            : 'a person';
 
         $plugin->load_hook("HOOK-BEFORE_NEW");
 
@@ -147,6 +147,8 @@
 
 	elseif (isset($_GET['list']))
 	{
+        $plugin->load_hook("HOOK-BEFORE_LIST");
+
 		$_GET['page'] = isset($_GET['page'])  ? $_GET['page'] : 1;
 
 		if (isset($_GET['search']))
@@ -241,22 +243,8 @@
 			$where_sql['AND']['content.category[=]'] = (int)$_GET['category'];
 		}
 		$data = $database->select('content', $join_sql, $columns_sql, $where_sql);
-		
-		$return_data = [];
-		
-		foreach ($data as $result)
-		{
-			$isadmin = ($result['author'][0] == '$') ? true : false;
-			if ($isadmin)
-			{
-				$result['author'] = substr($result['author'], 1);
-			}
-			array_push($return_data, $result);
-		}
-		
-		$plugin->load_hook("HOOK-BEFORE_LIST");
-		
-		echo json_encode($return_data);
+
+		echo json_encode($data);
 		exit();
 	}
 
@@ -276,6 +264,8 @@
 
 	elseif (isset($_GET['post']))
 	{
+        $plugin->load_hook("HOOK-BEFORE_POST");
+
 		require_once ('../libs/parsedown.php');
 
 		$Parsedown = new Parsedown();
@@ -318,22 +308,8 @@
 				$data[$i]['img'] = 'upload/' . $data[$i]['img'];
 			}
 		}
-		
-		$return_data = [];
-		
-		foreach ($data as $result)
-		{
-			$isadmin = ($result['author'][0] == '$') ? true : false;
-			if ($isadmin)
-			{
-				$result['author'] = substr($result['author'], 1);
-			}
-			array_push($return_data, $result);
-		}
-		
-		$plugin->load_hook("HOOK-BEFORE_POST");
-		
-		echo json_encode($return_data);
+
+		echo json_encode($data);
 		exit();
 	}
 
@@ -381,15 +357,9 @@
 				response_message(403, false);
 			}
 		}
-		
+
 		if (isset($_SESSION['logined']) && $_SESSION['logined'] == true)
 		{
-			if (isset($_POST['action']) && $_POST['action'] == 'logout')
-			{
-				$_SESSION['logined'] = false;
-				response_message(200, "assassin's creed");
-			}
-			
 			if (isset($_POST['action']) && ($_POST['action'] == 'delete'))
 			{
 				$data_false = [];

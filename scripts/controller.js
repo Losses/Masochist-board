@@ -23,7 +23,7 @@ function globalCtrl($scope, $http, $routeParams) {
                     sSelect('.transport_category');
                 }, 1000);
             });
-    };
+    }
 
     $http({
         method: 'POST',

@@ -2,6 +2,9 @@
 	session_set_cookie_params(31536000);
 	session_start();
 
+    //NOTICE: DO NOT EDIT THE 'MB_VERSION' BASED ON ANY REASON, IT MAY CAUSE THE UPDATER WORK IN AN ABNORMAL WAY!
+    define('MB_VERSION','0.9 PreAlpha');
+
 	require_once ('../config.php');
 
 	require_once ('../libs/medoo.php');
@@ -582,6 +585,21 @@
 					response_message(403, 'Add category failed OAQ ');
 				}
 			}
+
+            if (isset($_POST['action']) && ($_POST['action'] == 'system_info'))
+            {
+                if (!$_SESSION['logined'])
+                    response_message(403, 'You do not have the permission to access these information.');
+                
+                $system_info = [
+                    'Current PHP version'       =>    phpversion(),
+                    'Current MySQL version'     =>    $database->info()['version'],
+                    'Masochist-board version'   =>    MB_VERSION
+                ];
+
+                echo json_encode($system_info);
+                exit();
+            }
 		}
 	}
 

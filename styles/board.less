@@ -1899,8 +1899,19 @@ footer {
     bottom: 20px !important;
     transform: scale(0.85);
 
+    .manage_menu {
+      bottom: 0 !important;
+      right: 12px;
+    }
+
     &.hide {
       bottom: -70px !important;
+    }
+
+    &:hover {
+      .manage_menu {
+        bottom: 45px !important;
+      }
     }
   }
 }

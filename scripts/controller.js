@@ -139,17 +139,18 @@ function manageStarter($scope) {
         callManageDialog(true);
     } else {
         history.replaceState('', 'Masochist-board 管理员控制面板', '#/manage/status');
-        if ($('#masochist-manage-style')[0])
-            return true;
-
-        var newStyleSheet = $('<link>')
-            .attr('id', 'masochist-manage-style')
-            .attr('type', 'text/css')
-            .attr('rel', 'stylesheet')
-            .attr('href', 'styles/manage.css');
-
-        $('head').append(newStyleSheet);
-
-        StyleFix.styleElement(newStyleSheet[0]);
     }
+
+    if ($('#masochist-manage-style')[0])
+        return true;
+
+    var newStyleSheet = $('<link>')
+        .attr('id', 'masochist-manage-style')
+        .attr('type', 'text/css')
+        .attr('rel', 'stylesheet')
+        .attr('href', 'styles/manage.css');
+
+    $('head').append(newStyleSheet);
+
+    StyleFix.styleElement(newStyleSheet[0]);
 }

@@ -235,7 +235,7 @@
 		[
 			'AND'   =>  ['content.upid[=]'  =>  0],
 			'ORDER' =>  ['content.active_time DESC', 'content.time DESC'],
-			'LIMIT' =>  [($_GET['page'] - 1) * 10, $_GET['page'] * 10],
+			'LIMIT' =>  [($_GET['page'] - 1) * 10, 10],
 		];
 		if (!isset($_SESSION['logined']) || $_SESSION['logined'] == false)
 		{

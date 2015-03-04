@@ -11,6 +11,7 @@ Masochist-board 的代码由这些人编写（姓名首字母排序）：
 * Cee Cirno      前端调试、安全     https://plus.google.com/+CeeCirno
 * Losses Don     前端设计、后端     https://plus.google.com/+LossesDon
 * Sky Lark       后端              https://plus.google.com/102946974943755887957
+* 南方科技大某生   代码安全性测试
 
 非常感谢下列作者提供的开源库和作品！
 

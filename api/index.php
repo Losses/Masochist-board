@@ -247,7 +247,9 @@
 			$where_sql['AND']['content.category[=]'] = (int)$_GET['category'];
 		}
 		$data = $database->select('content', $join_sql, $columns_sql, $where_sql);
-
+		
+		$plugin->load_hook("HOOK-ALTER_LIST");
+		
 		echo json_encode($data);
 		exit();
 	}
@@ -312,6 +314,8 @@
 				$data[$i]['img'] = 'upload/' . $data[$i]['img'];
 			}
 		}
+		
+		$plugin->load_hook("HOOK-ALTER_POST");
 
 		echo json_encode($data);
 		exit();

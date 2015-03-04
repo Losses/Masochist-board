@@ -48,6 +48,7 @@ if (isset($_GET['new'])) {
     $post_upid = isset($_POST['upid']) ? $_POST['upid'] : 0;
     $post_sage = isset($_POST['sage']) ? 1 : 0;
     $post_cate = isset($_POST['category']) ? $_POST['category'] : 0;
+    $post_ip = get_ip_address();
     $post_author = (isset($_SESSION['logined'])
         && $_SESSION['logined'] == true) ? 'Admin' : 'a person';
 
@@ -126,7 +127,7 @@ if (isset($_GET['new'])) {
             'upid' => $post_upid,
             'sage' => $post_sage,
             'category' => $post_cate,
-            'ip' => get_ip_address()
+            'ip' => $post_ip
         ];
 
     $result = $database->insert('content', $data_sql);

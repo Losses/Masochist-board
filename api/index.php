@@ -137,52 +137,55 @@ if (isset($_GET['new'])) {
 
     $_GET['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
 
-    if (isset($_GET['search'])) {
-        $search_key = explode(' ', $_GET['search']);
-        $result_key = '';
-        foreach ($search_key as $key) {
-            $result_key .= '*' . $key . '* ';
-        }
-        $search_key = $database->quote($result_key);
-        $data = $database->query("SELECT * FROM content
-						WHERE MATCH (title, content)
-						AGAINST ($search_key IN BOOLEAN MODE)")
-            ->fetchAll();
+    if (isset($_SESSION['logined']) && $_SESSION['logined'] == true)
+    {
+        if (isset($_GET['search'])) {
+            $search_key = explode(' ', $_GET['search']);
+            $result_key = '';
+            foreach ($search_key as $key) {
+                $result_key .= '*' . $key . '* ';
+            }
+            $search_key = $database->quote($result_key);
+            $data = $database->query("SELECT * FROM content
+                            WHERE MATCH (title, content)
+                            AGAINST ($search_key IN BOOLEAN MODE)")
+                ->fetchAll();
 
-        $search_result = [];
+            $search_result = [];
 
-        foreach ($data as $result) {
-            $search_result[$result['id']] = ['post' => [], 'reply' => []];
+            foreach ($data as $result) {
+                $search_result[$result['id']] = ['post' => [], 'reply' => []];
 
-            if (isset($result['img']) && ($result['img'] != '')) {
-                $result['img'] = 'upload/' . $result['img'];
+                if (isset($result['img']) && ($result['img'] != '')) {
+                    $result['img'] = 'upload/' . $result['img'];
+                }
+
+                if ($result['upid'] == 0) {
+                    $search_result[$result['id']]['post'] = $result;
+                } else {
+                    $search_result[$result['upid']]['reply'][] = $result;
+                }
             }
 
-            if ($result['upid'] == 0) {
+            $sql_condition = ['id' => []];
+
+            foreach ($search_result as $key => $value) {
+                if (count($value['post']) == 0) {
+                    $sql_condition['id'][] = $key;
+                }
+            }
+
+            if (count($sql_condition['id']) != 0) {
+                $plugin_results = $database->select('content', '*', $sql_condition);
+            }
+
+            foreach ($plugin_results as $result) {
                 $search_result[$result['id']]['post'] = $result;
-            } else {
-                $search_result[$result['upid']]['reply'][] = $result;
             }
+
+            echo json_encode(array_values($search_result));
+            exit();
         }
-
-        $sql_condition = ['id' => []];
-
-        foreach ($search_result as $key => $value) {
-            if (count($value['post']) == 0) {
-                $sql_condition['id'][] = $key;
-            }
-        }
-
-        if (count($sql_condition['id']) != 0) {
-            $plugin_results = $database->select('content', '*', $sql_condition);
-        }
-
-        foreach ($plugin_results as $result) {
-            $search_result[$result['id']]['post'] = $result;
-        }
-
-        echo json_encode(array_values($search_result));
-        exit();
     }
 
     $join_sql =

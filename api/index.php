@@ -1,7 +1,4 @@
 <?php
-	session_set_cookie_params(31536000);
-	session_start();
-
     //NOTICE: DO NOT EDIT THE 'MB_VERSION' BASED ON ANY REASON, IT MAY CAUSE THE UPDATER WORK IN AN ABNORMAL WAY!
     define('MB_VERSION','0.9 PreAlpha');
 
@@ -14,7 +11,6 @@
     require_once ('../libs/plugin.php');
 
     require_once ('../libs/remove_xss.php');
-	
 
 	$emotion  = new emotions();
 
@@ -40,6 +36,11 @@
 	$join_sql	 = [];
 
 	$current_time = $database->query('SELECT NOW()')->fetchAll()[0][0];
+
+    $plugin->load_hook("HOOK-BEFORE_START");
+
+    session_set_cookie_params(31536000);
+    session_start();
 
 	if (isset($_GET['new']))
 	{

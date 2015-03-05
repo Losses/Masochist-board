@@ -25,9 +25,11 @@
   0% {
     background: #607d8b;
   }
+
   50% {
     background: #f44336;
   }
+
   100% {
     background: #607d8b;
   }
@@ -37,9 +39,11 @@
   0% {
     background: #4caf50;
   }
+
   50% {
     background: #f44336;
   }
+
   100% {
     background: #4caf50;
   }
@@ -51,16 +55,19 @@
     opacity: 0;
     visibility: hidden;
   }
+
   20% {
     left: -215px;
     opacity: 1;
     visibility: visible;
   }
+
   80% {
     left: -215px;
     opacity: 1;
     visibility: visible;
   }
+
   100% {
     left: -240px;
     opacity: 0;
@@ -72,9 +79,11 @@
   0% {
     left: 49%;
   }
+
   50% {
     left: 50%;
   }
+
   100% {
     left: 51%;
   }
@@ -84,9 +93,11 @@
   0% {
     right: 4px;
   }
+
   50% {
     right: 0;
   }
+
   100% {
     right: -4px;
   }
@@ -103,10 +114,12 @@
     stroke-dasharray: 1, 200;
     stroke-dashoffset: 0;
   }
+
   50% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -35;
   }
+
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -124;
@@ -117,12 +130,15 @@
   100%, 0% {
     stroke: #f44336;
   }
+
   40% {
     stroke: #2196f3;
   }
+
   66% {
     stroke: #4caf50;
   }
+
   80%, 90% {
     stroke: #ffc107;
   }
@@ -223,6 +239,7 @@ html, body {
 
     &:hover, &.selected {
       background: @lightestColor;
+
       .title {
         color: @darkFontHoverColor;
 
@@ -243,13 +260,14 @@ html, body {
 
   .search_list {
     .article_group {
-      width: ~"calc(100% - 300px)"
+      width: ~"calc(100% - 300px)";
     }
 
     > li {
       &:hover {
         .replies {
           background: lighten(@lighterColor, 5%);
+
           li {
             border-color: lighten(@lightColor, 5%);
           }
@@ -283,9 +301,11 @@ html, body {
 
 .function_list {
   margin: 0 10px 15px 10px;
+
   .category {
     > div {
       position: relative;
+
       a {
         color: @mainThemeColor;
         margin: 3px;
@@ -316,9 +336,11 @@ html, body {
       display: none;
     }
   }
+
   .add_new {
     display: none;
   }
+
   .extend_categories {
     border: 0;
     background: none;
@@ -334,12 +356,15 @@ html, body {
       color: lighten(@mainThemeColor, 20%);
     }
   }
+
   .search {
     i::before {
       color: @mainThemeColor;
     }
+
     span {
       position: relative;
+
       &::after {
         content: '\feff';
         left: 0;
@@ -371,6 +396,7 @@ html, body {
           width: 100%;
         }
       }
+
       input[name="search"] {
         width: 200px;
         opacity: 1;
@@ -384,6 +410,7 @@ html, body {
       visibility: visible;
       opacity: 1;
     }
+
     .category {
       max-height: 0;
       margin-bottom: 10px;
@@ -399,7 +426,6 @@ html, body {
       float: left;
     }
   }
-
 }
 
 #new_post {
@@ -428,13 +454,10 @@ html, body {
   width: 550px;
   height: 500px;
   margin: -250px 0 0 -275px;
-
   overflow: hidden;
   position: fixed;
   z-index: 5;
-
   transition: all 300ms;
-
   margin-top: -200px;
   opacity: 0;
   visibility: hidden;
@@ -480,6 +503,7 @@ html, body {
       &.selected {
         color: red;
       }
+
       input {
         display: none;
       }
@@ -517,13 +541,13 @@ html, body {
         border: 0;
         border-radius: 100%;
         font-size: 15px;
-
       }
 
       .extend {
         opacity: 0;
         visibility: hidden;
         transition: all 300ms;
+
         > div {
           height: 0;
           padding: 5px 0;
@@ -632,7 +656,6 @@ html, body {
               visibility: visible;
             }
           }
-
         }
 
         .upload_cancel {
@@ -641,10 +664,10 @@ html, body {
           height: 30px !important;
           margin-top: 3px;
           position: absolute;
-
           transform: rotate(0deg);
           opacity: 0;
           transition: all 200ms;
+
           .icon-cancel {
             width: 30px;
             height: 30px;
@@ -687,6 +710,7 @@ html, body {
           right: -10px;
           border-color: transparent transparent transparent #b1a6c4;
         }
+
         &::after {
           right: -8px;
           border-color: transparent transparent transparent #dacfed;
@@ -729,6 +753,7 @@ html, body {
 
     textarea {
       width: ~"calc(100% - 40px)";
+      overflow-y: auto;
       height: 392px;
       padding: 20px;
       border: 0;
@@ -770,6 +795,7 @@ html, body {
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
           z-index: 5;
         }
+
         &:active {
           box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 
@@ -845,9 +871,11 @@ html, body {
 .s_select {
   width: auto;
   position: relative;
+
   input {
     display: none;
   }
+
   .s_choosen {
     width: auto;
     height: 26px;
@@ -858,6 +886,7 @@ html, body {
     outline: none;
     position: relative;
   }
+
   .s_choosen::after {
     content: '\feff';
     top: 13px;
@@ -869,8 +898,8 @@ html, body {
     border-color: @darkestThemeColor transparent transparent transparent;
     display: block;
     position: absolute;
-
   }
+
   .s_choosen:hover::after {
     border-color: @lightColor transparent transparent transparent;
   }
@@ -888,24 +917,28 @@ html, body {
     overflow: hidden;
     position: absolute;
     transition: max-height 500ms, opacity 60ms;
+
     li {
       padding: 5px 6px;
       cursor: pointer;
       transition: all 300ms;
     }
+
     li:hover {
       background: #deedf1;
       color: white;
-
       .color_sheet();
     }
+
     li.keyboard:hover {
       background: transparent;
     }
+
     li.selected {
       background: #deedf1 !important;
     }
   }
+
   .s_select_body.selected {
     max-height: 700px;
     opacity: 1;
@@ -919,7 +952,6 @@ html, body {
   bottom: 50px;
   width: 65px;
   height: 65px;
-
   position: fixed;
   z-index: 5;
 
@@ -935,7 +967,6 @@ html, body {
     &:active {
       box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26), 0 8px 17px 0 rgba(0, 0, 0, .2);
     }
-
   }
 
   &.show {
@@ -965,7 +996,6 @@ html, body {
     margin-top: -25px;
     opacity: 1;
     visibility: visible;
-
     transition: all 300ms;
   }
 
@@ -1024,14 +1054,15 @@ footer {
     }
 
     textarea {
-      height: 300px;
+      height: 260px;
     }
 
     &.fold {
       height: 525px;
       margin-top: -262px !important;
+
       textarea {
-        height: 300px;
+        height: 260px;
       }
     }
 
@@ -1056,6 +1087,7 @@ footer {
 
   .article_group {
     margin: 0 0 0 20px;
+
     article {
       margin: 10px;
 
@@ -1187,14 +1219,10 @@ footer {
             height: 38px;
             margin-left: -58px;
             display: block;
-
             z-index: 5;
-
             opacity: 0;
             visibility: hidden;
-
             transition: all 300ms;
-
             position: absolute;
 
             &::before {
@@ -1208,9 +1236,9 @@ footer {
               border-width: 6px;
               border-style: solid;
               display: block;
-
               position: absolute;
             }
+
             i {
               margin: 7px;
               display: block;
@@ -1218,6 +1246,7 @@ footer {
               color: #342d40;
               cursor: pointer;
               transition: all 300ms;
+
               &:hover {
                 color: #6b598b;
               }
@@ -1273,7 +1302,8 @@ footer {
         }
 
         .category_rename {
-          top: 3px;;
+          top: 3px;
+          ;
           right: -120px;
           width: 110px;
           position: absolute;
@@ -1298,6 +1328,7 @@ footer {
           form {
             display: block;
           }
+
           > a {
             border-color: transparent;
             color: transparent;
@@ -1310,6 +1341,7 @@ footer {
             color: white;
             opacity: 1;
             transition: all 300ms;
+
             &:hover {
               opacity: 0.7;
             }
@@ -1376,12 +1408,10 @@ footer {
           width: 85px;
           transition: all 300ms;
           position: absolute;
-
           color: white;
           border: 0;
           background: transparent;
           font-size: 11px;
-
           opacity: 0;
           visibility: hidden;
         }
@@ -1392,9 +1422,9 @@ footer {
           width: 8px;
           height: 12px;
           position: absolute;
-
           opacity: 0;
           visibility: hidden;
+
           &::before {
             content: '\feff';
             left: 2px;
@@ -1420,6 +1450,7 @@ footer {
             transition: all 300ms;
             opacity: 0;
             visibility: hidden;
+
             button {
               float: left;
               width: 15px;
@@ -1476,7 +1507,6 @@ footer {
           width: 120px;
           background: #3e00a4;
           border-color: transparent;
-
           .color_sheet();
 
           span {
@@ -1499,7 +1529,6 @@ footer {
 
   .manage_menu {
     display: block;
-
     right: 63px;
     bottom: 110px;
     width: 42px;
@@ -1513,6 +1542,7 @@ footer {
     li {
       height: 5px;
       transition: all 400ms;
+
       > button {
         width: 42px;
         height: 42px;
@@ -1522,7 +1552,6 @@ footer {
         font-size: 20px;
         transition: all 300ms;
         color: white;
-
         .drop_shadow(2);
 
         &.sage {
@@ -1535,7 +1564,6 @@ footer {
 
         &.delete {
           background: #ffc107;
-
           position: relative;
         }
 
@@ -1599,7 +1627,6 @@ footer {
           left: 5px;
           width: 50px;
           height: 124px;
-
           transform: rotate(-110deg);
           transition: all 500ms;
 
@@ -1621,7 +1648,6 @@ footer {
           left: -48px;
           height: 50px;
           width: 135px;
-
           transition: all 200ms;
           transform: rotate(-20deg);
 
@@ -1682,9 +1708,9 @@ footer {
             left: 5px;
             position: absolute;
             transition: all 200ms;
-
             opacity: 0;
             visibility: hidden;
+
             button {
               border: 0;
               background: none;
@@ -1725,12 +1751,14 @@ footer {
             .bump();
           }
         }
+
         .s_select {
           opacity: 1;
           visibility: visible;
           height: 30px;
           padding-right: 30px;
           transition: all 300ms;
+
           button {
             width: 80px;
             height: 30px;
@@ -1811,6 +1839,7 @@ footer {
         bottom: 100px;
         opacity: 1;
         visibility: visible;
+
         li {
           height: 52px;
           .bump();
@@ -1921,6 +1950,7 @@ footer {
     &.lock {
       opacity: 0.5 !important;
     }
+
     &::before {
       content: '\e80b' !important;
     }
@@ -1980,6 +2010,7 @@ footer {
   transform: scale(1);
   opacity: 1;
   transition: all 400ms;
+
   .up {
     opacity: 0;
     transform: scale(1.4);

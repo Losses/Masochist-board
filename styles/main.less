@@ -61,9 +61,10 @@ header {
     transition: all 0.3s;
     position: relative;
 
-    * {
+    > * {
       transform: skew(22.5deg);
     }
+
     li {
       padding: 20px 20px 20px 40px;
       float: left;
@@ -86,14 +87,12 @@ header {
       transform: skew(0deg);
       display: block;
       position: absolute;
-
       transition: all 0.3s ease-in-out;
     }
 
     .high {
       a:link, a:hover, a:visited {
         color: black !important;
-
         transition: all 0.3s ease-in-out;
         -moz-transition: all ease-in-out 0.3s;
       }
@@ -131,7 +130,6 @@ header {
   &:link, &:visited, &:active {
     text-decoration: none;
     color: white;
-
   }
 }
 
@@ -194,11 +192,13 @@ footer {
       * {
         transform: skew(0deg);
       }
+
       li {
         padding: 15px 0 15px 0;
         flex: 1;
         text-align: center;
       }
+
       .highlight {
         height: 51px;
         width: 25% !important;

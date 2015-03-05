@@ -186,8 +186,15 @@ function manageStarter($scope, $http) {
     }
 }
 
-function pluginCtrl($scope, $http, $routeParams) {
-    $scope.content = 'Loading...';
+function pluginCtrl($scope, $http, $routeParams, $sce) {
+    plugin = this;
+    plugin.$scope = $scope;
+    plugin.$http = $http;
+    plugin.$routeParams = $routeParams;
+
+    $scope.response = {};
+    $scope.response.content = 'Loading...';
+
     $http({
         method: 'POST',
         url: 'api/?plugin',
@@ -195,9 +202,10 @@ function pluginCtrl($scope, $http, $routeParams) {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).success(function (response) {
         if (response.message) {
-            $scope.response = 'ERROR:' + response.message;
+            $scope.response.content = 'ERROR:' + response.message;
         } else {
             $scope.response = response;
+            $scope.response.trustedContent = $sce.trustAsHtml(response.content);
         }
     })
 }

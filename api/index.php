@@ -276,7 +276,7 @@ if (isset($_GET['new'])) {
         }
     }
 
-    $plugin->load_hook("HOOK-ALTER_POST");
+    $plugin->load_hook("HOOK-AFTER_POST");
 
     echo json_encode($data);
     exit();

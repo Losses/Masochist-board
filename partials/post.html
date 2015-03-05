@@ -19,9 +19,8 @@
                     <a class='title' href='#/post/{{post.id}}'>{{post.title}}</a>
                     <span class="sage" ng-show="post.sage == 1">SAGE</span>
                 </p>
-                <span class="author">{{post.author}}</span>
+                <span class="author" ng-bind-html="post.author | trustHtml"></span>
                 <article ng-bind-html="post.content | trustHtml">
-                    {{post.content}}
                 </article>
             </div>
         </div>

@@ -64,7 +64,7 @@
         <a class='title' href='#/post/{{post.id}}'>{{post.title}}
             <span class="sage" ng-show="post.sage == 1">SAGE</span>
         </a> <br>
-        <span class="author">{{post.author}}</span>
+        <span class="author" ng-bind-html="post.author | trustHtml"></span>
 
         <input type="checkbox" class="manage_ multi_select" data-post-id="{{post.id}}"/>
     </li>

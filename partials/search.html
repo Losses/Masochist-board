@@ -17,14 +17,14 @@
                 <a class='title' href='#/post/{{result.post.id}}'>{{result.post.title}}</a>
                 <span class="sage" ng-show="post.sage == 1">SAGE</span>
             </p>
-            <span class="author">{{result.post.author}}</span>
+            <span class="author">{{result.post.author | trustHtml}}</span>
             <article ng-bind-html="result.post.content | trustHtml">
                 {{result.post.content}}
             </article>
 
             <ul class="replies clear" ng-if="result.reply.length > 0">
                 <li ng-repeat="reply in result.reply">
-                    <span class="author">{{reply.author}}</span>
+                    <span class="author" ng-bind-html="post.author | trustHtml"></span>
                     <article ng-bind-html="reply.content | trustHtml">
                         {{reply.content}}
                     </article>

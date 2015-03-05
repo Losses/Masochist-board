@@ -146,9 +146,8 @@ function manageStarter($scope, $http) {
             data: $.param({'system_info': ''}),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function (response) {
-            console.log(response);
             $scope.systemInfo = response;
-        })
+        });
     }
 
     if ($('#masochist-manage-style')[0])
@@ -165,6 +164,40 @@ function manageStarter($scope, $http) {
     StyleFix.styleElement(newStyleSheet[0]);
 
     $scope.logout = function () {
-        console.log('!');
+        $http({
+            method: 'POST',
+            url: 'api/?manage',
+            data: $.param({'action': 'logout'}),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function (response) {
+            if (response.code) {
+                losses.global.logined = false;
+                losses.global.$digest();
+            }
+
+            if (response.code == 200) {
+                magicalLocation('#/');
+            } else if (response.message) {
+                publicWarning(response.message);
+            } else {
+                publicWarning(response);
+            }
+        })
     }
+}
+
+function pluginCtrl($scope, $http, $routeParams) {
+    $scope.content = 'Loading...';
+    $http({
+        method: 'POST',
+        url: 'api/?plugin',
+        data: $.param({'plugin_page': $routeParams.pluginAction}),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).success(function (response) {
+        if (response.message) {
+            $scope.response = 'ERROR:' + response.message;
+        } else {
+            $scope.response = response;
+        }
+    })
 }

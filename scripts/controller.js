@@ -185,3 +185,19 @@ function manageStarter($scope, $http) {
         })
     }
 }
+
+function pluginCtrl($scope, $http, $routeParams) {
+    $scope.content = 'Loading...';
+    $http({
+        method: 'POST',
+        url: 'api/?plugin',
+        data: $.param({'plugin_page': $routeParams.pluginAction}),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).success(function (response) {
+        if (response.message) {
+            $scope.content = 'ERROR:' + response.message;
+        } else {
+            $scope.content = response;
+        }
+    })
+}

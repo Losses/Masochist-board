@@ -138,8 +138,7 @@ if (isset($_GET['new'])) {
 
     $_GET['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
 
-    if (isset($_SESSION['logined']) && $_SESSION['logined'] == true)
-    {
+    if (isset($_SESSION['logined']) && $_SESSION['logined'] == true) {
         if (isset($_GET['search'])) {
             $search_key = explode(' ', $_GET['search']);
             $result_key = '';
@@ -507,6 +506,10 @@ if (isset($_GET['new'])) {
             echo json_encode($system_info);
             exit();
         }
+    }
+} elseif (isset($_GET['plugin'])) {
+    if (isset ($_POST['plugin_page'])) {
+        $plugin->load_public_page($_POST['plugin_page']);
     }
 }
 

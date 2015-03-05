@@ -35,7 +35,10 @@ mKnowledge.config(['$routeProvider',
                 templateUrl: 'partials/manage.html',
                 controller: manageStarter
             }).
-            otherwise({redirectTo: '/'});
+            when('/:pluginAction', {
+                templateUrl: 'partials/plugin.html',
+                controller: pluginCtrl
+            });
     }
 ]);
 
@@ -44,6 +47,8 @@ mKnowledge.controller('globalCtrl', globalCtrl);
 mKnowledge.controller('dialogCtrl', dialogCtrl);
 
 mKnowledge.controller('manageCtrl', manageCtrl);
+
+mKnowledge.controller('pluginCtrl', pluginCtrl);
 
 mKnowledge.filter('trustHtml', function ($sce) {
     return function (input) {

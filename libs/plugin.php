@@ -37,10 +37,14 @@ class plugin
                 }
 
                 foreach ($plugin_public_page as $page_name => $file_location) {
-                    $this->config['public_page'][$page_name] = "$file/$file_location";
+                    $this->config['public_page'][$page_name] = [
+                        'page_location' => "$file/$file_location",
+                        'page_dir' => $file
+                    ];
                 }
 
                 $this->config[$plugin_info['IDENTIFICATION']] = $plugin_config;
+                $this->config[$plugin_info['IDENTIFICATION']]['dir_location'] = $file;
             }
         }
     }
@@ -59,10 +63,26 @@ class plugin
         if (!isset($this->config['public_page'][$page_name]))
             response_message(403, "Invalid request.");
 
-        if (!is_file($this->config['public_page'][$page_name]))
+        if (!is_file($this->config['public_page'][$page_name]['page_location']))
             response_message(404, "Can't get the template.");
 
-        echo file_get_contents($this->config['public_page'][$page_name]);
+        $return = [
+            'location' => $this->config['public_page'][$page_name]['page_dir'],
+            'content' => file_get_contents($this->config['public_page'][$page_name]['page_location'])
+        ];
+
+        echo(json_encode($return));
+        exit();
+    }
+
+    public function load_api($plugin_identification)
+    {
+        $api_file_location = $this->config[$plugin_identification]['dir_location'] . '/api.php';
+
+        if (!is_file($api_file_location))
+            response_message(403, 'Api file does not exists');
+
+        require($api_file_location);
         exit();
     }
 }

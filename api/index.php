@@ -510,6 +510,8 @@ if (isset($_GET['new'])) {
 } elseif (isset($_GET['plugin'])) {
     if (isset ($_POST['plugin_page'])) {
         $plugin->load_public_page($_POST['plugin_page']);
+    } else if (isset($_POST['api'])) {
+        $plugin->load_api($_POST['plugin_page']);
     }
 }
 

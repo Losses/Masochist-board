@@ -195,9 +195,9 @@ function pluginCtrl($scope, $http, $routeParams) {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).success(function (response) {
         if (response.message) {
-            $scope.content = 'ERROR:' + response.message;
+            $scope.response = 'ERROR:' + response.message;
         } else {
-            $scope.content = response;
+            $scope.response = response;
         }
     })
 }

@@ -10,13 +10,13 @@ Masochist-board 的代码由这些人编写（姓名首字母排序）：
 
 * Cee Cirno      前端调试、安全     https://plus.google.com/+CeeCirno
 * Losses Don     前端设计、后端     https://plus.google.com/+LossesDon
-* Somin Chan     前端兼容、逻辑     https://plus.google.com/+SimonChan
+* Simon Chan     前端兼容、逻辑     https://plus.google.com/+SimonChan
 * Sky Lark       后端             https://plus.google.com/102946974943755887957
 
 感谢这些人对 Masochist-board的开发提供技术指导
 
 * Miz Cat        http://oekaki.so/
-* TebgAttack     http://tengattack.com/
+* TengAttack     http://tengattack.com/
 
 非常感谢下列作者提供的开源库和作品！
 

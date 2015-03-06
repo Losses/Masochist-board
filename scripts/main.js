@@ -2,42 +2,37 @@
  * Created by Don on 1/31/2015.
  */
 
-(function () {
-    var bodyElement = $('body') /*nxt line*/
-        , headerList = $('header>nav') /*nxt line*/
-        , highlightItem = $('.highlight') /*nxt line*/
-        , timeoutEvent = false;
+/// <reference path="../scripts/libs/jquery.js">
 
-    headerList.delegate('li', 'mouseenter', function () {
+var body = $(document.body);
+var highlight = $(".highlight");
+var nav = $("header > nav");
+nav.find("li").mouseenter((function () {
+    var timeoutId;
+
+    return function () {
         var $this = $(this);
 
-        if (timeoutEvent)
-            clearTimeout(timeoutEvent);
+        if (timeoutId)
+            clearTimeout(timeoutId);
 
-        highlightItem.css('left', $this.position().left);
-        $this.addClass('high');
+        highlight.css("left", $this.position().left).width($this.width());
 
-        if (bodyElement.hasClass('touch_screen')) {
-            timeoutEvent = setTimeout(function () {
-                $this.removeClass('high');
-                highlightItem.css('left', 1000);
-            }, 1500);
+        if (body.hasClass("touch_screen")) {
+            timeoutId = setTimeout(function () {
+                highlight.css("left", 1000);
+            }, 500);
         }
-    }).delegate('li', 'mouseleave', function () {
-        $(this).removeClass('high');
-    });
+    }
+})());
+nav.mouseleave(function () {
+    if (!body.hasClass("touch_screen"))
+        highlight.css("left", 1000);
+});
 
-    $('nav').on('mouseleave', function (event) {
-        highlightItem.css('left', 1000);
-
-        event.stopPropagation();
-        event.preventDefault();
-    });
-
-    $('#close').on('click', function () {
-        $('#highlight').slideUp();
-    })
-})();
+$('#close').on('click', function () {
+    $('#highlight').slideUp();
+})
 
 $(function () {
     var hintElement = $('<span>').addClass('s-tooltip').text('STooltip by Losses Don');

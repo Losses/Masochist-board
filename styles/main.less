@@ -36,78 +36,6 @@ html, body {
   clear: both;
 }
 
-header {
-  background: linear-gradient(to bottom, #5c00ff, #410cc7);
-  min-height: 200px;
-  color: white;
-  transition: all 300ms;
-  position: relative;
-
-  a {
-    &:visited, &:link {
-      color: white;
-      text-decoration: none;
-      border-bottom: 1px white dashed;
-    }
-  }
-
-  nav {
-    background: #3e00a4;
-    margin-top: 20px;
-    margin-right: -40px;
-    padding-right: 60px;
-    float: right;
-    transform: skew(-22.5deg);
-    transition: all 0.3s;
-    position: relative;
-
-    > * {
-      transform: skew(22.5deg);
-    }
-
-    li {
-      padding: 20px 20px 20px 40px;
-      float: left;
-      transition: all 0.3s ease-in-out;
-
-      a {
-        &:link {
-          color: white;
-          border: none;
-          text-decoration: none;
-        }
-      }
-    }
-
-    .highlight {
-      width: 85px;
-      height: 62px;
-      left: 1000px;
-      background: #fdd000;
-      transform: skew(0deg);
-      display: block;
-      position: absolute;
-      transition: all 0.3s ease-in-out;
-    }
-
-    .high {
-      a:link, a:hover, a:visited {
-        color: black !important;
-        transition: all 0.3s ease-in-out;
-        -moz-transition: all ease-in-out 0.3s;
-      }
-    }
-
-    &::after {
-      width: 0;
-      height: 0;
-      content: "\feff";
-      display: block;
-      clear: both;
-    }
-  }
-}
-
 .button {
   top: -2px;
   border: 1px white solid !important;
@@ -133,26 +61,6 @@ header {
   }
 }
 
-#intro {
-  left: 0;
-  top: 50px;
-  width: 40%;
-  height: 158px;
-  text-align: center;
-  position: absolute;
-  transition: left ease-in-out 0.5s;
-
-  h1 {
-    font-size: 40px;
-    line-height: 60px;
-  }
-
-  .subtitle {
-    font-size: 15px;
-    line-height: 40px;
-  }
-}
-
 .blank {
   height: 390px;
   display: none;
@@ -174,36 +82,6 @@ footer {
 
     &:hover {
       color: #3c324d;
-    }
-  }
-}
-
-@media only screen and (max-width: 530px) {
-  header {
-    nav {
-      width: 100%;
-      margin-top: 0;
-      margin-right: 0;
-      padding-right: 0;
-      transform: skew(0deg);
-      display: flex;
-      flex-flow: row;
-
-      * {
-        transform: skew(0deg);
-      }
-
-      li {
-        padding: 15px 0 15px 0;
-        flex: 1;
-        text-align: center;
-      }
-
-      .highlight {
-        height: 51px;
-        width: 25% !important;
-        padding-top: 1px;
-      }
     }
   }
 }

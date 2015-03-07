@@ -1,14 +1,5 @@
 @import url("webfonts/webfont.css");
-
-// Generate general transitions.
-// For multiple properties, pass as `.transition(A, B, C;)`.
-// Note the last semicolon must be presented,
-// or LESS will treat `A`, `B`, `C` as separate parameters.
-.transition(@property) {
-    transition-property: @property;
-    transition-duration: 300ms;
-    transition-timing-function: ease-in-out;
-}
+@import "function.less";
 
 header {
     .transition(height);

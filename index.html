@@ -25,6 +25,7 @@
     <link type="text/css" rel="stylesheet" href="styles/main.css" />
     <link type="text/css" rel="stylesheet" href="styles/nav.css" />
     <link type="text/css" rel="stylesheet" href="styles/board.css" />
+    <link type="text/css" rel="stylesheet" href="styles/dialog.css" />
     <link type="text/css" rel="stylesheet" href="styles/emoji.css" data-noprefix />
     <title>{{title}}Masochist-board</title>
 </head>
@@ -63,7 +64,6 @@
                     <input type='text' name='upid' value="0" style='display:none' />
 
                     <div class="dialog_head">
-
                         <div class="s_select post_category">
                             <input class="select_rebuild" name="category" readonly value="1" />
                             <button class="s_choosen">{{categories[firstCategoryKey].name}}</button>
@@ -75,27 +75,55 @@
                                 </li>
                             </ul>
                         </div>
-
-                        <input class='right' type='text' name='title' placeholder="标题" />
+                        <input type='text' name='title' placeholder="标题" />
                         <label class="checkbox_rebuild">
-                            SAGE<input type="checkbox" name="sage" class="checkbox_rebuild"
-                                       value="1">
+                            SAGE
+                            <input type="checkbox" name="sage" class="checkbox_rebuild" value="1">
                         </label>
+                        <i class="icon-cancel close_dialog"></i>
                     </div>
 
-                    <textarea name='content'></textarea>
+                    <div class="content">
+                        <textarea name='content'></textarea>
+                        <div class="icon_group">
+                            <div class="extend">
+                                <div class="upload_warp">
+                                    <div class="image_preview"></div>
+                                    <div class="upload_cancel icon_cotainer">
+                                        <button class="icon-cancel remove_image colorful_icon"></button>
+                                    </div>
+                                    <div class="hint"></div>
+                                    <div class="icon_cotainer">
+                                        <button class="icon-picture upload_image colorful_icon"></button>
+                                        <input type='file' name='image' id='upload_image_active'
+                                               accept="image/gif, image/jpeg, image/svg+xml, image/bmp, image/wbmp, image/png" />
+                                    </div>
+                                </div>
+
+                                <div class="icon_cotainer">
+                                    <button class="icon-smile emoji_button colorful_icon"></button>
+                                </div>
+                            </div>
+                            <div>
+                                <button type='submit' class="post_submit icon-"></button>
+                            </div>
+                        </div>
+                    </div>
 
                     <div id="emoji_box">
-                        <ul ng-repeat="group in groups" class="clear g-{{group.name}}">
-                            <li ng-repeat="emoji in group.emoji">
-                                <button class="emoji {{emoji.value}}" data-value="{{emoji.name}}"></button>
-                            </li>
-                        </ul>
+                        <div class="wrapper">
+                            <ul ng-repeat="group in groups" class="clear g-{{group.name}}">
+                                <li ng-repeat="emoji in group.emoji">
+                                    <button class="emoji {{emoji.value}}" data-value="{{emoji.name}}"></button>
+                                </li>
+                            </ul>
+                        </div>
                         <nav class="group_select clear">
                             <ul>
                                 <li ng-repeat="group in groups">
                                     <i class="emotion_name icon-{{group.name}}" data-group-name="g-{{group.name}}"></i>
                                 </li>
+                                <li class="space"></li>
                                 <li class="cancel">
                                     <i class="icon-cancel"></i>
                                 </li>
@@ -104,31 +132,7 @@
                     </div>
 
                     <!button class='icon-menu'><!/button>
-                    <div class="icon_group">
-                        <div class="extend">
-                            <div class="upload_warp">
-                                <div class="image_preview"></div>
-                                <div class="upload_cancel icon_cotainer">
-                                    <button class="icon-cancel remove_image colorful_icon"></button>
-                                </div>
-                                <div class="hint"></div>
-                                <div class="icon_cotainer">
-                                    <button class="icon-picture upload_image colorful_icon"></button>
-                                    <input type='file' name='image' id='upload_image_active' />
-                                </div>
-                            </div>
-
-                            <div class="icon_cotainer">
-                                <button class="icon-smile emoji_button colorful_icon"></button>
-                            </div>
-                        </div>
-                        <div>
-                            <button type='submit' class="post_submit icon-"></button>
-                        </div>
-                    </div>
                 </form>
-
-                <i class="icon-cancel close_dialog"></i>
             </div>
 
             <div class="float_icon" id="new_post" ng-controller="manageCtrl">

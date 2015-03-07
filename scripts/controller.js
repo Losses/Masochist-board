@@ -90,6 +90,7 @@ function postCtrl($http, $scope, $rootScope, $routeParams) {
     function switchTitle() {
         var title;
         if ($routeParams.categoryId) {
+            console.log('a');
             title = $scope.categories[$routeParams.categoryId].name + ' - ';
             $rootScope.canPost = 'show';
             $rootScope.currentCategoryKey = $routeParams.categoryId;
@@ -102,7 +103,7 @@ function postCtrl($http, $scope, $rootScope, $routeParams) {
         } else {
             title = '';
             $rootScope.canPost = 'show';
-            $rootScope.currentCategoryKey = $routeParams.firstCategoryKey;
+            $rootScope.currentCategoryKey = $rootScope.firstCategoryKey;
         }
 
         $rootScope.title = title + 'Masochist-board';

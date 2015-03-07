@@ -14,7 +14,11 @@
         if (timeoutEvent)
             clearTimeout(timeoutEvent);
 
-        highlightItem.css('left', $this.position().left);
+        highlightItem.css({
+            'left': $this.position().left,
+            'width': $this.width() + 55
+        });
+
         $this.addClass('high');
 
         if (bodyElement.hasClass('touch_screen')) {

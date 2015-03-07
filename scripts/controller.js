@@ -87,15 +87,18 @@ function postCtrl($http, $scope, $rootScope, $routeParams) {
     }
 
     function switchTitle() {
+        var title;
         if ($routeParams.categoryId) {
-            $rootScope.title = $scope.categories[$routeParams.categoryId - 1].name + ' - ';
+            title = $scope.categories[$routeParams.categoryId].name + ' - ';
         } else if ($routeParams.searchKey) {
-            $rootScope.title = "搜索：" + $routeParams.searchKey + ' - ';
+            title = "搜索：" + $routeParams.searchKey + ' - ';
         } else if ($routeParams.postId) {
-            $rootScope.title = $scope.posts[0].title + ' - ';
+            title = $scope.posts[0].title + ' - ';
         } else {
-            $rootScope.title = '';
+            title = '';
         }
+
+        $rootScope.title = title + 'Masochist-board';
     }
 
     $(window).off('scroll.globalScroll')

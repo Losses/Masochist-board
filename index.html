@@ -33,8 +33,7 @@
     <script src="scripts/controller.js"></script>
     <script src="scripts/prefixfree.min.js"></script>
     <script src="scripts/custom.js"></script>
-    <title>Masochist-board</title>
-    <title>{{title}}Masochist-board</title>
+    <title ng-bind="title">Masochist-board</title>
 </head>
 <body ng-controller="globalCtrl"
       ng-class="{ post_page: router.postId, manage_login:router.manageAction == 'login'}">

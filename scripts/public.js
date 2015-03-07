@@ -84,10 +84,6 @@ function processPageElement(routerResult) {
 
     if (routerResult.searchKey) {
         $('input[name="search"]').val(routerResult.searchKey);
-
-        $('.search').addClass('extend');
-    } else {
-        $('.search').removeClass('extend');
     }
 
     setTimeout(function () {

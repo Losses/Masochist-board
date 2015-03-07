@@ -36,8 +36,6 @@
             }
 
             .close_dialog {
-                .transition(opacity, transform;);
-                opacity: 0;
                 display: none;
                 width: 15px;
                 height: 15px;
@@ -46,7 +44,6 @@
                 cursor: pointer;
 
                 @media only screen and (max-width: 550px) {
-                    opacity: 1;
                     display: block;
                 }
             }
@@ -503,5 +500,31 @@
 
     .author {
         font-size: 13px;
+    }
+}
+
+.touch_screen {
+    #post_dialog form {
+        .dialog_head .close_dialog {
+            display: block;
+        }
+
+        .content .post_submit {
+            &.lock {
+                opacity: 0.5 !important;
+            }
+
+            &::before {
+                content: '\e80b' !important;
+            }
+        }
+    }
+
+    &.post_page #post_dialog form .dialog_head {
+        display: flex;
+
+        *:not(.close_dialog) {
+            visibility: hidden;
+        }
     }
 }

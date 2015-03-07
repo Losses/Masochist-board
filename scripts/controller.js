@@ -2,19 +2,19 @@
  * Created by Don on 2/15/2015.
  */
 
-function globalCtrl($scope, $http, $routeParams) {
-    losses.global = $scope;
-    $scope.reloadCate = loadCate;
-    $scope.router = $routeParams;
-    $scope.categories = {};
+function globalCtrl($rootScope, $scope, $http, $routeParams) {
+    losses.global = $rootScope;
+    $rootScope.reloadCate = loadCate;
+    $rootScope.router = $routeParams;
+    $rootScope.categories = {};
 
     function loadCate() {
         $http.get("api/?category")
             .success(function (response) {
                 for (var i = 0; i < response.length; i++) {
-                    $scope.categories[response[i].id] = response[i];
+                    $rootScope.categories[response[i].id] = response[i];
                 }
-                $scope.firstCategoryKey = Object.keys($scope.categories)[0];
+                $rootScope.firstCategoryKey = Object.keys($scope.categories)[0];
 
 
                 setTimeout(checkFunctionMenu, 300);
@@ -31,7 +31,7 @@ function globalCtrl($scope, $http, $routeParams) {
         data: $.param({'check': ''}),
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).success(function (response) {
-        $scope.logined = (response.message);
+        $rootScope.logined = (response.message);
 
         manageLoginProcess();
     });

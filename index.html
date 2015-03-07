@@ -28,7 +28,7 @@
     <link type="text/css" rel="stylesheet" href="styles/dialog.css" />
     <link type="text/css" rel="stylesheet" href="styles/emoji.css" data-noprefix />
     <link type="text/css" rel="stylesheet" href="styles/custom.css" data-noprefix />
-    <title>{{title}}Masochist-board</title>
+    <title ng-bind="title">Masochist-board</title>
 </head>
 <body ng-controller="globalCtrl"
       ng-class="{ post_page: router.postId, manage_login:router.manageAction == 'login'}">
@@ -36,10 +36,10 @@
         <!--[if lt IE 9]>
         <div style="position:fixed;top:0;left:0;right:0;bottom:0;background:black;z-index:999999999;text-align:center;">
             <a href="http://godarkforie.org/upgrade?lang=en">
-                        <img src="http://godarkforie.org/splash/en.jpg" alt="You are using an old version of Internet Explorer" />
+                <img src="http://godarkforie.org/splash/en.jpg" alt="You are using an old version of Internet Explorer" />
             </a>
-                </div>
-            <![endif]-->
+        </div>
+        <![endif]-->
         <header class="clear">
             <nav>
                 <i class="highlight"></i>

@@ -15,6 +15,7 @@ function globalCtrl($rootScope, $scope, $http, $routeParams) {
                     $rootScope.categories[response[i].id] = response[i];
                 }
                 $rootScope.firstCategoryKey = Object.keys($scope.categories)[0];
+                $rootScope.currentCategoryKey = Object.keys($scope.categories)[0];
 
 
                 setTimeout(checkFunctionMenu, 300);
@@ -91,6 +92,7 @@ function postCtrl($http, $scope, $rootScope, $routeParams) {
         if ($routeParams.categoryId) {
             title = $scope.categories[$routeParams.categoryId].name + ' - ';
             $rootScope.canPost = 'show';
+            $rootScope.currentCategoryKey = $routeParams.categoryId;
         } else if ($routeParams.searchKey) {
             title = "搜索：" + $routeParams.searchKey + ' - ';
             $rootScope.canPost = 'hide';
@@ -100,6 +102,7 @@ function postCtrl($http, $scope, $rootScope, $routeParams) {
         } else {
             title = '';
             $rootScope.canPost = 'show';
+            $rootScope.currentCategoryKey = $routeParams.firstCategoryKey;
         }
 
         $rootScope.title = title + 'Masochist-board';

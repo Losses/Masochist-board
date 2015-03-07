@@ -71,8 +71,8 @@
                 <div class="dialog_head">
 
                     <div class="s_select post_category">
-                        <input class="select_rebuild" name="category" readonly value="1"/>
-                        <button class="s_choosen">{{categories[firstCategoryKey].name}}</button>
+                        <input class="select_rebuild" name="category" readonly value="{{currentCategoryKey}}"/>
+                        <button class="s_choosen">{{categories[currentCategoryKey].name}}</button>
                         <ul class="s_select_body">
                             <li ng-repeat="category in categories | object2Array"
                                 ng-if="(category.hide == 0) || logined"
@@ -152,8 +152,8 @@
                     <button class="icon-transport move" data-title="将该 PO 转移到其他分类"></button>
                     <div class="transport_select_warp">
                         <div class="s_select transport_category">
-                            <input class="select_rebuild" name="manage_transform" readonly value="1"/>
-                            <button class="s_choosen">{{categories[firstCategoryKey].name}}</button>
+                            <input class="select_rebuild" name="manage_transform" readonly value="{{currentCategoryKey}}"/>
+                            <button class="s_choosen">{{categories[currentCategoryKey].name}}</button>
                             <div class="s_select_body_warp">
                                 <ul class="s_select_body">
                                     <li ng-repeat="category in categories | object2Array"

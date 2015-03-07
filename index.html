@@ -133,7 +133,8 @@
             <i class="icon-cancel close_dialog"></i>
         </div>
 
-        <div class="float_icon" id="new_post" ng-controller="manageCtrl">
+        <div class="float_icon" id="new_post"
+             ng-controller="manageCtrl" ng-class="canPost">
             <ul class="manage_menu manage_">
                 <li class="delete_warp">
                     <button class="icon-trash delete" data-title="删除该 PO"></button>

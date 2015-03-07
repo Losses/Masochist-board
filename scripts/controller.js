@@ -90,12 +90,16 @@ function postCtrl($http, $scope, $rootScope, $routeParams) {
         var title;
         if ($routeParams.categoryId) {
             title = $scope.categories[$routeParams.categoryId].name + ' - ';
+            $rootScope.canPost = 'show';
         } else if ($routeParams.searchKey) {
             title = "搜索：" + $routeParams.searchKey + ' - ';
+            $rootScope.canPost = 'hide';
         } else if ($routeParams.postId) {
             title = $scope.posts[0].title + ' - ';
+            $rootScope.canPost = 'show';
         } else {
             title = '';
+            $rootScope.canPost = 'show';
         }
 
         $rootScope.title = title + 'Masochist-board';
@@ -132,7 +136,8 @@ function dialogCtrl($http, $scope) {
         });
 }
 
-function manageCtrl($scope) {
+function manageCtrl($scope, $rootScope) {
+    $rootScope.canPost = 'hide';
     losses.scope.manage = $scope;
 }
 
@@ -141,7 +146,8 @@ function loginJumper() {
     location.reload();
 }
 
-function manageStarter($scope, $http, $routeParams) {
+function manageStarter($scope, $http, $routeParams, $rootScope) {
+    $rootScope.canPost = 'hide';
     if ($('#masochist-manage-style')[0])
         return true;
 

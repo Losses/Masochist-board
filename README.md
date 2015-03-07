@@ -20,8 +20,8 @@ Masochist-board 的代码由这些人编写（姓名首字母排序）：
 
 感谢这些人对 Masochist-board 的美工方面鼎力协助
 
-*かぐや           http://oekaki.so/?p=douga&spec=m_profile&id=7015
-*影舞出云         http://oekaki.so/?p=douga&spec=m_profile&id=64683
+* かぐや           http://oekaki.so/?p=douga&spec=m_profile&id=7015
+* 影舞出云         http://oekaki.so/?p=douga&spec=m_profile&id=64683
 
 非常感谢下列作者提供的开源库和作品！
 

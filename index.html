@@ -27,18 +27,19 @@
     <link type="text/css" rel="stylesheet" href="styles/board.css" />
     <link type="text/css" rel="stylesheet" href="styles/dialog.css" />
     <link type="text/css" rel="stylesheet" href="styles/emoji.css" data-noprefix />
+    <link type="text/css" rel="stylesheet" href="styles/custom.css" data-noprefix />
     <title>{{title}}Masochist-board</title>
 </head>
 <body ng-controller="globalCtrl"
       ng-class="{ post_page: router.postId, manage_login:router.manageAction == 'login'}">
     <div class="wrap">
         <!--[if lt IE 9]>
-            <div style="position:fixed;top:0;left:0;right:0;bottom:0;background:black;z-index:999999999;text-align:center;">
-                <a href="http://godarkforie.org/upgrade?lang=en">
-                    <img src="http://godarkforie.org/splash/en.jpg" alt="You are using an old version of Internet Explorer" />
-                </a>
-            </div>
-        <![endif]-->
+        <div style="position:fixed;top:0;left:0;right:0;bottom:0;background:black;z-index:999999999;text-align:center;">
+            <a href="http://godarkforie.org/upgrade?lang=en">
+                        <img src="http://godarkforie.org/splash/en.jpg" alt="You are using an old version of Internet Explorer" />
+            </a>
+                </div>
+            <![endif]-->
         <header class="clear">
             <nav>
                 <i class="highlight"></i>
@@ -65,8 +66,8 @@
 
                     <div class="dialog_head">
                         <div class="s_select post_category">
-                            <input class="select_rebuild" name="category" readonly value="1" />
-                            <button class="s_choosen">{{categories[firstCategoryKey].name}}</button>
+                            <input class="select_rebuild" name="category" readonly value="{{currentCategoryKey}}" />
+                            <button class="s_choosen">{{categories[currentCategoryKey].name}}</button>
                             <ul class="s_select_body">
                                 <li ng-repeat="category in categories | object2Array"
                                     ng-if="(category.hide == 0) || logined"
@@ -135,7 +136,8 @@
                 </form>
             </div>
 
-            <div class="float_icon" id="new_post" ng-controller="manageCtrl">
+            <div class="float_icon" id="new_post"
+                 ng-controller="manageCtrl" ng-class="canPost">
                 <ul class="manage_menu manage_">
                     <li class="delete_warp">
                         <button class="icon-trash delete" data-title="删除该 PO"></button>
@@ -153,8 +155,8 @@
                         <button class="icon-transport move" data-title="将该 PO 转移到其他分类"></button>
                         <div class="transport_select_warp">
                             <div class="s_select transport_category">
-                                <input class="select_rebuild" name="manage_transform" readonly value="1" />
-                                <button class="s_choosen">{{categories[firstCategoryKey].name}}</button>
+                                <input class="select_rebuild" name="manage_transform" readonly value="{{currentCategoryKey}}" />
+                                <button class="s_choosen">{{categories[currentCategoryKey].name}}</button>
                                 <div class="s_select_body_warp">
                                     <ul class="s_select_body">
                                         <li ng-repeat="category in categories | object2Array"
@@ -174,7 +176,8 @@
                     </li>
 
                     <li>
-                        <button class="icon-sage sage confirm_sage" data-title="Sage 该 PO" data-manage-action="sage"></button>
+                        <button class="icon-sage sage confirm_sage" data-title="Sage 该 PO"
+                                data-manage-action="sage"></button>
                     </li>
                 </ul>
                 <i class="icon-pencil"></i>
@@ -183,7 +186,7 @@
             <div class="loading_spin">
                 <div class="background"></div>
                 <svg class="circular">
-                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10" />
+                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"></circle>
                 </svg>
             </div>
 
@@ -198,7 +201,7 @@
     </div>
     <footer>
         <p>Powered by <a href="https://github.com/Losses/Masochist-board">Masochist-board</a>
-        <p>Designed By <a href="https://plus.google.com/u/0/+LossesDon/posts">Losses Don</a>, Programmed By <a href="https://plus.google.com/+SkyLark2333">Sky Lark</a>
+        <p>Designed By <a href="https://google.com/+LossesDon">Losses Don</a>, Programmed By <a href="https://google.com/+SkyLark2333">Sky Lark</a>
     </footer>
     <script src="scripts/offline.js"></script>
 
@@ -208,8 +211,8 @@
     <script src="scripts/libs/jquery.mousewheel.min.js"></script>
     <script src="scripts/libs/angular.min.js"></script>
     <script src="scripts/libs/angular-route.min.js"></script>
+    <script src="scripts/libs/prefixfree.min.js"></script>
     <script src="scripts/controller.js"></script>
-    <script src="scripts/prefixfree.min.js"></script>
     <script src="scripts/main.js"></script>
     <script src="scripts/public.js"></script>
 </body>

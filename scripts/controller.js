@@ -2,19 +2,20 @@
  * Created by Don on 2/15/2015.
  */
 
-function globalCtrl($scope, $http, $routeParams) {
-    losses.global = $scope;
-    $scope.reloadCate = loadCate;
-    $scope.router = $routeParams;
-    $scope.categories = {};
+function globalCtrl($rootScope, $scope, $http, $routeParams) {
+    losses.global = $rootScope;
+    $rootScope.reloadCate = loadCate;
+    $rootScope.router = $routeParams;
+    $rootScope.categories = {};
 
     function loadCate() {
         $http.get("api/?category")
             .success(function (response) {
                 for (var i = 0; i < response.length; i++) {
-                    $scope.categories[response[i].id] = response[i];
+                    $rootScope.categories[response[i].id] = response[i];
                 }
-                $scope.firstCategoryKey = Object.keys($scope.categories)[0];
+                $rootScope.firstCategoryKey = Object.keys($scope.categories)[0];
+                $rootScope.currentCategoryKey = Object.keys($scope.categories)[0];
 
 
                 setTimeout(checkFunctionMenu, 300);
@@ -31,7 +32,7 @@ function globalCtrl($scope, $http, $routeParams) {
         data: $.param({'check': ''}),
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).success(function (response) {
-        $scope.logined = (response.message);
+        $rootScope.logined = (response.message);
 
         manageLoginProcess();
     });
@@ -87,15 +88,25 @@ function postCtrl($http, $scope, $rootScope, $routeParams) {
     }
 
     function switchTitle() {
+        var title;
         if ($routeParams.categoryId) {
-            $rootScope.title = $scope.categories[$routeParams.categoryId - 1].name + ' - ';
+            console.log('a');
+            title = $scope.categories[$routeParams.categoryId].name + ' - ';
+            $rootScope.canPost = 'show';
+            $rootScope.currentCategoryKey = $routeParams.categoryId;
         } else if ($routeParams.searchKey) {
-            $rootScope.title = "搜索：" + $routeParams.searchKey + ' - ';
+            title = "搜索：" + $routeParams.searchKey + ' - ';
+            $rootScope.canPost = 'hide';
         } else if ($routeParams.postId) {
-            $rootScope.title = $scope.posts[0].title + ' - ';
+            title = $scope.posts[0].title + ' - ';
+            $rootScope.canPost = 'show';
         } else {
-            $rootScope.title = '';
+            title = '';
+            $rootScope.canPost = 'show';
+            $rootScope.currentCategoryKey = $rootScope.firstCategoryKey;
         }
+
+        $rootScope.title = title + 'Masochist-board';
     }
 
     $(window).off('scroll.globalScroll')
@@ -129,27 +140,18 @@ function dialogCtrl($http, $scope) {
         });
 }
 
-function manageCtrl($scope) {
+function manageCtrl($scope, $rootScope) {
+    $rootScope.canPost = 'hide';
     losses.scope.manage = $scope;
 }
 
-function manageStarter($scope, $http) {
-    if (!$scope.logined) {
-        history.replaceState('', 'Masochist-board 管理员登录', '#/manage/login');
-        callManageDialog(true);
-    } else {
-        history.replaceState('', 'Masochist-board 管理员控制面板', '#/manage/status');
+function loginJumper() {
+    history.replaceState('', 'Masochist-board 管理员登录', '#/manage/login');
+    location.reload();
+}
 
-        $http({
-            method: 'POST',
-            url: 'api/?manage',
-            data: $.param({'system_info': ''}),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).success(function (response) {
-            $scope.systemInfo = response;
-        });
-    }
-
+function manageStarter($scope, $http, $routeParams, $rootScope) {
+    $rootScope.canPost = 'hide';
     if ($('#masochist-manage-style')[0])
         return true;
 
@@ -162,6 +164,7 @@ function manageStarter($scope, $http) {
     $('head').append(newStyleSheet);
 
     StyleFix.styleElement(newStyleSheet[0]);
+
 
     $scope.logout = function () {
         $http({
@@ -183,6 +186,24 @@ function manageStarter($scope, $http) {
                 publicWarning(response);
             }
         })
+    };
+
+    if (!$scope.logined) {
+        history.replaceState('', 'Masochist-board 管理员登录', '#/manage/login');
+        callManageDialog(true);
+    } else {
+        if ($routeParams.manageAction !== 'status') {
+            history.replaceState('', 'Masochist-board 管理员登录', '#/manage/status');
+            location.reload();
+        }
+        $http({
+            method: 'POST',
+            url: 'api/?manage',
+            data: $.param({'system_info': ''}),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function (response) {
+            $scope.systemInfo = response;
+        });
     }
 }
 

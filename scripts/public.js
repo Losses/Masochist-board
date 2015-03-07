@@ -29,7 +29,7 @@ mKnowledge.config(['$routeProvider',
             }).
             when('/manage', {
                 templateUrl: 'partials/manage.html',
-                controller: manageStarter
+                controller: loginJumper
             }).
             when('/manage/:manageAction', {
                 templateUrl: 'partials/manage.html',
@@ -84,10 +84,6 @@ function processPageElement(routerResult) {
 
     if (routerResult.searchKey) {
         $('input[name="search"]').val(routerResult.searchKey);
-
-        $('.search').addClass('extend');
-    } else {
-        $('.search').removeClass('extend');
     }
 
     setTimeout(function () {

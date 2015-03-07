@@ -5,4 +5,8 @@
 /upload/*.png
 /upload/*.gif
 /backup/*/*
+/styles/custom.less
+/styles/custom.css
+/scripts/custom.js
+/images/custom/*
 /plugins

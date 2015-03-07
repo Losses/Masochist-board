@@ -13,10 +13,15 @@ Masochist-board 的代码由这些人编写（姓名首字母排序）：
 * Simon Chan     前端兼容、逻辑     https://google.com/+SimonChan
 * Sky Lark       后端              https://google.com/+SkyLark2333
 
-感谢这些人对 Masochist-board的开发提供技术指导
+感谢这些人对 Masochist-board 的开发提供技术指导
 
 * Miz Cat        http://oekaki.so/
 * TengAttack     http://tengattack.com/
+
+感谢这些人对 Masochist-board 的美工方面鼎力协助
+
+* かぐや           http://oekaki.so/?p=douga&spec=m_profile&id=7015
+* 影舞出云         http://oekaki.so/?p=douga&spec=m_profile&id=64683
 
 非常感谢下列作者提供的开源库和作品！
 
@@ -35,5 +40,7 @@ Masochist-board 的代码由这些人编写（姓名首字母排序）：
 ##受虐狂基金会##
 
 如果您喜欢我们的程序，请考虑为 Masochist Foundation 捐款以资助我们维持项目组的各项花销。
+
+捐款方式：支付宝账号 foundation@m-b.science
 
 我们为十元以上的捐款者提供一年的 m-b.science moe4sale.in 二级域名，和@m-b.science邮箱。

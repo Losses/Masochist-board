@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#version 0.6
+#version 0.7
 CACHE:
     scripts/offline.js
     scripts/angular.min.js

@@ -29,7 +29,7 @@ mKnowledge.config(['$routeProvider',
             }).
             when('/manage', {
                 templateUrl: 'partials/manage.html',
-                controller: manageStarter
+                controller: loginJumper
             }).
             when('/manage/:manageAction', {
                 templateUrl: 'partials/manage.html',

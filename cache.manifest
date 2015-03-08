@@ -3,13 +3,13 @@ CACHE MANIFEST
 #refresh date: 2015-03-08 12:38
 CACHE:
     scripts/offline.js
-    scripts/angular.min.js
-    scripts/angular-route.min.js
-    scripts/jquery.js
-    scripts/jquery.form.min.js
-    scripts/jquery.mousewheel.min.js
-    scripts/md5.min.js
-    scripts/prefixfree.min.js
+    scripts/libs/angular.min.js
+    scripts/libs/angular-route.min.js
+    scripts/libs/jquery.js
+    scripts/libs/jquery.form.min.js
+    scripts/libs/jquery.mousewheel.min.js
+    scripts/libs/md5.min.js
+    scripts/libs/prefixfree.min.js
     fonts/SourceSansPro-Bold.ttf
     fonts/SourceSansPro-Light.ttf
     fonts/SourceSansPro-Regular.ttf

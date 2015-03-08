@@ -65,7 +65,7 @@
 .icon-comment:before { content: '\e80c'; } /* '' */
 .icon-menu:before { content: '\e80d'; } /* '' */
 .icon-transport:before { content: '\e80e'; } /* '' */
-.icon-tool:before { content: '\e80f'; } /* '' */
+.icon-tool:before,.icon-tools:before { content: '\e80f'; } /* '' */
 .icon-humen:before { content: '\e810'; } /* '' */
 .icon-cloud:before { content: '\e811'; } /* '' */
 .icon-sociaty:before { content: '\e812'; } /* '' */
@@ -88,3 +88,4 @@
 .icon-sage:before { content: '\e820'; } /* '' */
 .icon-minus-circled:before { content: '\e822'; } /* '' */
 .icon-plus-circled:before { content: '\e823'; } /* '' */
+.icon-leaf:before,.icon-natural:before { content: '\e825'; } /* '' */

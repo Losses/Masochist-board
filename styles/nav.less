@@ -40,6 +40,11 @@ header {
             }
         }
 
+        a:link, a:visited {
+            color: white;
+            border: none;
+        }
+
         li {
             float: left;
 
@@ -52,8 +57,6 @@ header {
                 .transition(color);
 
                 &:link, &:visited {
-                    color: white;
-                    border: none;
                     text-decoration: none;
                     display: block;
                     transform: skew(22.5deg);
@@ -72,7 +75,7 @@ header {
         }
 
         .highlight {
-            .transition(left);
+            .transition(left, width;);
             height: 61px;
             left: 1000px;
             background: #fdd000;

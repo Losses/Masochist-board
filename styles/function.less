@@ -10,6 +10,18 @@
 @lighterColor: #d7cceb;
 @lightestColor: #ece8f5;
 
+.flex-box(@direction: row, @wrap: nowrap) {
+    display: flex;
+    display: -webkit-flex;
+    flex-flow: @direction @wrap;
+    -webkit-flex-flow: @direction @wrap;
+}
+
+.flex(@grow: 1) {
+    flex: @grow;
+    -webkit-flex: @grow;
+}
+
 // Generate general transitions.
 // For multiple properties, pass as `.transition(A, B, C;)`.
 // Note the last semicolon must be presented,
@@ -66,10 +78,11 @@
     }
 }
 
-.padding_box() {
+.padding-box(@padding: 0) {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    padding: @padding;
 }
 
 .drop_shadow(@level: 1) {

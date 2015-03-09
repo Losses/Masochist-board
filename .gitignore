@@ -9,4 +9,5 @@
 images/custom/*
 styles/custom.less
 styles/custom.css
+styles/custom.css.map
 scripts/custom.js

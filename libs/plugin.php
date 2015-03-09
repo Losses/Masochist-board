@@ -75,6 +75,9 @@ class plugin
         file_put_contents($cache_location, $cache_list_content, LOCK_EX);
 
         for ($h = 2; $h < count($plugin_tree); $h++) {
+            if (!is_dir($plugin_tree[$h]))
+                continue;
+
             $dir = "../plugins/$plugin_tree[$h]/custom";
 
             if (!is_dir($dir))

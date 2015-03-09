@@ -16,6 +16,11 @@ header {
         height: 280px;
     }
 
+    a:link, a:visited {
+        color: white;
+        border: none;
+    }
+
     nav {
         .transition(width, margin, padding;);
         background: #3e00a4;
@@ -35,21 +40,15 @@ header {
             transform: skew(0deg);
 
             ul {
-                display: flex;
-                flex-flow: row;
+                .flex-box();
             }
-        }
-
-        a:link, a:visited {
-            color: white;
-            border: none;
         }
 
         li {
             float: left;
 
             @media only screen and (max-width: 530px) {
-                flex: 1;
+                .flex(1);
                 text-align: center;
             }
 

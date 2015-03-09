@@ -21,19 +21,19 @@ $database = new medoo
     [
         'database_type' => 'mysql',
         'database_name' => DB_NAME,
-        'server' => DB_HOST,
-        'username' => DB_USER,
-        'password' => DB_PASSWORD,
-        'port' => DB_PORT,
-        'charset' => 'utf8',
-        'option' => [PDO::ATTR_CASE => PDO::CASE_NATURAL]
+        'server'        => DB_HOST,
+        'username'      => DB_USER,
+        'password'      => DB_PASSWORD,
+        'port'          => DB_PORT,
+        'charset'       => 'utf8',
+        'option'        => [PDO::ATTR_CASE => PDO::CASE_NATURAL]
     ]
 );
 
 $columns_sql = [];
-$where_sql = [];
-$data_sql = [];
-$join_sql = [];
+$where_sql   = [];
+$data_sql    = [];
+$join_sql    = [];
 
 $current_time = $database->query('SELECT NOW()')->fetchAll()[0][0];
 
@@ -43,14 +43,14 @@ session_set_cookie_params(31536000);
 session_start();
 
 if (isset($_GET['new'])) {
-    $post_title = isset($_POST['title']) ? $_POST['title'] : '';
-    $post_content = isset($_POST['content']) ? $_POST['content'] : '';
-    $post_upid = isset($_POST['upid']) ? $_POST['upid'] : 0;
-    $post_sage = isset($_POST['sage']) ? 1 : 0;
-    $post_cate = isset($_POST['category']) ? $_POST['category'] : 0;
+    $post_title = isset($_POST['title'])     ? $_POST['title']    : '';
+    $post_content = isset($_POST['content']) ? $_POST['content']  : '';
+    $post_upid = isset($_POST['upid'])       ? $_POST['upid']     : 0;
+    $post_sage = isset($_POST['sage'])       ? 1                  : 0;
+    $post_cate = isset($_POST['category'])   ? $_POST['category'] : 0;
     $post_ip = get_ip_address();
     $post_author = (isset($_SESSION['logined'])
-        && $_SESSION['logined'] == true) ? 'Admin' : 'a person';
+        && $_SESSION['logined'] == true)     ? 'Admin'            : 'a person';
 
     $plugin->load_hook("HOOK-BEFORE_NEW");
 
@@ -81,7 +81,7 @@ if (isset($_GET['new'])) {
     }
 
     if (count($_FILES) > 0) {
-        $type_img = ['image/gif', 'image/jpeg', 'image/svg',
+        $type_img = ['image/gif', 'image/jpeg', 'image/svg+xml',
             'image/bmp', 'image/wbmp', 'image/png'];
 
         if ((in_array($_FILES['image']['type'], $type_img))

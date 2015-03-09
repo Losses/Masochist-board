@@ -78,7 +78,6 @@
                 exit();
             }
             
-            
             $columns_sql = ['sage'];
             $where_sql = ['id[=]' => $post_upid];
             $issage = $database->select('content',
@@ -96,8 +95,7 @@
                 'image/bmp', 'image/wbmp', 'image/png'];
 
             if ((in_array($_FILES['image']['type'], $type_img))
-                && ($_FILES['image']['size'] < 50000000)
-            )
+                && ($_FILES['image']['size'] < 50000000))
             {
                 if ($_FILES['image']['error'])
                 {
@@ -168,22 +166,19 @@
             {
                 $result_key .= '*' . $key . '* ';
             }
-
-            $data = $database->select("content", "*",
-            [
-                "MATCH" =>
-                [
-                    "columns" => ["content", "title"],
-                    "keyword" => "$result_key IN BOOLEAN MODE"
-                ]
-            ]);
-
+            
+            $search_key = $database->quote($result_key);
+            
+            $data = $database->query("SELECT * FROM content
+                                WHERE MATCH (title, content)
+                                AGAINST ($search_key IN BOOLEAN MODE)")
+                                ->fetchAll();
+            
             $search_result = [];
 
             foreach ($data as $result)
             {
-                $search_result[$result['id']] =
-                    ['post' => [], 'reply' => []];
+                $search_result[$result['id']] = ['post' =>  [], 'reply' =>  []];
 
                 if (isset($result['img']) && ($result['img'] != ''))
                 {
@@ -193,30 +188,36 @@
                 if ($result['upid'] == 0)
                 {
                     $search_result[$result['id']]['post'] = $result;
-                } else
+                }
+                else
                 {
                     $search_result[$result['upid']]['reply'][] = $result;
                 }
             }
-
+            
             $sql_condition = ['id' => []];
 
-            foreach ($search_result as $key => $value) {
+            foreach ($search_result as $key => $value)
+            {
                 if (!isset($value['post']))
+                {
                     continue;
-
-                if (count($value['post']) == 0) {
+                }
+                if (count($value['post']) == 0)
+                {
                     $sql_condition['id'][] = $key;
                 }
             }
-
+            
             $plugin_results = [];
 
-            if (count($sql_condition['id']) != 0) {
+            if (count($sql_condition['id']) != 0)
+            {
                 $plugin_results = $database->select('content', '*', $sql_condition);
             }
 
-            foreach ($plugin_results as $result) {
+            foreach ($plugin_results as $result)
+            {
                 $search_result[$result['id']]['post'] = $result;
             }
 

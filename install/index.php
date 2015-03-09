@@ -47,10 +47,10 @@ if (isset($_SESSION['info_catched'])
         <meta name="theme-color" content="#5c00ff">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link type="text/css" rel="stylesheet" href="../styles/main.css"/>
-        <link type="text/css" rel="stylesheet" href="../styles/page.css"/>
+        <link type="text/css" rel="stylesheet" href="../styles/nav.css"/>
         <link type="text/css" rel="stylesheet" href="../styles/board.css"/>
-        <script src="../scripts/jquery.js"></script>
-        <script src="../scripts/prefixfree.min.js"></script>
+        <script src="../scripts/libs/jquery.js"></script>
+        <script src="../scripts/libs/prefixfree.min.js"></script>
         <title>Masochist-board 安装向导</title>
 
         <style>

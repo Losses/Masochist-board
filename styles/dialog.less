@@ -1,10 +1,9 @@
 ﻿@import "function.less";
 
 @dialog-width: 550px;
-@dialog-height: 525px;
 
 #post_dialog {
-    .card(@dialog-width, @dialog-height);
+    .card(@dialog-width, 510px);
     overflow: hidden;
     z-index: 5;
 
@@ -65,19 +64,20 @@
         }
 
         .content {
-            .padding_box();
-            padding: 20px;
             position: relative;
-            width: 100%;
             flex: 1;
 
             textarea {
                 overflow-y: auto;
-                width: 100%;
-                height: 100%;
                 border: 0;
                 font-size: 14px;
                 line-height: 2em;
+                // Fuck Chrome cannot use 100% height directly.
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                .padding_box();
+                padding: 20px;
             }
 
             .icon_group {
@@ -392,23 +392,24 @@
                 }
 
                 li {
-                    .padding_box();
-                    width: 35px;
-                    height: 40px;
-                    padding: 0 2.5px;
+                    .transition(color);
                     color: #5E4092;
-                    font-size: 20px;
-                    line-height: 40px;
-                    transition: all 200ms;
-                    cursor: pointer;
+
+                    i {
+                        display: block;
+                        width: 33px;
+                        height: 40px;
+                        font-size: 20px;
+                        line-height: 40px;
+                        text-align: center;
+                        cursor: pointer;
+                    }
 
                     &:hover {
                         color: #3A265D;
                     }
 
                     &.space {
-                        width: auto;
-                        height: auto;
                         flex: 1;
                     }
 
@@ -427,7 +428,7 @@
     &.fold {
         form {
             #emoji_box {
-                height: 220px;
+                height: 170px;
             }
         }
     }
@@ -435,7 +436,7 @@
 
 .post_page {
     #post_dialog {
-        .card(@dialog-width, @dialog-height - 30px);
+        .card(@dialog-width, 330px);
 
         .dialog_head {
             display: none;

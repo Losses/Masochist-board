@@ -11,13 +11,12 @@
         width: 100%;
         height: 100%;
         font-size: 12px;
-        display: flex;
-        flex-flow: column;
+        .flex-box(column);
 
         .dialog_head {
+            .flex-box();
             padding: 20px 10px;
             border-bottom: 1px solid @lighterColor;
-            display: flex;
 
             > * {
                 margin: 0 10px;
@@ -31,7 +30,7 @@
                 height: 2em;
                 border: none;
                 display: block;
-                flex: 1;
+                .flex(1);
             }
 
             .close_dialog {
@@ -65,7 +64,7 @@
 
         .content {
             position: relative;
-            flex: 1;
+            .flex(1);
 
             textarea {
                 overflow-y: auto;
@@ -76,8 +75,7 @@
                 position: absolute;
                 width: 100%;
                 height: 100%;
-                .padding_box();
-                padding: 20px;
+                .padding-box(20px);
             }
 
             .icon_group {
@@ -325,11 +323,10 @@
         #emoji_box {
             .transition(height);
             height: 0;
-            display: flex;
-            flex-flow: column;
+            .flex-box(column);
 
             .wrapper {
-                flex: 1;
+                .flex(1);
                 position: relative;
 
                 > ul {
@@ -384,11 +381,9 @@
                 background: #c0b5d3;
 
                 > ul {
-                    .padding_box();
+                    .padding-box(0 5px);
+                    .flex-box(row, wrap);
                     width: 100%;
-                    padding: 0 5px;
-                    display: flex;
-                    flex-flow: row wrap;
                 }
 
                 li {
@@ -410,7 +405,7 @@
                     }
 
                     &.space {
-                        flex: 1;
+                        .flex(1);
                     }
 
                     &.cancel {
@@ -444,7 +439,7 @@
 
         @media only screen and (max-width: 550px) {
             .dialog_head {
-                display: flex;
+                .flex-box();
 
                 *:not(.close_dialog) {
                     visibility: hidden;
@@ -522,7 +517,7 @@
     }
 
     &.post_page #post_dialog form .dialog_head {
-        display: flex;
+        .flex-box();
 
         *:not(.close_dialog) {
             visibility: hidden;

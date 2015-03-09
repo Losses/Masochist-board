@@ -728,7 +728,8 @@ function install_mb()
     if (!is_dir($dir))
         mkdir($dir);
 
-    rename('../config.php', "$dir/config.php");
+    if (is_file('../config.php'))
+        rename('../config.php', "$dir/config.php");
 
     $config_content = "
         <?php

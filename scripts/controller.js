@@ -90,7 +90,6 @@ function postCtrl($http, $scope, $rootScope, $routeParams) {
     function switchTitle() {
         var title;
         if ($routeParams.categoryId) {
-            console.log('a');
             title = $scope.categories[$routeParams.categoryId].name + ' - ';
             $rootScope.canPost = 'show';
             $rootScope.currentCategoryKey = $routeParams.categoryId;

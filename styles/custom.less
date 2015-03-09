@@ -1,0 +1,39 @@
+header {
+  background-size: cover;
+  background-position: center;
+  //background-attachment: fixed;
+  position: relative;
+  h1 {
+    text-shadow: 0 0 8px black;
+  }
+  .subtitle {
+    text-shadow: 0 0 2px black, 0 0 2px black, 0 0 2px black, 0 0 2px black;
+  }
+
+  nav {
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  .theme_author {
+    right: 20px;
+    bottom: 10px;
+    border: 0 !important;
+    font-size: 12px;
+    text-shadow: 0 0 2px black, 0 0 2px black, 0 0 2px black;
+    position: absolute;
+    &::before {
+      content: 'By: ';
+    }
+  }
+
+}
+
+.theme_0 {
+  background-image: url('../images/custom/theme_2.png');
+  border-bottom: #132caa solid 4px;
+}
+
+.theme_1 {
+  background-image: url('../images/custom/theme_1.jpg');
+  border-bottom: #5d6896 solid 4px;
+}

@@ -25,7 +25,6 @@ class plugin
             $cache_content = file_get_contents($cache_file_name);
 
             if (trim($plugin_tree_serialize) != trim($cache_content)) {
-                print_r('a');
                 $this->build_cache($plugin_tree, $cache_file_name);
             }
         } else {

@@ -178,7 +178,7 @@
 
             foreach ($data as $result)
             {
-                $search_result[$result['id']] = ['post' =>  [], 'reply' =>  []];
+                $search_result[$result['upid']] = ['post' =>  [], 'reply' =>  []];
 
                 if (isset($result['img']) && ($result['img'] != ''))
                 {

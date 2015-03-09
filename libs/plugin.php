@@ -16,6 +16,22 @@ class plugin
     function __construct()
     {
         $plugin_tree = scandir('../plugins/');
+
+        $plugin_tree_serialize = serialize($plugin_tree);
+        $cache_file_name = '../dbs/plugin_cache';
+        $cache_content = NULL;
+
+        if (is_file($cache_file_name)) {
+            $cache_content = file_get_contents($cache_file_name);
+
+            if (trim($plugin_tree_serialize) != trim($cache_content)) {
+                print_r('a');
+                $this->build_cache($plugin_tree, $cache_file_name);
+            }
+        } else {
+            $this->build_cache($plugin_tree, $cache_file_name);
+        }
+
         $this->config['public_page'] = [];
 
         for ($h = 2; $h < count($plugin_tree); $h++) {
@@ -27,7 +43,7 @@ class plugin
                 $plugin_injector = [];
                 $plugin_public_page = [];
 
-                require_once("$file/config.php");
+                require("$file/config.php");
 
                 foreach ($plugin_injector as $hook_name => $hook_file) {
                     if (!isset($this->plugin_list[$hook_name]))
@@ -46,6 +62,36 @@ class plugin
                 $this->config[$plugin_info['IDENTIFICATION']] = $plugin_config;
                 $this->config[$plugin_info['IDENTIFICATION']]['dir_location'] = $file;
             }
+        }
+    }
+
+    private function build_cache($plugin_tree, $cache_location)
+    {
+        $cache_file_list = ['custom.css', 'custom.js'];
+        $cache_list_content = serialize($plugin_tree);
+        $cache_file_content = [];
+        $cache_file_dir = '../dbs/cache';
+
+        file_put_contents($cache_location, $cache_list_content, LOCK_EX);
+
+        for ($h = 2; $h < count($plugin_tree); $h++) {
+            $dir = "../plugins/$plugin_tree[$h]/custom";
+
+            if (!is_dir($dir))
+                continue;
+
+            for ($g = 0; $g < count($cache_file_list); $g++) {
+                $custom_file_name = "$dir/$cache_file_list[$g]";
+                if (is_file($custom_file_name)) {
+                    $custom_file_content = file_get_contents($custom_file_name);
+                    $cache_file_content[$g][] = "$custom_file_content\n\n";
+                }
+            }
+        }
+
+        for ($g = 0; $g < count($cache_file_list); $g++) {
+            $cache_file = implode($cache_file_content[$g]);
+            file_put_contents("$cache_file_dir/$cache_file_list[$g]", $cache_file);
         }
     }
 

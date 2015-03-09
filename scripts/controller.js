@@ -45,6 +45,8 @@ function postCtrl($http, $scope, $rootScope, $routeParams) {
     losses.scope.postCtrl = $scope;
     processPageElement($scope.router);
 
+    $rootScope.canPost = 'show';
+
     var page = 1
         , loading = false;
 
@@ -91,17 +93,14 @@ function postCtrl($http, $scope, $rootScope, $routeParams) {
         var title;
         if ($routeParams.categoryId) {
             title = $scope.categories[$routeParams.categoryId].name + ' - ';
-            $rootScope.canPost = 'show';
             $rootScope.currentCategoryKey = $routeParams.categoryId;
         } else if ($routeParams.searchKey) {
             title = "搜索：" + $routeParams.searchKey + ' - ';
             $rootScope.canPost = 'hide';
         } else if ($routeParams.postId) {
             title = $scope.posts[0].title + ' - ';
-            $rootScope.canPost = 'show';
         } else {
             title = '';
-            $rootScope.canPost = 'show';
             $rootScope.currentCategoryKey = $rootScope.firstCategoryKey;
         }
 
@@ -206,11 +205,13 @@ function manageStarter($scope, $http, $routeParams, $rootScope) {
     }
 }
 
-function pluginCtrl($scope, $http, $routeParams, $sce) {
+function pluginCtrl($scope, $http, $routeParams, $rootScope, $sce) {
     plugin = this;
     plugin.$scope = $scope;
     plugin.$http = $http;
     plugin.$routeParams = $routeParams;
+
+    $rootScope.canPost = 'hide';
 
     $scope.response = {};
     $scope.response.content = 'Loading...';

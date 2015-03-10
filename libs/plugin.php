@@ -74,7 +74,7 @@ class plugin
         file_put_contents($cache_location, $cache_list_content, LOCK_EX);
 
         for ($h = 2; $h < count($plugin_tree); $h++) {
-            if (!is_dir($plugin_tree[$h]))
+            if (!is_dir("../plugins/$plugin_tree[$h]"))
                 continue;
 
             $dir = "../plugins/$plugin_tree[$h]/custom";
@@ -93,7 +93,7 @@ class plugin
 
         for ($g = 0; $g < count($cache_file_list); $g++) {
             $cache_file = implode($cache_file_content[$g]);
-            file_put_contents("$cache_file_dir/$cache_file_list[$g]", $cache_file);
+            file_put_contents("$cache_file_dir/$cache_file_list[$g]", $cache_file, LOCK_EX);
         }
     }
 

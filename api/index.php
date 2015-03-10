@@ -77,7 +77,7 @@
                 response_message(403, "You need some contents!");
                 exit();
             }
-            
+
             $columns_sql = ['sage'];
             $where_sql = ['id[=]' => $post_upid];
             $issage = $database->select('content',
@@ -126,7 +126,7 @@
         $where_sql = ['id[=]' => $post_cate];
         $is_mute = $database->select('category',
             $columns_sql, $where_sql)[0]['mute'] === '1';
-        if ($is_mute && (!isset($_SESSION['logined']) 
+        if ($is_mute && (!isset($_SESSION['logined'])
             || $_SESSION['logined'] == false))
         {
             response_message(403, "You can't post at mute category!");
@@ -166,14 +166,14 @@
             {
                 $result_key .= '*' . $key . '* ';
             }
-            
+
             $search_key = $database->quote($result_key);
-            
+
             $data = $database->query("SELECT * FROM content
                                 WHERE MATCH (title, content)
                                 AGAINST ($search_key IN BOOLEAN MODE)")
                                 ->fetchAll();
-            
+
             $search_result = [];
             /*
             foreach ($data as $result)
@@ -194,7 +194,7 @@
                     $search_result[$result['upid']]['reply'][] = $result;
                 }
             }
-            
+
             $sql_condition = ['id' => []];
 
             foreach ($search_result as $key => $value)
@@ -208,7 +208,7 @@
                     $sql_condition['id'][] = $key;
                 }
             }
-            
+
             $plugin_results = [];
 
             if (count($sql_condition['id']) != 0)
@@ -221,7 +221,7 @@
                 $search_result[$result['id']]['post'] = $result;
             }
             */
-            
+
             foreach ($data as $result)
             {
                 if ($result['upid'] == 0)
@@ -233,7 +233,7 @@
                     $search_result[$result['upid']]['reply'][] = $result;
                 }
             }
-            
+
             foreach ($search_result as $result)
             {
                 if ($result['reply'] != null && $result['post'] == null)
@@ -253,7 +253,7 @@
                         $database->select('content', '*', $where_sql);
                 }
             }
-            
+
             echo json_encode(array_values($search_result));
             exit();
         }

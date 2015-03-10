@@ -719,6 +719,10 @@
 function masochist_debug($info)
 {
     $date = date('Y-m-d H:i:s');
+
+    if(is_array($info))
+        $info = json_encode($info);
+    
     $write_str = "[$date] $info \n";
     file_put_contents('../dbs/debug_info', $write_str, FILE_APPEND);
 }

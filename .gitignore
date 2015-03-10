@@ -6,7 +6,6 @@
 /upload/*.gif
 /backup/*/*
 /plugins
-/images/custom/*
 /dbs/cache/*.*
 /dbs/debug_info
 /dbs/plugin_cache

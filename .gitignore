@@ -1,0 +1,11 @@
+.git
+.idea
+/config.php
+/upload/*.jpg
+/upload/*.png
+/upload/*.gif
+/backup/*/*
+/plugins
+/dbs/cache/*.*
+/dbs/debug_info
+/dbs/plugin_cache

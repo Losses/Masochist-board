@@ -1,0 +1,78 @@
+@import url('function.less');
+
+.manage_login {
+  .logo {
+    margin: 0 auto;
+    pointer-events: none;
+    display: block;
+  }
+
+  form.card {
+    top: 370px !important;
+    margin-top: 0 !important;
+    position: absolute !important;
+  }
+}
+
+.not_logined {
+  .hint {
+    margin: 140px 0 40px 0;
+    color: #794dcc;
+    font-size: 13px;
+    text-align: right;
+  }
+}
+
+.manager {
+  .logo {
+    margin: 0 auto;
+    pointer-events: none;
+    display: block;
+  }
+
+  .sysinfo {
+    margin: 0 30px 20px 30px;
+    font-size: 14px;
+    line-height: 2em;
+    text-align: center;
+
+    dt {
+      margin-top: 10px;
+      color: #16092d;
+      font-weight: bold;
+
+      &::before, &::after {
+        content: '~';
+      }
+
+      &:nth-of-type(0) {
+        margin-top: -10px;
+      }
+    }
+
+    dd {
+      color: #3c324d;
+    }
+  }
+
+  .logout {
+    border: 0;
+    border-radius: 3px;
+    margin: 0 auto;
+    padding: 10px 50px;
+    background: #f44336;
+    color: white;
+    font-size: 13px;
+    display: block;
+    .drop_shadow(2);
+    transition: all 300ms;
+
+    &:hover {
+      .drop_shadow(3);
+    }
+
+    &:active {
+      .drop_shadow(4);
+    }
+  }
+}

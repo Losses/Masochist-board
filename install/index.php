@@ -436,6 +436,7 @@ if (isset($_SESSION['info_catched'])
 
                         <p class="c<?= is_writable('../') ?>">./</p>
                         <p class="c<?= is_writable('../dbs/') ?>">./dbs</p>
+                        <p class="c<?= is_writable('../dbs/cache') ?>">./dbs/cache</p>
                         <p class="c<?= is_writable('../backup/') ?>">./backup</p>
                         <p class="c<?= is_writable('../upload/') ?>">./upload</p>
 
@@ -443,6 +444,7 @@ if (isset($_SESSION['info_catched'])
                             <?php if (
                                 is_writable('../')
                                 && is_writable('../dbs/')
+                                && is_writable('../dbs/cache')
                                 && is_writable('../upload/')
                                 && is_writable('../backup/')
                             ): ?>

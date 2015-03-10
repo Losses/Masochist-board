@@ -175,53 +175,7 @@
                                 ->fetchAll();
 
             $search_result = [];
-            /*
-            foreach ($data as $result)
-            {
-                $search_result[$result['id']] = ['post' =>  [], 'reply' =>  []];
-
-                if (isset($result['img']) && ($result['img'] != ''))
-                {
-                    $result['img'] = 'upload/' . $result['img'];
-                }
-
-                if ($result['upid'] == 0)
-                {
-                    $search_result[$result['id']]['post'] = $result;
-                }
-                else
-                {
-                    $search_result[$result['upid']]['reply'][] = $result;
-                }
-            }
-
-            $sql_condition = ['id' => []];
-
-            foreach ($search_result as $key => $value)
-            {
-                if (!isset($value['post']))
-                {
-                    continue;
-                }
-                if (count($value['post']) == 0)
-                {
-                    $sql_condition['id'][] = $key;
-                }
-            }
-
-            $plugin_results = [];
-
-            if (count($sql_condition['id']) != 0)
-            {
-                $plugin_results = $database->select('content', '*', $sql_condition);
-            }
-
-            foreach ($plugin_results as $result)
-            {
-                $search_result[$result['id']]['post'] = $result;
-            }
-            */
-
+            
             foreach ($data as $result)
             {
                 if ($result['upid'] == 0)
@@ -233,27 +187,32 @@
                     $search_result[$result['upid']]['reply'][] = $result;
                 }
             }
-
+            
             foreach ($search_result as $result)
             {
                 if ($result['reply'] != null && $result['post'] == null)
                 {
-                    $search_result[$result["reply"][0]['upid']] = ['post' =>  [], 'reply' =>  []];
+                    $search_result[$result['reply'][0]['upid']] =
+                        ['post' =>  [], 'reply' =>  []];
                     $where_sql =
                     [
-                        'id[=]' =>  $result["reply"][0]['upid']
+                        'id[=]' =>  $result['reply'][0]['upid']
                     ];
-                    $search_result[$result["reply"][0]['upid']]['post'] =
+                    $search_result[$result['reply'][0]['upid']]['post'] =
                         $database->select('content', '*', $where_sql)[0];
-                    $where_sql =
-                    [
-                        'id[=]' =>  $result['reply'][0]['id']
-                    ];
-                    $search_result[$result["reply"][0]['upid']]['reply'] =
-                        $database->select('content', '*', $where_sql);
+                    
+                    for ($i=0; $i <= count($result['reply']) - 1; $i++)
+                    {
+                        $where_sql =
+                        [
+                            'id[=]' =>  $result['reply'][$i]['id']
+                        ];
+                        $search_result[$result['reply'][$i]['upid']]['reply'][] =
+                            $database->select('content', '*', $where_sql)[0];
+                    }
                 }
             }
-
+            
             echo json_encode(array_values($search_result));
             exit();
         }

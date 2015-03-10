@@ -77,8 +77,7 @@
                 response_message(403, "You need some contents!");
                 exit();
             }
-            
-            
+
             $columns_sql = ['sage'];
             $where_sql = ['id[=]' => $post_upid];
             $issage = $database->select('content',
@@ -96,8 +95,7 @@
                 'image/bmp', 'image/wbmp', 'image/png'];
 
             if ((in_array($_FILES['image']['type'], $type_img))
-                && ($_FILES['image']['size'] < 50000000)
-            )
+                && ($_FILES['image']['size'] < 50000000))
             {
                 if ($_FILES['image']['error'])
                 {
@@ -128,7 +126,7 @@
         $where_sql = ['id[=]' => $post_cate];
         $is_mute = $database->select('category',
             $columns_sql, $where_sql)[0]['mute'] === '1';
-        if ($is_mute && (!isset($_SESSION['logined']) 
+        if ($is_mute && (!isset($_SESSION['logined'])
             || $_SESSION['logined'] == false))
         {
             response_message(403, "You can't post at mute category!");
@@ -169,57 +167,52 @@
                 $result_key .= '*' . $key . '* ';
             }
 
-            $data = $database->select("content", "*",
-            [
-                "MATCH" =>
-                [
-                    "columns" => ["content", "title"],
-                    "keyword" => "$result_key IN BOOLEAN MODE"
-                ]
-            ]);
+            $search_key = $database->quote($result_key);
+
+            $data = $database->query("SELECT * FROM content
+                                WHERE MATCH (title, content)
+                                AGAINST ($search_key IN BOOLEAN MODE)")
+                                ->fetchAll();
 
             $search_result = [];
-
+            
             foreach ($data as $result)
             {
-                $search_result[$result['id']] =
-                    ['post' => [], 'reply' => []];
-
-                if (isset($result['img']) && ($result['img'] != ''))
-                {
-                    $result['img'] = 'upload/' . $result['img'];
-                }
-
                 if ($result['upid'] == 0)
                 {
                     $search_result[$result['id']]['post'] = $result;
-                } else
+                }
+                else
                 {
                     $search_result[$result['upid']]['reply'][] = $result;
                 }
             }
-
-            $sql_condition = ['id' => []];
-
-            foreach ($search_result as $key => $value) {
-                if (!isset($value['post']))
-                    continue;
-
-                if (count($value['post']) == 0) {
-                    $sql_condition['id'][] = $key;
+            
+            foreach ($search_result as $result)
+            {
+                if ($result['reply'] != null && $result['post'] == null)
+                {
+                    $search_result[$result['reply'][0]['upid']] =
+                        ['post' =>  [], 'reply' =>  []];
+                    $where_sql =
+                    [
+                        'id[=]' =>  $result['reply'][0]['upid']
+                    ];
+                    $search_result[$result['reply'][0]['upid']]['post'] =
+                        $database->select('content', '*', $where_sql)[0];
+                    
+                    for ($i=0; $i <= count($result['reply']) - 1; $i++)
+                    {
+                        $where_sql =
+                        [
+                            'id[=]' =>  $result['reply'][$i]['id']
+                        ];
+                        $search_result[$result['reply'][$i]['upid']]['reply'][] =
+                            $database->select('content', '*', $where_sql)[0];
+                    }
                 }
             }
-
-            $plugin_results = [];
-
-            if (count($sql_condition['id']) != 0) {
-                $plugin_results = $database->select('content', '*', $sql_condition);
-            }
-
-            foreach ($plugin_results as $result) {
-                $search_result[$result['id']]['post'] = $result;
-            }
-
+            
             echo json_encode(array_values($search_result));
             exit();
         }
@@ -606,20 +599,20 @@
             if (isset($_POST['system_info']))
             {
                 if (!$_SESSION['logined'])
-                {
                     response_message(403,
                         'You do not have the permission to access these information.');
 
-                    $system_info =
+                $system_info =
                     [
                         'Current PHP version' => phpversion(),
                         'Current MySQL version' => $database->info()['version'],
                         'Masochist-board version' => MB_VERSION
                     ];
 
-                    echo json_encode($system_info);
-                    exit();
-                }
+                masochist_debug($system_info);
+
+                echo json_encode($system_info);
+                exit();
             }
         }
     }
@@ -681,3 +674,14 @@
 
         return $ipaddress;
     }
+
+function masochist_debug($info)
+{
+    $date = date('Y-m-d H:i:s');
+
+    if(is_array($info))
+        $info = json_encode($info);
+
+    $write_str = "[$date] $info \n";
+    file_put_contents('../dbs/debug_info', $write_str, FILE_APPEND);
+}

@@ -435,12 +435,16 @@ if (isset($_SESSION['info_catched'])
                         </article>
 
                         <p class="c<?= is_writable('../') ?>">./</p>
+                        <p class="c<?= is_writable('../dbs/') ?>">./dbs</p>
+                        <p class="c<?= is_writable('../dbs/cache') ?>">./dbs/cache</p>
                         <p class="c<?= is_writable('../backup/') ?>">./backup</p>
                         <p class="c<?= is_writable('../upload/') ?>">./upload</p>
 
                         <div class="icon_collection clear">
                             <?php if (
                                 is_writable('../')
+                                && is_writable('../dbs/')
+                                && is_writable('../dbs/cache')
                                 && is_writable('../upload/')
                                 && is_writable('../backup/')
                             ): ?>

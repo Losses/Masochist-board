@@ -49,7 +49,7 @@ Our link: https://github.com/Losses/Masochist-board
 
 ####附加协议####
 
-您必须在贵站页脚中加入明显的我们的链接，下面几种形式供您选择：
+您必须在贵站页脚中加入明显的我们的 **链接** ，下面几种形式供您选择：
 
 *	Powered by Masochist-board
 *	Powered by M-b

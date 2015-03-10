@@ -45,6 +45,8 @@ function postCtrl($http, $scope, $rootScope, $routeParams) {
     losses.scope.postCtrl = $scope;
     processPageElement($scope.router);
 
+    $rootScope.canPost = 'show';
+
     var page = 1
         , loading = false;
 
@@ -90,19 +92,15 @@ function postCtrl($http, $scope, $rootScope, $routeParams) {
     function switchTitle() {
         var title;
         if ($routeParams.categoryId) {
-            console.log('a');
             title = $scope.categories[$routeParams.categoryId].name + ' - ';
-            $rootScope.canPost = 'show';
             $rootScope.currentCategoryKey = $routeParams.categoryId;
         } else if ($routeParams.searchKey) {
             title = "搜索：" + $routeParams.searchKey + ' - ';
             $rootScope.canPost = 'hide';
         } else if ($routeParams.postId) {
             title = $scope.posts[0].title + ' - ';
-            $rootScope.canPost = 'show';
         } else {
             title = '';
-            $rootScope.canPost = 'show';
             $rootScope.currentCategoryKey = $rootScope.firstCategoryKey;
         }
 
@@ -145,12 +143,14 @@ function manageCtrl($scope, $rootScope) {
     losses.scope.manage = $scope;
 }
 
-function loginJumper() {
-    history.replaceState('', 'Masochist-board 管理员登录', '#/manage/login');
-    location.reload();
+function loginJumper($scope, $location) {
+    if (!$scope.logined)
+        $location.path('/manage/login').replace();
+    else
+        $location.path('/manage/status').replace();
 }
 
-function manageStarter($scope, $http, $routeParams, $rootScope) {
+function manageStarter($scope, $http, $routeParams, $rootScope, $location) {
     $rootScope.canPost = 'hide';
     if ($('#masochist-manage-style')[0])
         return true;
@@ -188,30 +188,33 @@ function manageStarter($scope, $http, $routeParams, $rootScope) {
         })
     };
 
-    if (!$scope.logined) {
-        history.replaceState('', 'Masochist-board 管理员登录', '#/manage/login');
-        callManageDialog(true);
+    if (!$scope.logined && $routeParams.manageAction !== 'login') {
+        $location.path('/manage/login').replace();
     } else {
-        if ($routeParams.manageAction !== 'status') {
-            history.replaceState('', 'Masochist-board 管理员登录', '#/manage/status');
-            location.reload();
+        if ($scope.logined && $routeParams.manageAction !== 'status') {
+            $location.path('/manage/status').replace();
+        } else {
+            $http({
+                method: 'POST',
+                url: 'api/?manage',
+                data: $.param({'system_info': ''}),
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).success(function (response) {
+                $scope.systemInfo = response;
+            });
         }
-        $http({
-            method: 'POST',
-            url: 'api/?manage',
-            data: $.param({'system_info': ''}),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).success(function (response) {
-            $scope.systemInfo = response;
-        });
     }
+
+
 }
 
-function pluginCtrl($scope, $http, $routeParams, $sce) {
+function pluginCtrl($scope, $http, $routeParams, $rootScope, $sce) {
     plugin = this;
     plugin.$scope = $scope;
     plugin.$http = $http;
     plugin.$routeParams = $routeParams;
+
+    $rootScope.canPost = 'hide';
 
     $scope.response = {};
     $scope.response.content = 'Loading...';

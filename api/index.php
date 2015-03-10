@@ -640,20 +640,20 @@
             if (isset($_POST['system_info']))
             {
                 if (!$_SESSION['logined'])
-                {
                     response_message(403,
                         'You do not have the permission to access these information.');
 
-                    $system_info =
+                $system_info =
                     [
                         'Current PHP version' => phpversion(),
                         'Current MySQL version' => $database->info()['version'],
                         'Masochist-board version' => MB_VERSION
                     ];
 
-                    echo json_encode($system_info);
-                    exit();
-                }
+                masochist_debug($system_info);
+
+                echo json_encode($system_info);
+                exit();
             }
         }
     }

@@ -143,12 +143,14 @@ function manageCtrl($scope, $rootScope) {
     losses.scope.manage = $scope;
 }
 
-function loginJumper() {
-    history.replaceState('', 'Masochist-board 管理员登录', '#/manage/login');
-    location.reload();
+function loginJumper($scope, $location) {
+    if (!$scope.logined)
+        $location.path('/manage/login').replace();
+    else
+        $location.path('/manage/status').replace();
 }
 
-function manageStarter($scope, $http, $routeParams, $rootScope) {
+function manageStarter($scope, $http, $routeParams, $rootScope, $location) {
     $rootScope.canPost = 'hide';
     if ($('#masochist-manage-style')[0])
         return true;
@@ -186,23 +188,24 @@ function manageStarter($scope, $http, $routeParams, $rootScope) {
         })
     };
 
-    if (!$scope.logined) {
-        history.replaceState('', 'Masochist-board 管理员登录', '#/manage/login');
-        callManageDialog(true);
+    if (!$scope.logined && $routeParams.manageAction !== 'login') {
+        $location.path('/manage/login').replace();
     } else {
-        if ($routeParams.manageAction !== 'status') {
-            history.replaceState('', 'Masochist-board 管理员登录', '#/manage/status');
-            location.reload();
+        if ($scope.logined && $routeParams.manageAction !== 'status') {
+            $location.path('/manage/status').replace();
+        } else {
+            $http({
+                method: 'POST',
+                url: 'api/?manage',
+                data: $.param({'system_info': ''}),
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).success(function (response) {
+                $scope.systemInfo = response;
+            });
         }
-        $http({
-            method: 'POST',
-            url: 'api/?manage',
-            data: $.param({'system_info': ''}),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).success(function (response) {
-            $scope.systemInfo = response;
-        });
     }
+
+
 }
 
 function pluginCtrl($scope, $http, $routeParams, $rootScope, $sce) {

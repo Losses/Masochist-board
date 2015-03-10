@@ -6,8 +6,7 @@
 /upload/*.gif
 /backup/*/*
 /plugins
-images/custom/*
-styles/custom.less
-styles/custom.css
-styles/custom.css.map
-scripts/custom.js
+/images/custom/*
+/dbs/cache/*.*
+/dbs/debug_info
+/dbs/plugin_cache

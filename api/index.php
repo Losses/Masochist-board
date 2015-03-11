@@ -298,7 +298,7 @@
                 'id[=]'     =>  $_GET['id']
             ],
             'ORDER' =>  ['upid', 'id'],
-            'LIMIT' =>  [($_GET['page'] - 1) * 10, $_GET['page'] * 10]
+            'LIMIT' =>  [($_GET['page'] - 1) * 10, 10]
         ];
         $data = $database->select('content', $columns_sql, $where_sql);
 

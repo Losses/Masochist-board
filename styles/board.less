@@ -227,9 +227,6 @@
     }
 
     .search_list {
-        .article_group {
-            width: ~"calc(100% - 300px)";
-        }
 
         > li {
             &:hover {
@@ -244,7 +241,7 @@
         }
 
         .replies {
-            width: ~"calc(100% - 200px)";
+            max-width: 800px;
             padding: 10px;
             margin: 10px 20px;
             background: lighten(@lightestColor, 2%);
@@ -464,7 +461,7 @@
         box-sizing: border-box;
         overflow: hidden;
         position: absolute;
-        z-index:2;
+        z-index: 2;
         transition: max-height 500ms, opacity 60ms;
 
         li {
@@ -769,8 +766,7 @@ footer {
                 }
 
                 .category_rename {
-                    top: 3px;
-                    ;
+                    top: 3px;;
                     right: -120px;
                     width: 110px;
                     position: absolute;

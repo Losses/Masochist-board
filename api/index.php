@@ -160,9 +160,9 @@
 
         $join_sql =
         [
-            '[><]category' =>
+            '[><]category'  =>
             [
-                'category' => 'id'
+                'category'  =>  'id'
             ]
         ];
 
@@ -178,9 +178,9 @@
         ];
         $where_sql =
         [
-            'AND' => ['content.upid[=]' => 0],
-            'ORDER' => ['content.active_time DESC', 'content.time DESC'],
-            'LIMIT' => [($_GET['page'] - 1) * 10, 10],
+            'AND'   =>  ['content.upid[=]' => 0],
+            'ORDER' =>  ['content.active_time DESC', 'content.time DESC'],
+            'LIMIT' =>  [($_GET['page'] - 1) * 10, 10],
         ];
         if (!isset($_SESSION['logined']) || $_SESSION['logined'] == false)
         {
@@ -209,12 +209,27 @@
         }
 
         $search_key = $database->quote($result_key);
-
-        $data = $database->query("  SELECT * FROM content
-                                    WHERE MATCH (title, content)
-                                    AGAINST ($search_key IN BOOLEAN MODE)
-                                    LIMIT $page_start, 10")
-                         ->fetchAll();
+        
+        if (isset($_SESSION['logined']) && $_SESSION['logined'] == true)
+        {
+            $data = $database->query("  
+                                        SELECT `*` FROM `content`
+                                        WHERE MATCH (title, content)
+                                        AGAINST ($search_key IN BOOLEAN MODE)
+                                        LIMIT $page_start, 10
+                                    ")->fetchAll();
+        }
+        else
+        {
+            $data = $database->query("  
+                                        SELECT * FROM `content`
+                                        JOIN `category` ON `content`.`category` = `category`.`id`
+                                        WHERE MATCH `content`.`title`, `content`.`content`
+                                        AGAINST ($search_key IN BOOLEAN MODE)
+                                        AND `category`.`hide` != 1
+                                        LIMIT $page_start, 10
+                                    ")->fetchAll();
+        }
 
         $search_result = [];
 
@@ -263,7 +278,8 @@
         if (isset($_SESSION['logined']) && $_SESSION['logined'] == true)
         {
             $data = $database->select('category', '*');
-        } else
+        }
+        else
         {
             $where_sql = ['hide[=]' => 0];
             $data = $database->select('category', '*', $where_sql);

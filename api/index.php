@@ -190,7 +190,7 @@
             
             foreach ($search_result as $result)
             {
-                if ($result['reply'] != null && $result['post'] == null)
+                if (null != $result['reply'] && null == $result['reply'])
                 {
                     $search_result[$result['reply'][0]['upid']] =
                         ['post' =>  [], 'reply' =>  []];

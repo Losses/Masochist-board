@@ -495,10 +495,11 @@
 
             if (isset($_POST['action']) && ($_POST['action'] == 'hide_cate'))
             {
+                $columns_sql = ['hide'];
                 $where_sql = ['id[=]' => $_POST['target']];
                 $ishide = $database->select('category',
-                        'hide', $where_sql)[0]['hide'] === '1';
-                if ($ishide)
+                    $columns_sql, $where_sql)[0]['hide'] == '1';
+                if ($ishide == 1)
                 {
                     $data_sql = ['hide' => 0];
                 }
@@ -521,9 +522,10 @@
 
             if (isset($_POST['action']) && ($_POST['action'] == 'mute_cate'))
             {
+                $columns_sql = ['mute'];
                 $where_sql = ['id[=]' => $_POST['target']];
                 $ismute = $database->select('category',
-                        'mute', $where_sql)[0]['mute'] === '1';
+                    $columns_sql, $where_sql)[0]['mute'] == '1';
                 if ($ismute)
                 {
                     $data_sql = ['mute' => 0];

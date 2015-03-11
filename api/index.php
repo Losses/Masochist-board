@@ -201,7 +201,7 @@
     {
         $search_key = explode(' ', $_GET['search']);
         $result_key = '';
-        $page_start = $_GET['page'] ? (((int)$_GET['page']) - 1 * 10) : 0;
+        $page_start = isset($_GET['page']) ? (((int)$_GET['page'] - 1) * 10) : 0;
 
         foreach ($search_key as $key)
         {

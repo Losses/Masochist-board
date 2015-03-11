@@ -213,7 +213,7 @@
         if (isset($_SESSION['logined']) && $_SESSION['logined'] == true)
         {
             $data = $database->query("  
-                                        SELECT `*` FROM `content`
+                                        SELECT * FROM `content`
                                         WHERE MATCH (title, content)
                                         AGAINST ($search_key IN BOOLEAN MODE)
                                         LIMIT $page_start, 10
@@ -224,7 +224,7 @@
             $data = $database->query("  
                                         SELECT * FROM `content`
                                         JOIN `category` ON `content`.`category` = `category`.`id`
-                                        WHERE MATCH `content`.`title`, `content`.`content`
+                                        WHERE MATCH (content.title, content.content)
                                         AGAINST ($search_key IN BOOLEAN MODE)
                                         AND `category`.`hide` != 1
                                         LIMIT $page_start, 10

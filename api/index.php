@@ -221,40 +221,6 @@
                                     LIMIT $page_start, 10
                                 ")->fetchAll();
         
-        $data_length = count($data);
-        for ($i = 0; $i < $data_length; $i++)
-        {
-            $data[$i]['content'] =
-                $emotion->phrase(RemoveXSS($Parsedown->text($data[$i]['content'])));
-
-            if (isset($data[$i]['img']) && ($data[$i]['img'] != ''))
-            {
-                $data[$i]['img'] = 'upload/' . $data[$i]['img'];
-            }
-        }
-        
-        /*
-        if (isset($_SESSION['logined']) && $_SESSION['logined'] == true)
-        {
-            $data = $database->query("  
-                                        SELECT * FROM `content`
-                                        WHERE MATCH (title, content)
-                                        AGAINST ($search_key IN BOOLEAN MODE)
-                                        LIMIT $page_start, 10
-                                    ")->fetchAll();
-        }
-        else
-        {
-            $data = $database->query("  
-                                        SELECT * FROM `content`
-                                        JOIN `category` ON `content`.`category` = `category`.`id`
-                                        WHERE MATCH (content.title, content.content)
-                                        AGAINST ($search_key IN BOOLEAN MODE)
-                                        AND `category`.`hide` != 1
-                                        LIMIT $page_start, 10
-                                    ")->fetchAll();
-        }
-        */
         $search_result = [];
 
         foreach ($data as $result)
@@ -293,7 +259,21 @@
                 }
             }
         }
-
+        
+        foreach ($search_result as $value)
+        {
+            $search_result[$value['post']['id']]['post']['content'] =
+                $emotion->phrase(RemoveXSS($Parsedown->text(
+                    $search_result[$value['post']['id']]['post']['content'])));
+                    
+            if ($search_result[$value['post']['id']]['post']['img'] 
+                && ($search_result[$value['post']['id']]['post']['img'] != ''))
+            {
+                $search_result[$value['post']['id']]['post']['img'] =
+                    'upload/' . $search_result[$value['post']['id']]['post']['img'];
+            }
+        }
+        
         echo json_encode(array_values($search_result));
         exit();
     }

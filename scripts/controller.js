@@ -81,7 +81,7 @@ function postCtrl($http, $scope, $rootScope, $routeParams) {
         if ($routeParams.categoryId) {
             getContent("api/?list&category=" + $routeParams.categoryId + "&page=" + page);
         } else if ($routeParams.searchKey) {
-            getContent("api/?list&search=" + $routeParams.searchKey + "&page=" + page);
+            getContent("api/?search=" + $routeParams.searchKey + "&page=" + page);
         } else if ($routeParams.postId) {
             getContent("api/?post&id=" + $routeParams.postId + "&page=" + page);
         } else {

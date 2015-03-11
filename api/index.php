@@ -211,15 +211,34 @@
         {
             $result_key .= '*' . $key . '* ';
         }
-
         $search_key = $database->quote($result_key);
         
         $data = $database->query("  
-                                    SELECT * FROM `content`
+                                    SELECT * FROM content
                                     WHERE MATCH (title, content)
                                     AGAINST ($search_key IN BOOLEAN MODE)
                                     LIMIT $page_start, 10
                                 ")->fetchAll();
+
+        if (!isset($_SESSION['logined']) || $_SESSION['logined'] == false)
+        {
+            for ($i = 0; $i < count($data); $i++)
+            {
+                $columns_sql = ['hide'];
+                $where_sql = ['id[=]' => $data[$i]['category']];
+                $ishide = $database->select('category',
+                    $columns_sql, $where_sql)[0]['hide'] == '1';
+                
+                if ($ishide)
+                {
+                    $data[$i] = null;
+                }
+            }
+            if ($data[0] == null)
+            {
+                $data = null;
+            }
+        }
         
         $search_result = [];
 
@@ -273,6 +292,8 @@
                     'upload/' . $search_result[$value['post']['id']]['post']['img'];
             }
         }
+        
+        
         
         echo json_encode(array_values($search_result));
         exit();
@@ -699,13 +720,13 @@
         return $ipaddress;
     }
 
-function masochist_debug($info)
-{
-    $date = date('Y-m-d H:i:s');
+    function masochist_debug($info)
+    {
+        $date = date('Y-m-d H:i:s');
 
-    if(is_array($info))
-        $info = json_encode($info);
+        if(is_array($info))
+            $info = json_encode($info);
 
-    $write_str = "[$date] $info \n";
-    file_put_contents('../dbs/debug_info', $write_str, FILE_APPEND);
-}
+        $write_str = "[$date] $info \n";
+        file_put_contents('../dbs/debug_info', $write_str, FILE_APPEND);
+    }

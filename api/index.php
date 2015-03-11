@@ -210,6 +210,14 @@
 
         $search_key = $database->quote($result_key);
         
+        $data = $database->query("  
+                                    SELECT * FROM `content`
+                                    WHERE MATCH (title, content)
+                                    AGAINST ($search_key IN BOOLEAN MODE)
+                                    LIMIT $page_start, 10
+                                ")->fetchAll();
+        
+        /*
         if (isset($_SESSION['logined']) && $_SESSION['logined'] == true)
         {
             $data = $database->query("  
@@ -230,7 +238,7 @@
                                         LIMIT $page_start, 10
                                     ")->fetchAll();
         }
-
+        */
         $search_result = [];
 
         foreach ($data as $result)
@@ -247,7 +255,7 @@
 
         foreach ($search_result as $result)
         {
-            if (null != $result['reply'] && !isset($result['post']))
+            if (isset($result['reply']) && !isset($result['post']))
             {
                 $search_result[$result['reply'][0]['upid']] =
                     ['post' =>  [], 'reply' =>  []];

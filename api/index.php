@@ -201,6 +201,8 @@
     {
         $search_key = explode(' ', $_GET['search']);
         $result_key = '';
+        $page_start = $_GET['page'] ? (((int)$_GET['page']) - 1 * 10) : 0;
+
         foreach ($search_key as $key)
         {
             $result_key .= '*' . $key . '* ';
@@ -208,13 +210,14 @@
 
         $search_key = $database->quote($result_key);
 
-        $data = $database->query("SELECT * FROM content
-                            WHERE MATCH (title, content)
-                            AGAINST ($search_key IN BOOLEAN MODE)")
-                            ->fetchAll();
+        $data = $database->query("  SELECT * FROM content
+                                    WHERE MATCH (title, content)
+                                    AGAINST ($search_key IN BOOLEAN MODE)
+                                    LIMIT $page_start, 10")
+                         ->fetchAll();
 
         $search_result = [];
-        
+
         foreach ($data as $result)
         {
             if ($result['upid'] == 0)
@@ -226,7 +229,7 @@
                 $search_result[$result['upid']]['reply'][] = $result;
             }
         }
-        
+
         foreach ($search_result as $result)
         {
             if (null != $result['reply'] && !isset($result['post']))
@@ -239,7 +242,7 @@
                 ];
                 $search_result[$result['reply'][0]['upid']]['post'] =
                     $database->select('content', '*', $where_sql)[0];
-                
+
                 for ($i=0; $i <= count($result['reply']) - 1; $i++)
                 {
                     $where_sql =
@@ -251,7 +254,7 @@
                 }
             }
         }
-        
+
         echo json_encode(array_values($search_result));
         exit();
     }

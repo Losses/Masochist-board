@@ -199,6 +199,10 @@
     }
     elseif (isset($_GET['search']))
     {
+        require_once('../libs/parsedown.php');
+
+        $Parsedown = new Parsedown();
+        
         $search_key = explode(' ', $_GET['search']);
         $result_key = '';
         $page_start = isset($_GET['page']) ? (((int)$_GET['page'] - 1) * 10) : 0;
@@ -216,6 +220,18 @@
                                     AGAINST ($search_key IN BOOLEAN MODE)
                                     LIMIT $page_start, 10
                                 ")->fetchAll();
+        
+        $data_length = count($data);
+        for ($i = 0; $i < $data_length; $i++)
+        {
+            $data[$i]['content'] =
+                $emotion->phrase(RemoveXSS($Parsedown->text($data[$i]['content'])));
+
+            if (isset($data[$i]['img']) && ($data[$i]['img'] != ''))
+            {
+                $data[$i]['img'] = 'upload/' . $data[$i]['img'];
+            }
+        }
         
         /*
         if (isset($_SESSION['logined']) && $_SESSION['logined'] == true)

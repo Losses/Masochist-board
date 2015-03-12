@@ -158,70 +158,11 @@
 
         $_GET['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
 
-        if (isset($_GET['search']))
-        {
-            $search_key = explode(' ', $_GET['search']);
-            $result_key = '';
-            foreach ($search_key as $key)
-            {
-                $result_key .= '*' . $key . '* ';
-            }
-
-            $search_key = $database->quote($result_key);
-
-            $data = $database->query("SELECT * FROM content
-                                WHERE MATCH (title, content)
-                                AGAINST ($search_key IN BOOLEAN MODE)")
-                                ->fetchAll();
-
-            $search_result = [];
-            
-            foreach ($data as $result)
-            {
-                if ($result['upid'] == 0)
-                {
-                    $search_result[$result['id']]['post'] = $result;
-                }
-                else
-                {
-                    $search_result[$result['upid']]['reply'][] = $result;
-                }
-            }
-            
-            foreach ($search_result as $result)
-            {
-                if ($result['reply'] != null && $result['post'] == null)
-                {
-                    $search_result[$result['reply'][0]['upid']] =
-                        ['post' =>  [], 'reply' =>  []];
-                    $where_sql =
-                    [
-                        'id[=]' =>  $result['reply'][0]['upid']
-                    ];
-                    $search_result[$result['reply'][0]['upid']]['post'] =
-                        $database->select('content', '*', $where_sql)[0];
-                    
-                    for ($i=0; $i <= count($result['reply']) - 1; $i++)
-                    {
-                        $where_sql =
-                        [
-                            'id[=]' =>  $result['reply'][$i]['id']
-                        ];
-                        $search_result[$result['reply'][$i]['upid']]['reply'][] =
-                            $database->select('content', '*', $where_sql)[0];
-                    }
-                }
-            }
-            
-            echo json_encode(array_values($search_result));
-            exit();
-        }
-
         $join_sql =
         [
-            '[><]category' =>
+            '[><]category'  =>
             [
-                'category' => 'id'
+                'category'  =>  'id'
             ]
         ];
 
@@ -237,9 +178,9 @@
         ];
         $where_sql =
         [
-            'AND' => ['content.upid[=]' => 0],
-            'ORDER' => ['content.active_time DESC', 'content.time DESC'],
-            'LIMIT' => [($_GET['page'] - 1) * 10, 10],
+            'AND'   =>  ['content.upid[=]' => 0],
+            'ORDER' =>  ['content.active_time DESC', 'content.time DESC'],
+            'LIMIT' =>  [($_GET['page'] - 1) * 10, 10],
         ];
         if (!isset($_SESSION['logined']) || $_SESSION['logined'] == false)
         {
@@ -256,12 +197,114 @@
         echo json_encode($data);
         exit();
     }
+    elseif (isset($_GET['search']))
+    {
+        require_once('../libs/parsedown.php');
+
+        $Parsedown = new Parsedown();
+        
+        $search_key = explode(' ', $_GET['search']);
+        $result_key = '';
+        $page_start = isset($_GET['page']) ? (((int)$_GET['page'] - 1) * 10) : 0;
+
+        foreach ($search_key as $key)
+        {
+            $result_key .= '*' . $key . '* ';
+        }
+        $search_key = $database->quote($result_key);
+        
+        $data = $database->query("  
+                                    SELECT * FROM content
+                                    WHERE MATCH (title, content)
+                                    AGAINST ($search_key IN BOOLEAN MODE)
+                                    LIMIT $page_start, 10
+                                ")->fetchAll();
+
+        if (!isset($_SESSION['logined']) || $_SESSION['logined'] == false)
+        {
+            for ($i = 0; $i < count($data); $i++)
+            {
+                $columns_sql = ['hide'];
+                $where_sql = ['id[=]' => $data[$i]['category']];
+                $ishide = $database->select('category',
+                    $columns_sql, $where_sql)[0]['hide'] == '1';
+                
+                if ($ishide)
+                {
+                    $data[$i] = null;
+                }
+            }
+            if ($data[0] == null)
+            {
+                $data = null;
+            }
+        }
+        
+        $search_result = [];
+
+        foreach ($data as $result)
+        {
+            if ($result['upid'] == 0)
+            {
+                $search_result[$result['id']]['post'] = $result;
+            }
+            else
+            {
+                $search_result[$result['upid']]['reply'][] = $result;
+            }
+        }
+
+        foreach ($search_result as $result)
+        {
+            if (isset($result['reply']) && !isset($result['post']))
+            {
+                $search_result[$result['reply'][0]['upid']] =
+                    ['post' =>  [], 'reply' =>  []];
+                $where_sql =
+                [
+                    'id[=]' =>  $result['reply'][0]['upid']
+                ];
+                $search_result[$result['reply'][0]['upid']]['post'] =
+                    $database->select('content', '*', $where_sql)[0];
+
+                for ($i=0; $i <= count($result['reply']) - 1; $i++)
+                {
+                    $where_sql =
+                    [
+                        'id[=]' =>  $result['reply'][$i]['id']
+                    ];
+                    $search_result[$result['reply'][$i]['upid']]['reply'][] =
+                        $database->select('content', '*', $where_sql)[0];
+                }
+            }
+        }
+        
+        foreach ($search_result as $value)
+        {
+            $search_result[$value['post']['id']]['post']['content'] =
+                $emotion->phrase(RemoveXSS($Parsedown->text(
+                    $search_result[$value['post']['id']]['post']['content'])));
+                    
+            if ($search_result[$value['post']['id']]['post']['img'] 
+                && ($search_result[$value['post']['id']]['post']['img'] != ''))
+            {
+                $search_result[$value['post']['id']]['post']['img'] =
+                    'upload/' . $search_result[$value['post']['id']]['post']['img'];
+            }
+        }
+        
+        
+        
+        echo json_encode(array_values($search_result));
+        exit();
+    }
     elseif (isset($_GET['category']))
     {
         if (isset($_SESSION['logined']) && $_SESSION['logined'] == true)
         {
             $data = $database->select('category', '*');
-        } else
+        }
+        else
         {
             $where_sql = ['hide[=]' => 0];
             $data = $database->select('category', '*', $where_sql);
@@ -299,7 +342,7 @@
                 'id[=]'     =>  $_GET['id']
             ],
             'ORDER' =>  ['upid', 'id'],
-            'LIMIT' =>  [($_GET['page'] - 1) * 10, $_GET['page'] * 10]
+            'LIMIT' =>  [($_GET['page'] - 1) * 10, 10]
         ];
         $data = $database->select('content', $columns_sql, $where_sql);
 
@@ -477,10 +520,11 @@
 
             if (isset($_POST['action']) && ($_POST['action'] == 'hide_cate'))
             {
+                $columns_sql = ['hide'];
                 $where_sql = ['id[=]' => $_POST['target']];
                 $ishide = $database->select('category',
-                        'hide', $where_sql)[0]['hide'] === '1';
-                if ($ishide)
+                    $columns_sql, $where_sql)[0]['hide'] == '1';
+                if ($ishide == 1)
                 {
                     $data_sql = ['hide' => 0];
                 }
@@ -503,9 +547,10 @@
 
             if (isset($_POST['action']) && ($_POST['action'] == 'mute_cate'))
             {
+                $columns_sql = ['mute'];
                 $where_sql = ['id[=]' => $_POST['target']];
                 $ismute = $database->select('category',
-                        'mute', $where_sql)[0]['mute'] === '1';
+                    $columns_sql, $where_sql)[0]['mute'] == '1';
                 if ($ismute)
                 {
                     $data_sql = ['mute' => 0];
@@ -675,13 +720,13 @@
         return $ipaddress;
     }
 
-function masochist_debug($info)
-{
-    $date = date('Y-m-d H:i:s');
+    function masochist_debug($info)
+    {
+        $date = date('Y-m-d H:i:s');
 
-    if(is_array($info))
-        $info = json_encode($info);
+        if(is_array($info))
+            $info = json_encode($info);
 
-    $write_str = "[$date] $info \n";
-    file_put_contents('../dbs/debug_info', $write_str, FILE_APPEND);
-}
+        $write_str = "[$date] $info \n";
+        file_put_contents('../dbs/debug_info', $write_str, FILE_APPEND);
+    }

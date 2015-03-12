@@ -12,6 +12,7 @@
         height: 100%;
         font-size: 12px;
         .flex-box(column);
+        position: relative;
 
         .dialog_head {
             .flex-box();
@@ -32,18 +33,21 @@
                 display: block;
                 .flex(1);
             }
+        }
 
-            .close_dialog {
-                display: none;
-                width: 15px;
-                height: 15px;
-                padding: 5px;
-                color: #3c324d;
-                cursor: pointer;
+        .close_dialog {
+            display: none;
+            top: 20px;
+            right: 15px;
+            width: 15px;
+            height: 15px;
+            padding: 5px;
+            color: #3c324d;
+            cursor: pointer;
+            position: absolute;
 
-                @media only screen and (max-width: 550px) {
-                    display: block;
-                }
+            @media only screen and (max-width: 550px) {
+                display: block;
             }
         }
 
@@ -52,6 +56,8 @@
             color: #ddd;
             letter-spacing: 1px;
             transition: color 300ms;
+            user-select: none;
+            cursor: pointer;
 
             &.selected {
                 color: red;
@@ -59,6 +65,10 @@
 
             input {
                 display: none;
+            }
+
+            @media only screen and (max-width: 550px) {
+                padding-right: 30px;
             }
         }
 
@@ -439,11 +449,12 @@
 
         @media only screen and (max-width: 550px) {
             .dialog_head {
-                .flex-box();
+                display: none;
+            }
 
-                *:not(.close_dialog) {
-                    visibility: hidden;
-                }
+            .close_dialog {
+                display: block;
+                z-index: 1;
             }
         }
     }
@@ -501,8 +512,13 @@
 
 .touch_screen {
     #post_dialog form {
-        .dialog_head .close_dialog {
+        .checkbox_rebuild {
+            padding-right: 30px;
+        }
+
+        .close_dialog {
             display: block;
+            z-index: 1;
         }
 
         .content .post_submit {
@@ -516,11 +532,9 @@
         }
     }
 
-    &.post_page #post_dialog form .dialog_head {
-        .flex-box();
-
-        *:not(.close_dialog) {
-            visibility: hidden;
+    &.post_page {
+        #post_dialog form .dialog_head {
+            display: none;
         }
     }
 }

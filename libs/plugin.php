@@ -138,7 +138,7 @@ class plugin
         if (!isset($page_config[$request_type]) || !is_file("$page_dir/" . $page_config[$request_type]))
             response_message(404, 'file not found');
 
-        $content = file_get_contents($page_config[$request_type]);
+        $content = file_get_contents("$page_dir/" . $page_config[$request_type]);
 
         echo $content;
         exit();

@@ -208,6 +208,7 @@ function manageStarter($scope, $http, $routeParams, $rootScope, $location) {
 
 }
 
+/*
 function pluginCtrl($scope, $http, $routeParams, $rootScope, $sce) {
     plugin = this;
     plugin.$scope = $scope;
@@ -233,3 +234,4 @@ function pluginCtrl($scope, $http, $routeParams, $rootScope, $sce) {
         }
     })
 }
+    */

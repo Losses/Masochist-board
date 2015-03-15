@@ -4,8 +4,12 @@
 
 var mKnowledge = angular.module('mKnowledge', ['ngRoute']);
 
-mKnowledge.config(['$routeProvider',
-    function ($routeProvider) {
+mKnowledge.config(['$controllerProvider', '$routeProvider',
+    function ($controllerProvider, $routeProvider) {
+        mKnowledge.registerPlugin = function (name, controller) {
+            $controllerProvider.register('pluginCtrl$' + name, controller);
+        };
+
         $routeProvider.
             when('/', {
                 templateUrl: 'partials/list.html',
@@ -36,6 +40,7 @@ mKnowledge.config(['$routeProvider',
                 controller: manageStarter
             }).
             when('/:pluginAction', {
+                controller: 'pluginCtrl$pluginPageCtrl',
                 resolve: {
                     load: ['$q', '$route', '$rootScope', '$location',
                         function ($q, $route) {

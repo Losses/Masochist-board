@@ -72,7 +72,10 @@ mKnowledge.controller('dialogCtrl', dialogCtrl);
 
 mKnowledge.controller('manageCtrl', manageCtrl);
 
-mKnowledge.controller('pluginCtrl', pluginCtrl);
+mKnowledge.controller('pluginCtrl$pluginPageCtrl', function () {
+});
+
+//mKnowledge.controller('pluginCtrl', pluginCtrl);
 
 mKnowledge.filter('trustHtml', function ($sce) {
     return function (input) {

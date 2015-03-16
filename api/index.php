@@ -357,6 +357,11 @@
                 $data[$i]['img'] = 'upload/' . $data[$i]['img'];
             }
         }
+        
+        $pattern = '(>>([\S]*))';
+        $subject = $data[0]['content'];
+        preg_replace($pattern,
+            "<span style='color:#4CAF50'>$subject</span>", $subject);
 
         $plugin->load_hook("HOOK-AFTER_POST");
 

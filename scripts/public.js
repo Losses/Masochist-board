@@ -4,8 +4,12 @@
 
 var mKnowledge = angular.module('mKnowledge', ['ngRoute']);
 
-mKnowledge.config(['$routeProvider',
-    function ($routeProvider) {
+mKnowledge.config(['$controllerProvider', '$routeProvider',
+    function ($controllerProvider, $routeProvider) {
+        mKnowledge.registerPlugin = function (name, controller) {
+            $controllerProvider.register('pluginCtrl$' + name, controller);
+        };
+
         $routeProvider.
             when('/', {
                 templateUrl: 'partials/list.html',
@@ -36,8 +40,28 @@ mKnowledge.config(['$routeProvider',
                 controller: manageStarter
             }).
             when('/:pluginAction', {
-                templateUrl: 'partials/plugin.html',
-                controller: pluginCtrl
+                controller: 'pluginCtrl$pluginPageCtrl',
+                resolve: {
+                    load: ['$q', '$route', '$rootScope', '$location',
+                        function ($q, $route) {
+                            var deferred = $q.defer(),
+                                params = $route.current.params;
+
+                            $.getScript('api/?plugin&name=' + params.pluginAction + '&type=script')
+                                .always(function (result, state) {
+                                    if (state === 'error' || state === 'parsererror') {
+                                        var url = 'api/?plugin&name=' + params.pluginAction + '&type=script';
+                                        console.report('Load script: ' + url + ' failed', params);
+                                    }
+                                    deferred.resolve();
+                                });
+
+                            return deferred.promise;
+                        }]
+                },
+                templateUrl: function (params) {
+                    return 'api/?plugin&name=' + params.pluginAction + '&type=html';
+                }
             });
     }
 ]);
@@ -48,7 +72,10 @@ mKnowledge.controller('dialogCtrl', dialogCtrl);
 
 mKnowledge.controller('manageCtrl', manageCtrl);
 
-mKnowledge.controller('pluginCtrl', pluginCtrl);
+mKnowledge.controller('pluginCtrl$pluginPageCtrl', function () {
+});
+
+//mKnowledge.controller('pluginCtrl', pluginCtrl);
 
 mKnowledge.filter('trustHtml', function ($sce) {
     return function (input) {

@@ -31,6 +31,10 @@ class plugin
             $this->build_cache($plugin_tree, $cache_file_name);
         }
 
+        if (defined('DEBUG_ALWAYS_REBUILD_CACHE') && DEBUG_ALWAYS_REBUILD_CACHE) {
+            $this->build_cache($plugin_tree, $cache_file_name);
+        }
+
         $this->config['public_page'] = [];
 
         for ($h = 2; $h < count($plugin_tree); $h++) {
@@ -51,9 +55,9 @@ class plugin
                     array_push($this->plugin_list[$hook_name], "$file/$hook_file");
                 }
 
-                foreach ($plugin_public_page as $page_name => $file_location) {
+                foreach ($plugin_public_page as $page_name => $file_settings) {
                     $this->config['public_page'][$page_name] = [
-                        'page_location' => "$file/$file_location",
+                        'page_settings' => $file_settings,
                         'page_dir' => $file
                     ];
                 }
@@ -108,18 +112,39 @@ class plugin
 
     public function load_public_page($page_name)
     {
-        if (!isset($this->config['public_page'][$page_name]))
+        $page_dir = $this->config['public_page'][$page_name]['page_dir'];
+        $page_config = $this->config['public_page'][$page_name]['page_settings'];
+
+        $return = [];
+
+        if (
+            !is_array($page_config) || !isset($page_config['html'])
+        )
             response_message(403, "Invalid request.");
 
-        if (!is_file($this->config['public_page'][$page_name]['page_location']))
-            response_message(404, "Can't get the template.");
+        if (isset($page_config['script']))
+            $return['script'] = "$page_dir/" . $page_config['script'];
 
-        $return = [
-            'location' => $this->config['public_page'][$page_name]['page_dir'],
-            'content' => file_get_contents($this->config['public_page'][$page_name]['page_location'])
-        ];
+        $return['html'] = "$page_dir/" . $page_config['html'];
 
         echo(json_encode($return));
+        exit();
+    }
+
+    public function load_plugin_file($page_name, $request_type)
+    {
+        if (!isset($this->config['public_page'][$page_name]))
+            response_message(404, 'page not found');
+
+        $page_dir = $this->config['public_page'][$page_name]['page_dir'];
+        $page_config = $this->config['public_page'][$page_name]['page_settings'];
+
+        if (!isset($page_config[$request_type]) || !is_file("$page_dir/" . $page_config[$request_type]))
+            response_message(404, 'file not found');
+
+        $content = file_get_contents("$page_dir/" . $page_config[$request_type]);
+
+        echo $content;
         exit();
     }
 

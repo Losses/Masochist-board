@@ -202,7 +202,7 @@
         require_once('../libs/parsedown.php');
 
         $Parsedown = new Parsedown();
-        
+
         $search_key = explode(' ', $_GET['search']);
         $result_key = '';
         $page_start = isset($_GET['page']) ? (((int)$_GET['page'] - 1) * 10) : 0;
@@ -212,8 +212,8 @@
             $result_key .= '*' . $key . '* ';
         }
         $search_key = $database->quote($result_key);
-        
-        $data = $database->query("  
+
+        $data = $database->query("
                                     SELECT * FROM content
                                     WHERE MATCH (title, content)
                                     AGAINST ($search_key IN BOOLEAN MODE)
@@ -228,7 +228,7 @@
                 $where_sql = ['id[=]' => $data[$i]['category']];
                 $ishide = $database->select('category',
                     $columns_sql, $where_sql)[0]['hide'] == '1';
-                
+
                 if ($ishide)
                 {
                     $data[$i] = null;
@@ -239,7 +239,7 @@
                 $data = null;
             }
         }
-        
+
         $search_result = [];
 
         foreach ($data as $result)
@@ -278,23 +278,23 @@
                 }
             }
         }
-        
+
         foreach ($search_result as $value)
         {
             $search_result[$value['post']['id']]['post']['content'] =
                 $emotion->phrase(RemoveXSS($Parsedown->text(
                     $search_result[$value['post']['id']]['post']['content'])));
-                    
-            if ($search_result[$value['post']['id']]['post']['img'] 
+
+            if ($search_result[$value['post']['id']]['post']['img']
                 && ($search_result[$value['post']['id']]['post']['img'] != ''))
             {
                 $search_result[$value['post']['id']]['post']['img'] =
                     'upload/' . $search_result[$value['post']['id']]['post']['img'];
             }
         }
-        
-        
-        
+
+
+
         echo json_encode(array_values($search_result));
         exit();
     }
@@ -357,6 +357,11 @@
                 $data[$i]['img'] = 'upload/' . $data[$i]['img'];
             }
         }
+        
+        $pattern = '(>>([\S]*))';
+        $subject = $data[0]['content'];
+        preg_replace($pattern,
+            "<span style='color:#4CAF50'>$subject</span>", $subject);
 
         $plugin->load_hook("HOOK-AFTER_POST");
 
@@ -663,13 +668,14 @@
     }
     elseif (isset($_GET['plugin']))
     {
-        if (isset ($_POST['plugin_page']))
-        {
-            $plugin->load_public_page($_POST['plugin_page']);
-        }
-        else if (isset($_POST['api']))
+        if (isset($_POST['api']))
         {
             $plugin->load_api($_POST['api']);
+            exit();
+        }
+        else if (isset($_GET['name']) && isset($_GET['type']))
+        {
+            $plugin->load_plugin_file($_GET['name'],$_GET['type']);
         }
     }
 

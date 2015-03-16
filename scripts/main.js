@@ -47,6 +47,7 @@ $(function () {
         })/*nxt line*/
         .delegate('[data-title]', 'mouseleave', function () {
             hintElement.removeClass('show');
-        })/*nxt line*/
-        .append(hintElement);
+        });
+
+    $('#common').append(hintElement);
 });

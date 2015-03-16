@@ -31,6 +31,10 @@ class plugin
             $this->build_cache($plugin_tree, $cache_file_name);
         }
 
+        if (defined('DEBUG_ALWAYS_REBUILD_CACHE') && DEBUG_ALWAYS_REBUILD_CACHE) {
+            $this->build_cache($plugin_tree, $cache_file_name);
+        }
+
         $this->config['public_page'] = [];
 
         for ($h = 2; $h < count($plugin_tree); $h++) {

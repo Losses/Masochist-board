@@ -321,7 +321,7 @@ $(document).ready(function documentReady() {
 
     (function lightBox() {
         /*lightbox*/
-        $('body').append('<section class="lightbox"><div class="darkness"><img src="" class="image" /></section>')
+        $('#common').after('<section class="lightbox"><div class="darkness"><img src="" class="image" /></section>')
             .delegate('.lbox', 'click', function () {
                 var scale = 1;
 
@@ -410,20 +410,6 @@ $(document).ready(function documentReady() {
                 });
             });
     })();
-
-    /*
-     switchLoading(true);
-
-     $.post('api/?manage', {'check': ''}, function (data) {
-     switchLoading(false);
-     var response = JSON.parse(data);
-
-     losses.global.logined = (response.message);
-     losses.global.$digest();
-
-     manageLoginProcess();
-     });
-     */
 
     $(window).resize(checkFunctionMenu);
 

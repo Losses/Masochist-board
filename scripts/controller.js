@@ -207,31 +207,3 @@ function manageStarter($scope, $http, $routeParams, $rootScope, $location) {
 
 
 }
-
-/*
-function pluginCtrl($scope, $http, $routeParams, $rootScope, $sce) {
-    plugin = this;
-    plugin.$scope = $scope;
-    plugin.$http = $http;
-    plugin.$routeParams = $routeParams;
-
-    $rootScope.canPost = 'hide';
-
-    $scope.response = {};
-    $scope.response.content = 'Loading...';
-
-    $http({
-        method: 'POST',
-        url: 'api/?plugin',
-        data: $.param({'plugin_page': $routeParams.pluginAction}),
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    }).success(function (response) {
-        if (response.message) {
-            $scope.response.content = 'ERROR:' + response.message;
-        } else {
-            $scope.response = response;
-            $scope.response.trustedContent = $sce.trustAsHtml(response.content);
-        }
-    })
-}
-    */

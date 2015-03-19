@@ -39,19 +39,21 @@ mKnowledge.config(['$controllerProvider', '$routeProvider',
                 templateUrl: 'partials/manage.html',
                 controller: manageStarter
             }).
-            when('/:pluginAction', {
+            when('/:pluginAction*', {
                 controller: 'pluginCtrl$pluginPageCtrl',
                 resolve: {
                     load: ['$q', '$route', '$rootScope', '$location',
-                        function ($q, $route) {
+                        function ($q, $route, $rootScope) {
                             var deferred = $q.defer(),
-                                params = $route.current.params;
+                                params = $route.current.params.pluginAction.split('/');
 
-                            $.getScript('api/?plugin&name=' + params.pluginAction + '&type=script')
+                            $rootScope.routeSplited = params;
+
+                            $.getScript('api/?plugin&name=' + params[0] + '&type=script')
                                 .always(function (result, state) {
                                     if (state === 'error' || state === 'parsererror') {
-                                        var url = 'api/?plugin&name=' + params.pluginAction + '&type=script';
-                                        console.report('Load script: ' + url + ' failed', params);
+                                        var url = 'api/?plugin&name=' + params[0] + '&type=script';
+                                        console.report('Load script: ' + url + ' failed', params[0]);
                                     }
                                     deferred.resolve();
                                 });
@@ -60,7 +62,8 @@ mKnowledge.config(['$controllerProvider', '$routeProvider',
                         }]
                 },
                 templateUrl: function (params) {
-                    return 'api/?plugin&name=' + params.pluginAction + '&type=html';
+                    console.log(params.pluginAction.split('/')[0]);
+                    return 'api/?plugin&name=' + params.pluginAction.split('/')[0] + '&type=html';
                 }
             });
     }
@@ -91,6 +94,12 @@ mKnowledge.filter('object2Array', function () {
             output.push(input[i]);
         }
         return output;
+    }
+});
+
+mKnowledge.filter('startFrom', function () {
+    return function (input, start) {
+        return input.slice(start);
     }
 });
 

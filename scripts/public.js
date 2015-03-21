@@ -62,7 +62,6 @@ mKnowledge.config(['$controllerProvider', '$routeProvider',
                         }]
                 },
                 templateUrl: function (params) {
-                    console.log(params.pluginAction.split('/')[0]);
                     return 'api/?plugin&name=' + params.pluginAction.split('/')[0] + '&type=html';
                 }
             });
@@ -216,7 +215,6 @@ function sSelect(selector) {
             });
 
             selectBody.delegate('li', 'click', function () {
-                console.log('!');
                 var selectObject = $(this).parents('.s_select').children('input');
                 selectObject.val($(this).attr('val'))
                     .next('.s_choosen').html($(this).html());

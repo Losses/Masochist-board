@@ -136,8 +136,6 @@ $(document).ready(function () {
                 condition.name = $(this).children('input').val();
             }
 
-            console.log(condition);
-
             $.post('api/?manage', condition, function (data) {
                 var response;
                 try {

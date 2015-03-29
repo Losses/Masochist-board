@@ -104,8 +104,8 @@ class plugin
     public function load_hook($hook_name)
     {
         if (isset($this->plugin_list[$hook_name])) {
-            for ($i = 0; $i < count($this->plugin_list[$hook_name]); $i++) {
-                require($this->plugin_list[$hook_name][$i]);
+            for ($a = 0; $a < count($this->plugin_list[$hook_name]); $a++) {
+                require($this->plugin_list[$hook_name][$a]);
             }
         }
     }

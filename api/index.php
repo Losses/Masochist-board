@@ -213,7 +213,8 @@
         $search_key = $database->quote($result_key);
 
         $data = $database->query("
-                                    SELECT * FROM content
+                                    SELECT `id`,`author`,`content`,`time`,`img`,`upid`,`sage`,`category`
+									FROM content
                                     WHERE MATCH (title, content)
                                     AGAINST ($search_key IN BOOLEAN MODE)
                                     LIMIT $page_start, 10

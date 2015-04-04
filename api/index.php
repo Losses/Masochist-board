@@ -186,17 +186,32 @@
         }
         $search_key = $database->quote($result_key);
         
-        $data = $database->query("
-                                    SELECT `content`.`id`, `author`, `content`,
-                                    `time`, `img`, `upid`, `sage`, `category`
-                                    FROM content
-                                    LEFT JOIN `category`
-                                    ON `category`.`id` = `content`.`category`
-                                    WHERE `category`.`hide` != 1
-                                    AND MATCH (title, content)
-                                    AGAINST ($search_key IN BOOLEAN MODE)
-                                    LIMIT $page_start, 10
-                                ")->fetchAll();
+        if (isset($_SESSION['logined']) && $_SESSION['logined'] == true) {
+            $insert_sql = "
+                            SELECT `content`.`id`, `author`, `content`,
+                            `time`, `img`, `upid`, `sage`, `category`
+                            FROM content
+                            LEFT JOIN `category`
+                            ON `category`.`id` = `content`.`category`
+                            WHERE MATCH (title, content)
+                            AGAINST ($search_key IN BOOLEAN MODE)
+                            LIMIT $page_start, 10
+                         ";
+        }
+        else {
+            $insert_sql = "
+                            SELECT `content`.`id`, `author`, `content`,
+                            `time`, `img`, `upid`, `sage`, `category`
+                            FROM content
+                            LEFT JOIN `category`
+                            ON `category`.`id` = `content`.`category`
+                            WHERE MATCH (title, content)
+                            AGAINST ($search_key IN BOOLEAN MODE)
+                            LIMIT $page_start, 10
+                         ";
+        }
+        $data = $database->query($insert_sql)->fetchAll();
+
         $search_result = [];
         
         foreach ($data as $result) {

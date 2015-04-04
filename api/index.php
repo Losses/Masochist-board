@@ -206,6 +206,7 @@
                             LEFT JOIN `category`
                             ON `category`.`id` = `content`.`category`
                             WHERE MATCH (title, content)
+                            AND `category`.`hide` != 1
                             AGAINST ($search_key IN BOOLEAN MODE)
                             LIMIT $page_start, 10
                          ";

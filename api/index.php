@@ -16,9 +16,7 @@
 
     $plugin = new plugin();
 
-    $database = new medoo
-    (
-        [
+    $database = new medoo ([
             'database_type' => 'mysql',
             'database_name' => DB_NAME,
             'server'        => DB_HOST,
@@ -27,8 +25,7 @@
             'port'          => DB_PORT,
             'charset'       => 'utf8',
             'option'        => [PDO::ATTR_CASE => PDO::CASE_NATURAL]
-        ]
-    );
+    ]);
 
     $columns_sql = [];
     $where_sql   = [];
@@ -42,8 +39,7 @@
     session_set_cookie_params(31536000);
     session_start();
 
-    if (isset($_GET['new']))
-    {
+    if (isset($_GET['new'])) {
         $post_title = isset($_POST['title'])     ? $_POST['title']    : '';
         $post_content = isset($_POST['content']) ? $_POST['content']  : '';
         $post_upid = isset($_POST['upid'])       ? $_POST['upid']     : 0;
@@ -52,60 +48,50 @@
         $post_ip = get_ip_address();
         $post_author = (isset($_SESSION['logined'])
             && $_SESSION['logined'] == true)     ? 'Admin'            : 'a person';
-
+        
         $plugin->load_hook("HOOK-BEFORE_NEW");
-
-        if ($post_upid == 0)
-        {
-            if ($post_title == '')
-            {
+        
+        if ($post_upid == 0) {
+            if ($post_title == '') {
                 response_message(403, "You need a title!");
                 exit();
             }
-            if ($post_content == '')
-            {
+            if ($post_content == '') {
                 response_message(403, "You need some contents!");
                 exit();
             }
-
+            
             $data_sql = ['active_time' => $current_time,];
         }
-        else
-        {
-            if ($post_content == '')
-            {
+        else {
+            if ($post_content == '') {
                 response_message(403, "You need some contents!");
                 exit();
             }
-
+            
             $columns_sql = ['sage'];
             $where_sql = ['id[=]' => $post_upid];
             $issage = $database->select('content',
                     $columns_sql, $where_sql)[0]['sage'] === '1';
-            if (!$issage)
-            {
+            if (!$issage) {
                 $data_sql = ['active_time' => $current_time,];
                 $data = $database->update('content', $data_sql, $where_sql);
             }
         }
-
-        if (count($_FILES) > 0)
-        {
+        
+        if (count($_FILES) > 0) {
             $type_img = ['image/gif', 'image/jpeg', 'image/svg+xml',
                 'image/bmp', 'image/wbmp', 'image/png'];
-
+         
             if ((in_array($_FILES['image']['type'], $type_img))
-                && ($_FILES['image']['size'] < 50000000))
-            {
-                if ($_FILES['image']['error'])
-                {
+                && ($_FILES['image']['size'] < 50000000)) {
+                if ($_FILES['image']['error']) {
                     response_message(500, 'Internal Server Error!');
                 }
-                else
-                {
+                else {
                     move_uploaded_file($_FILES['image']['tmp_name'],
                         '../upload/' . $_FILES['image']['name']);
-
+                        
                     $type_img = explode('.', '../upload/'
                         . $_FILES['image']['name']);
                     $post_img = md5(md5_file('../upload/'
@@ -117,24 +103,21 @@
                 }
             }
         }
-        else
-        {
+        else {
             $post_img = NULL;
         }
-
+        
         $columns_sql = ['mute'];
         $where_sql = ['id[=]' => $post_cate];
         $is_mute = $database->select('category',
             $columns_sql, $where_sql)[0]['mute'] === '1';
         if ($is_mute && (!isset($_SESSION['logined'])
-            || $_SESSION['logined'] == false))
-        {
+            || $_SESSION['logined'] == false)) {
             response_message(403, "You can't post at mute category!");
             exit();
         }
-
-        $data_sql +=
-        [
+        
+        $data_sql += [
             'author' => $post_author,
             'title' => $post_title,
             'content' => str_replace(array("\r\n", "\r", "\n"),"\n\n", htmlspecialchars($post_content)),
@@ -146,27 +129,23 @@
             'category' => $post_cate,
             'ip' => $post_ip
         ];
-
+        
         $result = $database->insert('content', $data_sql);
-
+        
         response_message(200, $result);
     }
-    elseif (isset($_GET['list']))
-    {
+    elseif (isset($_GET['list'])) {
         $plugin->load_hook("HOOK-BEFORE_LIST");
-
+        
         $_GET['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
-
-        $join_sql =
-        [
-            '[><]category'  =>
-            [
+        
+        $join_sql = [
+            '[><]category'  => [
                 'category'  =>  'id'
             ]
         ];
-
-        $columns_sql =
-        [
+        
+        $columns_sql = [
             'content.id',
             'content.title',
             'content.author',
@@ -175,125 +154,105 @@
             'content.sage',
             'content.img'
         ];
-        $where_sql =
-        [
+        $where_sql = [
             'AND'   =>  ['content.upid[=]' => 0],
             'ORDER' =>  ['content.active_time DESC', 'content.time DESC'],
             'LIMIT' =>  [($_GET['page'] - 1) * 10, 10],
         ];
-        if (!isset($_SESSION['logined']) || $_SESSION['logined'] == false)
-        {
+        if (!isset($_SESSION['logined']) || $_SESSION['logined'] == false) {
             $where_sql['AND']['category.hide[=]'] = 0;
         }
-        if (isset($_GET['category']))
-        {
+        if (isset($_GET['category'])) {
             $where_sql['AND']['content.category[=]'] = (int)$_GET['category'];
         }
         $data = $database->select('content', $join_sql, $columns_sql, $where_sql);
-
+        
         $plugin->load_hook("HOOK-AFTER_LIST");
-
+        
         echo json_encode($data);
         exit();
     }
-    elseif (isset($_GET['search']))
-    {
+    elseif (isset($_GET['search'])) {
         require_once('../libs/parsedown.php');
-
+        
         $Parsedown = new Parsedown();
-
+        
         $search_key = explode(' ', $_GET['search']);
         $result_key = '';
         $page_start = isset($_GET['page']) ? (((int)$_GET['page'] - 1) * 10) : 0;
-
-        foreach ($search_key as $key)
-        {
+        
+        foreach ($search_key as $key) {
             $result_key .= '*' . $key . '* ';
         }
         $search_key = $database->quote($result_key);
-
+        
         $data = $database->query("
                                     SELECT * FROM content
                                     WHERE MATCH (title, content)
                                     AGAINST ($search_key IN BOOLEAN MODE)
                                     LIMIT $page_start, 10
                                 ")->fetchAll();
-
-        if (!isset($_SESSION['logined']) || $_SESSION['logined'] == false)
-        {
-            for ($i = 0; $i < count($data); $i++)
-            {
-                $columns_sql = ['hide'];
-                $where_sql = ['id[=]' => $data[$i]['category']];
-                $ishide = $database->select('category',
-                    $columns_sql, $where_sql)[0]['hide'] == '1';
-
-                if ($ishide)
-                {
-                    $data[$i] = null;
+        
+        if (!isset($_SESSION['logined']) || $_SESSION['logined'] == false) {
+            $columns_sql = ['id'];
+            $where_sql = ['hide[=]' => 1];
+            $cate_hide = $database->select('category', $columns_sql, $where_sql);
+             
+            for ($i = 0; $i < count($data); $i++) {
+                foreach($cate_hide as $key) {
+                    if ($key == $data[$i]['category']) {
+                        $data[$i] = null;
+                    } 
                 }
             }
-            if ($data[0] == null)
-            {
+            if ($data[0] == null) {
                 $data = null;
             }
         }
-
+        
         $search_result = [];
-
-        foreach ($data as $result)
-        {
-            if ($result['upid'] == 0)
-            {
+        
+        foreach ($data as $result) {
+            if ($result['upid'] == 0) {
                 $search_result[$result['id']]['post'] = $result;
             }
-            else
-            {
+            else {
                 $search_result[$result['upid']]['reply'][] = $result;
             }
         }
-
-        foreach ($search_result as $result)
-        {
-            if (isset($result['reply']) && !isset($result['post']))
-            {
+        
+        foreach ($list_id as $result) {
+            $where_sql = ['id[=]' => $result[0]['upid']];
+            $search_result[$result[0]['upid']]['post'] = 
+                $database->select('content', '*', $where_sql)[0];
+        }
+        foreach ($search_result as $result) {
+            if (isset($result['reply']) && !isset($result['post'])) {
                 $search_result[$result['reply'][0]['upid']] =
-                    ['post' =>  [], 'reply' =>  []];
-                $where_sql =
-                [
-                    'id[=]' =>  $result['reply'][0]['upid']
+                    ['post' => [], 'reply' => []];
+                $where_sql = [
+                    'id[=]' =>  $result['reply'][0]['upid'],
+                    LIMIT => 1
                 ];
-                $search_result[$result['reply'][0]['upid']]['post'] =
+                $post_list = 
                     $database->select('content', '*', $where_sql)[0];
-
-                for ($i=0; $i <= count($result['reply']) - 1; $i++)
-                {
-                    $where_sql =
-                    [
-                        'id[=]' =>  $result['reply'][$i]['id']
-                    ];
-                    $search_result[$result['reply'][$i]['upid']]['reply'][] =
-                        $database->select('content', '*', $where_sql)[0];
-                }
+                $reply_list = $result['reply'];
+                $search_result[$result['reply'][0]['upid']]['post'] = $post_list;
+                $search_result[$result['reply'][0]['upid']]['reply'] = $reply_list;
             }
         }
-
-        foreach ($search_result as $value)
-        {
+        
+        foreach ($search_result as $value) {
             $search_result[$value['post']['id']]['post']['content'] =
                 $emotion->phrase(RemoveXSS($Parsedown->text(
-                    $search_result[$value['post']['id']]['post']['content'])));
-
+                    $search_result[$value['post']['id']]['post']['content']))); 
             if ($search_result[$value['post']['id']]['post']['img']
-                && ($search_result[$value['post']['id']]['post']['img'] != ''))
-            {
+                && ($search_result[$value['post']['id']]['post']['img'] != '')) {
                 $search_result[$value['post']['id']]['post']['img'] =
                     'upload/' . $search_result[$value['post']['id']]['post']['img'];
             }
         }
-
-
-
+        
         echo json_encode(array_values($search_result));
         exit();
     }

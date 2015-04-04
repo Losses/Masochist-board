@@ -187,29 +187,16 @@
         $search_key = $database->quote($result_key);
         
         $data = $database->query("
-                                    SELECT * FROM content
-                                    WHERE MATCH (title, content)
+                                    SELECT `category`.`id`, `author`, `content`,
+                                    `time`, `img`, `upid`, `sage`, `category`
+                                    FROM content
+                                    LEFT JOIN `category`
+                                    ON `category`.`id` = `content`.`category`
+                                    WHERE `category`.`hide` != 1
+                                    AND MATCH (title, content)
                                     AGAINST ($search_key IN BOOLEAN MODE)
                                     LIMIT $page_start, 10
                                 ")->fetchAll();
-        
-        if (!isset($_SESSION['logined']) || $_SESSION['logined'] == false) {
-            $columns_sql = ['id'];
-            $where_sql = ['hide[=]' => 1];
-            $cate_hide = $database->select('category', $columns_sql, $where_sql);
-             
-            for ($i = 0; $i < count($data); $i++) {
-                foreach($cate_hide as $key) {
-                    if ($key == $data[$i]['category']) {
-                        $data[$i] = null;
-                    } 
-                }
-            }
-            if ($data[0] == null) {
-                $data = null;
-            }
-        }
-        
         $search_result = [];
         
         foreach ($data as $result) {

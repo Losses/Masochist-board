@@ -187,7 +187,7 @@
         $search_key = $database->quote($result_key);
         
         $data = $database->query("
-                                    SELECT `category`.`id`, `author`, `content`,
+                                    SELECT `content`.`id`, `author`, `content`,
                                     `time`, `img`, `upid`, `sage`, `category`
                                     FROM content
                                     LEFT JOIN `category`

@@ -2,6 +2,9 @@
 //NOTICE: DO NOT EDIT THE 'MB_VERSION' BASED ON ANY REASON, IT MAY CAUSE THE UPDATER WORK IN AN ABNORMAL WAY!
     define('MB_VERSION', '0.9 PreAlpha');
 
+    if (!is_file('../config.php'))
+        response_message(500,'not installed');
+
     require_once('../config.php');
 
     require_once('../libs/medoo.php');
@@ -16,19 +19,24 @@
 
     $plugin = new plugin();
 
-    $database = new medoo
-    (
-        [
-            'database_type' => 'mysql',
-            'database_name' => DB_NAME,
-            'server'        => DB_HOST,
-            'username'      => DB_USER,
-            'password'      => DB_PASSWORD,
-            'port'          => DB_PORT,
-            'charset'       => 'utf8',
-            'option'        => [PDO::ATTR_CASE => PDO::CASE_NATURAL]
-        ]
-    );
+    try {
+        $database = new medoo
+        (
+            [
+                'database_type' => 'mysql',
+                'database_name' => DB_NAME,
+                'server'        => DB_HOST,
+                'username'      => DB_USER,
+                'password'      => DB_PASSWORD,
+                'port'          => DB_PORT,
+                'charset'       => 'utf8',
+                'option'        => [PDO::ATTR_CASE => PDO::CASE_NATURAL]
+            ]
+        );
+    }
+    catch (Exception $e) {
+        response_message(500,'server boom!');
+    }
 
     $columns_sql = [];
     $where_sql   = [];
@@ -672,7 +680,10 @@
             $plugin->load_plugin_file($_GET['name'],$_GET['type']);
         }
     }
-
+    elseif (isset($_GET['connection']))
+    {
+        response_message(200,'OK');
+    }
     function response_message($Code, $Message)
     {
         $Response =

@@ -7,6 +7,9 @@
 
     require_once('../config.php');
 
+    if (defined('DEBUG_SHUT_SITE') && DEBUG_SHUT_SITE)
+        response_message(500,'closed');
+
     require_once('../libs/medoo.php');
 
     require_once('../libs/emotions.php');

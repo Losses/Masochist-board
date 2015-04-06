@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <style>
+        @keyframes fly_left {
+            100% {
+                margin-left: -50%;
+            }
+        }
+
+        @keyframes fly_right {
+            100% {
+                margin-left: 50%;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background: #5c00ff;
+            background: -moz-linear-gradient(90deg, #5c00ff, #410cc7);
+            background: -webkit-gradient(linear, 0 50%, 100% 50%, from(#5c00ff), to(#410cc7));
+            background: -webkit-linear-gradient(90deg, #5c00ff, #410cc7);
+        }
+
+        .offline_mark {
+            top: 50%;
+            left: 50%;
+            margin-top: -150px;
+            margin-left: -150px;
+            position: absolute;
+        }
+
+        p {
+            width: 100%;
+            color: white;
+            opacity: 0.4;
+            text-align: center;
+            font-size: 40px;
+            position: absolute;
+        }
+
+        .fly_left {
+            animation: fly_left 200s linear infinite alternate;
+        }
+
+        .fly_right {
+            animation: fly_right 200s linear infinite alternate;
+        }
+
+        p:nth-of-type(1) {
+            top: 22%;
+        }
+
+        p:nth-of-type(2) {
+            top: 37%;
+            font-size: 38px;
+        }
+
+        p:nth-of-type(3) {
+            top: 52%;
+            font-size: 38px;
+        }
+
+        p:nth-of-type(4) {
+            top: 67%;
+            font-size: 35px;
+        }
+
+        @media only screen and (max-width: 600px) {
+            p {
+                transform: scale(0.6);
+            }
+        }
+
+        @media only screen and (max-width: 550px) {
+            p {
+                transform: scale(0.4);
+            }
+        }
+    </style>
+    <title>离线模式 - Masochist Board</title>
+    <script src="../scripts/libs/prefixfree.min.js"></script>
+</head>
+<body>
+
+<p class="fly_left">网站暂时关闭</p>
+
+<p class="fly_right">The site is temporarily closed</p>
+
+<p class="fly_left">サイトが一時的に閉鎖されている</p>
+
+<p class="fly_right">Le site est temporairement fermé</p>
+
+<img class="offline_mark" src="../images/closed.svg" alt="closed icon"/>
+
+<script>
+    history.replaceState(null, '网站关闭 - Masochist Board', './#/');
+</script>
+</body>
+</html>
